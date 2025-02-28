@@ -2,34 +2,25 @@ import mongoose, { Schema, model } from "mongoose";
 
 export interface UserDocument {
   _id: string;
-  email: string;
+  username: string;
   password: string;
-  // name: string;
-  // phone: string;
-  // image: string;
-  // createdAt: Date;
-  // updatedAt: Date;
 }
 
 const UserSchema = new Schema<UserDocument>(
   {
-    email: {
+    username: {
       type: String,
       unique: true,
-      required: [true, "Email is required"],
+      required: [true, "Usernmae is required"],
       match: [
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        "Email is invalid",
+        "Usernmae is invalid",
       ],
     },
     password: {
       type: String,
       required: true,
     },
-    // name: {
-    //   type: String,
-    //   required: [true, "Name is required"],
-    // },
   },
   {
     timestamps: true,

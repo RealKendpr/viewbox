@@ -1,11 +1,12 @@
 "use server";
 
-import { signIn } from "../../../auth";
+import { UserType } from "@/components/form";
+import { signIn } from "../../auth";
 import { AuthError } from "next-auth";
 
 export async function authenticate(
   prevState: string | undefined,
-  formData: FormData
+  formData: UserType
 ) {
   try {
     await signIn("credentials", formData);
