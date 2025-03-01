@@ -1,15 +1,22 @@
 "use server";
 
 import { UserType } from "@/components/form";
-import { signIn } from "../../auth";
+import { signIn, signOut } from "../../auth";
 import { AuthError } from "next-auth";
 
 export async function authenticate(
   prevState: string | undefined,
   formData: UserType
 ) {
+  const username = formData.username;
+  const password = formData.password;
+
   try {
-    await signIn("credentials", formData);
+    await signIn("credentials", {
+      redirectTo: "/dashboard",
+      username,
+      password,
+    });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -21,4 +28,8 @@ export async function authenticate(
     }
     throw error;
   }
+}
+
+export async function SignOut() {
+  await signOut({ redirectTo: "/login" });
 }

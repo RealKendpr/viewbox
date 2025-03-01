@@ -14,10 +14,10 @@ export const authConfig = {
 
       if (isOnDashboard) {
         if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
+        else return NextResponse.redirect(new URL("/login", nextUrl)); // Redirect unauthenticated users to login page
       }
       if (isLoggedIn && isOnLogin) {
-        return NextResponse.redirect(new URL("/dashboard", nextUrl));
+        return true;
       }
       return true;
     },
