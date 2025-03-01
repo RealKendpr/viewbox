@@ -32,10 +32,20 @@ export function Form() {
           name="username"
           label="Username"
           placeholder="Username"
+          pattern={/[A-Za-z][A-Za-z0-9\-]*/}
+          minL={6}
+          maxL={24}
         ></Inputs>
-        <Inputs name="password" label="Password"></Inputs>
+        <Inputs
+          name="password"
+          label="Password"
+          placeholder="Password"
+          // pattern={/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/}
+          type="password"
+          minL={6}
+        ></Inputs>
         <input type="hidden" name="redirectTo" value={callbackUrl} />
-        <button type="submit" aria-disabled={isPending}>
+        <button className="btn" type="submit" aria-disabled={isPending}>
           Submit
         </button>
         {errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}

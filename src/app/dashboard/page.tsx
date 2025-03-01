@@ -6,7 +6,9 @@ export default function Dashboard() {
       <h1>Welcome!</h1>
 
       <form action={SignOut}>
-        <button type="submit">Sign Out </button>
+        <button className="btn" type="submit">
+          Sign Out
+        </button>
       </form>
     </div>
   );

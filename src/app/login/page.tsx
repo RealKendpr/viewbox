@@ -1,13 +1,12 @@
 import { Form } from "@/components/form";
-
-interface Inputs {
-  username: string;
-}
+import { Suspense } from "react";
 
 export default function Login() {
   return (
     <div>
-      <Form></Form>
+      <Suspense>
+        <Form></Form>
+      </Suspense>
     </div>
   );
 }

@@ -1,15 +1,22 @@
 import { useFormContext } from "react-hook-form";
+import RequiredAlert from "./requiredAlert";
 
 export function Inputs({
   name,
   label,
   pattern,
   placeholder,
+  type,
+  minL,
+  maxL,
 }: {
   name: string;
   label: string;
   pattern?: RegExp | undefined;
   placeholder?: string;
+  type?: "password" | "text";
+  minL: number;
+  maxL?: number;
 }) {
   const {
     register,
@@ -19,17 +26,27 @@ export function Inputs({
   const validationRule = {
     required: true,
     pattern: pattern,
+    minLength: minL,
+    maxLength: maxL,
   };
 
   return (
     <div>
-      <label htmlFor={name}>{label}</label>
+      <label className="label" htmlFor={name}>
+        {label}
+      </label>
       <input
+        className="input"
         id={name}
-        type="text"
+        type={type || "text"}
         placeholder={placeholder}
         {...register(name, validationRule)}
       />
+      {errors[name] && (
+        <RequiredAlert
+          errorMsg={`Please enter a valid ${label.toLowerCase()}`}
+        />
+      )}
     </div>
   );
 }
