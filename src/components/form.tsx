@@ -2,14 +2,14 @@
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { Inputs } from "./input";
 import { startTransition, useActionState } from "react";
-import { authenticate } from "@/lib/actions";
+import { authenticate, Register } from "@/lib/actions";
 import { useSearchParams } from "next/navigation";
 export interface UserType {
   username: string;
   password: string;
 }
 
-export function Form() {
+export function Form({ formType }: { formType: "register" | "login" }) {
   const methods = useForm<UserType>();
 
   const searchParams = useSearchParams();
@@ -20,9 +20,13 @@ export function Form() {
   );
 
   const onSubmit: SubmitHandler<UserType> = async (data: UserType) => {
-    startTransition(() => {
-      formAction(data);
-    });
+    if (formType === "login") {
+      startTransition(() => {
+        formAction(data);
+      });
+    } else if (formType === "register") {
+      Register(data);
+    }
   };
 
   return (
@@ -44,11 +48,12 @@ export function Form() {
           type="password"
           minL={6}
         ></Inputs>
-        <input type="hidden" name="redirectTo" value={callbackUrl} />
+        {formType === "login" && (
+          <input type="hidden" name="redirectTo" value={callbackUrl} />
+        )}
         <button className="btn" type="submit" aria-disabled={isPending}>
           Submit
         </button>
-        {errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}
       </form>
     </FormProvider>
   );

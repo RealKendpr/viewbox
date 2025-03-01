@@ -5,7 +5,7 @@ export default function Login() {
   return (
     <div>
       <Suspense>
-        <Form></Form>
+        <Form formType="login"></Form>
       </Suspense>
     </div>
   );
