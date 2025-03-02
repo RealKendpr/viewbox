@@ -10,12 +10,15 @@ export async function createSession(userId: string) {
 
   const session = await encrypt({ userId, expiresAt });
 
-  const cookie = await cookies();
-  cookie.set("session", session, {
+  (await cookies()).set("session", session, {
     httpOnly: true,
     secure: true,
     expires: expiresAt,
   });
+}
+
+export async function deleteSession() {
+  (await cookies()).delete("session");
 }
 
 type SessionPayload = {

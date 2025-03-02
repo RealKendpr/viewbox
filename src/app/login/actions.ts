@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { UserType } from "@/components/form";
 import bcrypt from "bcryptjs";
-import { createSession } from "@/_lib/session";
+import { createSession, deleteSession } from "@/_lib/session";
 import { redirect } from "next/navigation";
 import { getUser } from "@/_lib/mongodb/getUser";
 
@@ -42,9 +42,10 @@ export async function login(prevState: any, formData: UserType) {
     };
 }
 
-// export async function SignOut() {
-//   await signOut({ redirectTo: "/login" });
-// }
+export async function logout() {
+  await deleteSession();
+  redirect("/login");
+}
 
 // export async function Register(formData: UserType) {
 //   const username = formData.username;
