@@ -2,8 +2,8 @@
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { Inputs } from "./input";
 import { startTransition, useActionState } from "react";
-import { authenticate, Register } from "@/lib/actions";
-import { useSearchParams } from "next/navigation";
+import { login } from "@/app/login/actions";
+import { useFormStatus } from "react-dom";
 export interface UserType {
   username: string;
   password: string;
@@ -12,20 +12,15 @@ export interface UserType {
 export function Form({ formType }: { formType: "register" | "login" }) {
   const methods = useForm<UserType>();
 
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
-  const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
-    undefined
-  );
+  const [state, loginAction] = useActionState(login, undefined);
 
   const onSubmit: SubmitHandler<UserType> = async (data: UserType) => {
     if (formType === "login") {
       startTransition(() => {
-        formAction(data);
+        loginAction(data);
       });
     } else if (formType === "register") {
-      Register(data);
+      // Register(data);
     }
   };
 
@@ -48,13 +43,17 @@ export function Form({ formType }: { formType: "register" | "login" }) {
           type="password"
           minL={6}
         ></Inputs>
-        {formType === "login" && (
-          <input type="hidden" name="redirectTo" value={callbackUrl} />
-        )}
-        <button className="btn" type="submit" aria-disabled={isPending}>
-          Submit
-        </button>
+        <SubmitBtn />
       </form>
     </FormProvider>
+  );
+}
+
+function SubmitBtn() {
+  const { pending } = useFormStatus();
+  return (
+    <button className="btn" disabled={pending} type="submit">
+      Login
+    </button>
   );
 }
