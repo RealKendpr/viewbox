@@ -5,12 +5,15 @@ import { Inputs } from "./input";
 import { startTransition, useActionState } from "react";
 import { login } from "@/app/(auth)/actions";
 import { useFormStatus } from "react-dom";
+import Link from "next/link";
+import FormOperations from "./formOperations";
+
 export interface UserType {
   username: string;
   password: string;
 }
 
-export function Form() {
+export function LoginForm() {
   const methods = useForm<UserType>();
 
   const [state, loginAction] = useActionState(login, undefined);
@@ -40,17 +43,8 @@ export function Form() {
           type="password"
           minL={6}
         ></Inputs>
-        <SubmitBtn />
+        <FormOperations submitBtn="Log In" type="login" />
       </form>
     </FormProvider>
-  );
-}
-
-function SubmitBtn() {
-  const { pending } = useFormStatus();
-  return (
-    <button className="btn" disabled={pending} type="submit">
-      Log In
-    </button>
   );
 }

@@ -4,6 +4,7 @@ import { Inputs } from "./input";
 import { register } from "@/app/(auth)/actions";
 import { useState } from "react";
 import Link from "next/link";
+import FormOperations from "./formOperations";
 
 export interface UserType {
   username: string;
@@ -48,9 +49,7 @@ export function RegisterForm() {
             type="password"
             minL={6}
           ></Inputs>
-          <button className="btn" type="submit">
-            Create Account
-          </button>
+          <FormOperations submitBtn="Register" type="register" />
         </form>
       </FormProvider>
     </>
