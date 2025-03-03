@@ -1,22 +1,22 @@
 "use server";
 
 import { z } from "zod";
-import { UserType } from "@/components/loginForm";
+import { UserType } from "@/app/(auth)/_components/loginForm";
 import bcrypt from "bcryptjs";
 import { createSession, deleteSession } from "@/_lib/session";
 import { redirect } from "next/navigation";
 import { getUser } from "@/_lib/mongodb/getUser";
 import UserModel from "@/_lib/mongodb/models/User";
 
-export async function login(prevState: any, formData: UserType) {
-  const loginSchema = z.object({
-    username: z.string().min(6),
-    password: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters" }),
-  });
+const userSchema = z.object({
+  username: z.string().min(6),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters" }),
+});
 
-  const result = loginSchema.safeParse(formData);
+export async function login(prevState: any, formData: UserType) {
+  const result = userSchema.safeParse(formData);
 
   if (result.success) {
     const { username, password } = result.data;
@@ -50,11 +50,12 @@ export async function logout() {
 }
 
 export async function register(formData: UserType) {
-  const username = formData.username;
-  const password = formData.password;
+  const result = userSchema.safeParse(formData);
 
-  try {
+  if (result.success) {
+    const { username, password } = result.data;
     const userFound = await getUser(username);
+
     if (!userFound) {
       const hashPassword = await bcrypt.hash(password, 12);
       const user = new UserModel({
@@ -62,9 +63,17 @@ export async function register(formData: UserType) {
         password: hashPassword,
       });
       await user.save();
-      return true;
-    } else throw new Error("username already exist");
-  } catch (error) {
-    console.error((error as Error).message);
-  }
+      return {
+        status: "success",
+      };
+    }
+    return {
+      errors: {
+        username: "Username already exist",
+      },
+    };
+  } else
+    return {
+      errors: result.error.flatten().fieldErrors,
+    };
 }

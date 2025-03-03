@@ -3,12 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { decrypt } from "./_lib/session";
 
 const protectedRoutes = ["/dashboard"];
-const publicRoutes = ["/login"];
+const publicRoutes = ["/login", "/register"];
 
 export default async function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname;
-  const isProtected = protectedRoutes.includes(path);
-  const isPublic = publicRoutes.includes(path);
+  const { pathname } = request.nextUrl;
+  const isProtected = protectedRoutes.includes(pathname);
+  const isPublic = publicRoutes.includes(pathname);
 
   const cookie = (await cookies()).get("session")?.value;
   const session = await decrypt(cookie);

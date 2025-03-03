@@ -1,8 +1,9 @@
 "use client";
+
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { Inputs } from "./input";
 import { startTransition, useActionState } from "react";
-import { login } from "@/app/login/actions";
+import { login } from "@/app/(auth)/actions";
 import { useFormStatus } from "react-dom";
 export interface UserType {
   username: string;
