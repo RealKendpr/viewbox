@@ -12,7 +12,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="bg-base-100">
+        <main className="hero-content min-h-screen">{children}</main>
+      </body>
     </html>
   );
 }
