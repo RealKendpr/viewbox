@@ -34,6 +34,7 @@ export async function login(prevState: any, formData: UserType) {
     if (passwordMatch) {
       await createSession(user.id);
 
+      console.log("A user logged in");
       redirect("/dashboard");
     }
   } else

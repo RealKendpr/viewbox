@@ -10,8 +10,8 @@ export default async function middleware(request: NextRequest) {
   const isProtected = protectedRoutes.includes(path);
   const isPublic = publicRoutes.includes(path);
 
-  const cookie = await cookies();
-  const session = await decrypt(cookie.get("session")?.value);
+  const cookie = (await cookies()).get("session")?.value;
+  const session = await decrypt(cookie);
 
   if (isProtected && !session?.userId) {
     return NextResponse.redirect(new URL("/login", request.nextUrl));
@@ -26,5 +26,5 @@ export default async function middleware(request: NextRequest) {
 
 export const config = {
   // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
-  matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
+  matcher: "/dashboard/:path*",
 };

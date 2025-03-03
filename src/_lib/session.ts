@@ -36,11 +36,14 @@ export async function encrypt(payload: SessionPayload) {
 
 export async function decrypt(session: string | undefined = "") {
   try {
+    if (!session) throw new Error("no session found");
+
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ["HS256"],
     });
+
     return payload;
   } catch (error) {
-    console.log("Failed to verify session");
+    console.error((error as Error).message);
   }
 }
