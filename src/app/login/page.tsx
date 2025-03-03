@@ -1,11 +1,11 @@
-import { Form } from "@/components/form";
+import { Form } from "@/components/loginForm";
 import { Suspense } from "react";
 
 export default function Login() {
   return (
     <div>
       <Suspense>
-        <Form formType="login"></Form>
+        <Form></Form>
       </Suspense>
     </div>
   );

@@ -1,11 +1,12 @@
 "use server";
 
 import { z } from "zod";
-import { UserType } from "@/components/form";
+import { UserType } from "@/components/loginForm";
 import bcrypt from "bcryptjs";
 import { createSession, deleteSession } from "@/_lib/session";
 import { redirect } from "next/navigation";
 import { getUser } from "@/_lib/mongodb/getUser";
+import UserModel from "@/_lib/mongodb/models/User";
 
 export async function login(prevState: any, formData: UserType) {
   const loginSchema = z.object({
@@ -48,27 +49,22 @@ export async function logout() {
   redirect("/login");
 }
 
-// export async function Register(formData: UserType) {
-//   const username = formData.username;
-//   const password = formData.password;
+export async function register(formData: UserType) {
+  const username = formData.username;
+  const password = formData.password;
 
-//   console.log(formData);
-
-//   try {
-//     await connectDB();
-//     const userFound = await UserModel.findOne({ username });
-//     if (userFound) {
-//       console.log("Username already exist");
-//     }
-
-//     const hashPassword = await bcrypt.hash(password, 12);
-//     const user = new UserModel({
-//       username: username,
-//       password: hashPassword,
-//     });
-
-//     await user.save();
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+  try {
+    const userFound = await getUser(username);
+    if (!userFound) {
+      const hashPassword = await bcrypt.hash(password, 12);
+      const user = new UserModel({
+        username: username,
+        password: hashPassword,
+      });
+      await user.save();
+      return true;
+    } else throw new Error("username already exist");
+  } catch (error) {
+    console.error((error as Error).message);
+  }
+}

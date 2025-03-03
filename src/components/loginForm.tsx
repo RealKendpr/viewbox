@@ -9,19 +9,15 @@ export interface UserType {
   password: string;
 }
 
-export function Form({ formType }: { formType: "register" | "login" }) {
+export function Form() {
   const methods = useForm<UserType>();
 
   const [state, loginAction] = useActionState(login, undefined);
 
-  const onSubmit: SubmitHandler<UserType> = async (data: UserType) => {
-    if (formType === "login") {
-      startTransition(() => {
-        loginAction(data);
-      });
-    } else if (formType === "register") {
-      // Register(data);
-    }
+  const onSubmit: SubmitHandler<UserType> = async (formData: UserType) => {
+    startTransition(() => {
+      loginAction(formData);
+    });
   };
 
   return (
@@ -53,7 +49,7 @@ function SubmitBtn() {
   const { pending } = useFormStatus();
   return (
     <button className="btn" disabled={pending} type="submit">
-      Login
+      Log In
     </button>
   );
 }
