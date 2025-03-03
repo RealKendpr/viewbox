@@ -3,10 +3,18 @@
 import { logout } from "../login/actions";
 
 export default function Dashboard() {
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <h1>Welcome!</h1>
-      <button className="btn" type="submit" onClick={() => logout()}>
+      <button className="btn" type="submit" onClick={handleLogout}>
         Log Out
       </button>
     </div>
