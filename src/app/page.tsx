@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <PublicHeader />
-      <main className="hero-content min-h-screen">
+      <main className="grid place-items-center min-h-screen">
         <div>
           {/* <p className="text-2xl">One Page</p> */}
           <h1 className="text-4xl mb-6 font-medium">

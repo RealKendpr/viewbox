@@ -11,7 +11,7 @@ export default function DashboardLayout({
         <span className="text-2xl font-bold text-accent">One Page</span>
         <LogoutBtn />
       </header>
-      <main>{children}</main>
+      <main className="px-3">{children}</main>
     </>
   );
 }

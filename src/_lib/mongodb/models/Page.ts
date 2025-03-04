@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema, model } from "mongoose";
 
-interface PageDocument extends Document {
+export interface PageDocument extends Document {
   name: string;
   pageIcon: string;
   userId: mongoose.Types.ObjectId;
@@ -11,6 +11,8 @@ interface PageDocument extends Document {
       icon: string;
     }
   ];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const linkSchema = new mongoose.Schema({
@@ -28,22 +30,27 @@ const linkSchema = new mongoose.Schema({
   },
 });
 
-const PageSchema = new Schema<PageDocument>({
-  name: {
-    type: String,
-    required: true,
+const PageSchema = new Schema<PageDocument>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    pageIcon: {
+      type: String,
+      default: "",
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    links: [linkSchema],
   },
-  pageIcon: {
-    type: String,
-    default: "",
-  },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  links: [linkSchema],
-});
+  {
+    timestamps: true,
+  }
+);
 
 const PageSchemaModel =
   mongoose.models?.Page || model<PageDocument>("PageDocument", PageSchema);
