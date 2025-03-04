@@ -4,8 +4,6 @@ import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { Inputs } from "./input";
 import { startTransition, useActionState } from "react";
 import { login } from "@/app/(auth)/actions";
-import { useFormStatus } from "react-dom";
-import Link from "next/link";
 import FormOperations from "./formOperations";
 
 export interface UserType {
@@ -26,7 +24,7 @@ export function LoginForm() {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <form className="" onSubmit={methods.handleSubmit(onSubmit)}>
         <Inputs
           name="username"
           label="Username"

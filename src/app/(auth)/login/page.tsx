@@ -5,13 +5,11 @@ import { Suspense } from "react";
 export default function Login() {
   return (
     <Suspense fallback={<LoadingSpinner />}>
-      <div>
-        <div className="mb-4">
-          <p className="text-3xl font-bold">Welcome Back!</p>
-          <h1 className="text-2xl">Log In</h1>
-        </div>
-        <LoginForm></LoginForm>
+      <div className="mb-4">
+        <p className="text-3xl font-bold">Welcome Back!</p>
+        <h1 className="text-2xl">Log In</h1>
       </div>
+      <LoginForm></LoginForm>
     </Suspense>
   );
 }

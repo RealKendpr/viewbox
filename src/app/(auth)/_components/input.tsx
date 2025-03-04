@@ -32,16 +32,16 @@ export function Inputs({
 
   return (
     <div>
-      <label className="label" htmlFor={name}>
-        {label}
+      <label className="floating-label" htmlFor={name}>
+        <span>{label}</span>
+        <input
+          className="input mt-4 mb-3 input-md w-full"
+          id={name}
+          type={type || "text"}
+          placeholder={placeholder}
+          {...register(name, validationRule)}
+        />
       </label>
-      <input
-        className="input"
-        id={name}
-        type={type || "text"}
-        placeholder={placeholder}
-        {...register(name, validationRule)}
-      />
       {errors[name] && (
         <RequiredAlert
           errorMsg={`Please enter a valid ${label.toLowerCase()}`}
