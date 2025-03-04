@@ -1,17 +1,14 @@
-import LogoutBtn from "./_components/logout";
+import { DashNav } from './_components/dashNav'
 
 export default function DashboardLayout({
-  children,
+  children
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <>
-      <header className="flex justify-between p-3">
-        <span className="text-2xl font-bold text-accent">One Page</span>
-        <LogoutBtn />
-      </header>
-      <main className="px-3">{children}</main>
+      <DashNav />
+      <main className='px-3'>{children}</main>
     </>
-  );
+  )
 }
