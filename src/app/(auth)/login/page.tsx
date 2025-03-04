@@ -1,9 +1,10 @@
+import { LoadingSpinner } from "@/_components/loading";
 import { LoginForm } from "@/app/(auth)/_components/loginForm";
 import { Suspense } from "react";
 
 export default function Login() {
   return (
-    <Suspense fallback={"Loading..."}>
+    <Suspense fallback={<LoadingSpinner />}>
       <div>
         <div className="mb-4">
           <p className="text-3xl font-bold">Welcome Back!</p>
