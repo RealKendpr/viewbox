@@ -1,14 +1,14 @@
-import { DashNav } from './_components/dashNav'
+import { DashNav } from "./_components/dashNav";
 
 export default function DashboardLayout({
   children
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
       <DashNav />
-      <main className='px-3'>{children}</main>
+      <main className="px-3">{children}</main>
     </>
-  )
+  );
 }
