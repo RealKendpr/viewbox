@@ -1,9 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { useFormStatus } from "react-dom";
 
 export default function FormOperations({
   submitBtn,
-  type,
+  type
 }: {
   submitBtn: string;
   type: "login" | "register";
@@ -15,15 +17,13 @@ export default function FormOperations({
       <button
         className="btn btn-primary btn-block"
         disabled={pending}
-        type="submit"
-      >
+        type="submit">
         {submitBtn}
       </button>
       <div className="divider">or</div>
       <Link
         className="underline"
-        href={type === "login" ? "/register" : "/login"}
-      >
+        href={type === "login" ? "/register" : "/login"}>
         {type === "login" ? "Create an Account" : "Log In"}
       </Link>
     </div>
