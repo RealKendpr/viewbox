@@ -20,11 +20,11 @@ export function Input({
 
   return (
     <div>
-      <label className="fieldset-label" htmlFor={name}>
+      <label className="fieldset-label mb-2 inline-flex" htmlFor={name}>
         {label}
       </label>
       <input
-        className="input"
+        className="input w-full"
         type="text"
         id={name}
         placeholder={placeholder}

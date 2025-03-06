@@ -8,29 +8,37 @@ export function AddLinks() {
   });
 
   return (
-    <fieldset className="fieldset">
-      <legend className="fieldset-legend">Links</legend>
-      <ul>
+    <>
+      <ul className="grid gap-y-3 mb-4">
         {fields.map((field, index) => (
           <li
             className="collapse bg-base-100 border-base-200 border"
             key={field.id}>
-            <input type="checkbox" defaultChecked />
+            <input
+              type="checkbox"
+              name={`accordion-${index + 1}`}
+              defaultChecked
+            />
             <div className="collapse-title font-semibold">
               <WatchTitle name={`links.${index}.title`} />
             </div>
-            <div className="collapse-content">
-              <Input
-                label="Link Title"
-                name={`links.${index}.title` as const}
-              />
-              <Input label="Link" name={`links.${index}.href` as const} />
-              <Input
-                label="Link's Icon"
-                name={`links.${index}.icon` as const}
-              />
+            <div className="collapse-content grid gap-y-3">
+              <div className="grid gap-y-3">
+                <Input
+                  label="Link Title"
+                  name={`links.${index}.title` as const}
+                />
+                <Input label="Link" name={`links.${index}.href` as const} />
+                <Input
+                  label="Link's Icon"
+                  name={`links.${index}.icon` as const}
+                />
+              </div>
               {index >= 1 && (
-                <button type="button" onClick={() => remove(index)}>
+                <button
+                  className="btn btn-warning btn-sm place-self-end"
+                  type="button"
+                  onClick={() => remove(index)}>
                   DELETE
                 </button>
               )}
@@ -40,6 +48,7 @@ export function AddLinks() {
       </ul>
       <button
         type="button"
+        className="btn btn-secondary"
         onClick={() =>
           append({
             linkTitle: "",
@@ -47,8 +56,8 @@ export function AddLinks() {
             linkIcon: ""
           })
         }>
-        APPEND
+        Add Link
       </button>
-    </fieldset>
+    </>
   );
 }

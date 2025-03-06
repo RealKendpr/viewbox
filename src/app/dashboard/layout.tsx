@@ -8,7 +8,7 @@ export default function DashboardLayout({
   return (
     <>
       <DashNav />
-      <main className="px-3">{children}</main>
+      <main className="mx-[4%]">{children}</main>
     </>
   );
 }

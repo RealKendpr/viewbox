@@ -30,15 +30,17 @@ export function CreateForm() {
   return (
     <FormProvider {...methods}>
       <form className="max-w-md" onSubmit={methods.handleSubmit(onSubmit)}>
-        <fieldset className="fieldset">
-          <legend className="fieldset-legend">Create your links page</legend>
+        <div className="grid gap-y-4">
           <Input label="Page Title" name="page-title" />
           <Input label="Icon External Link" name="page-icon" />
+        </div>
+
+        <fieldset className="fieldset my-2">
+          <legend className="fieldset-legend">Links</legend>
+          <AddLinks />
         </fieldset>
 
-        <AddLinks />
-
-        <button className="btn">Create</button>
+        <button className="btn btn-primary w-full">Create</button>
       </form>
     </FormProvider>
   );
