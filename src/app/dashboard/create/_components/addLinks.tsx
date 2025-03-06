@@ -17,7 +17,7 @@ export function AddLinks() {
             key={field.id}>
             <input type="checkbox" defaultChecked />
             <div className="collapse-title font-semibold">
-              {WatchTitle({ name: `links.${index}.title` })}
+              <WatchTitle name={`links.${index}.title`} />
             </div>
             <div className="collapse-content">
               <Input

@@ -5,6 +5,6 @@ export function WatchTitle({ name }: { name: string }) {
     name: name
   });
 
-  if (pageTitle) return pageTitle;
-  else return "[Empty title]";
+  if (pageTitle) return <>{pageTitle}</>;
+  else return <>[Empty title]</>;
 }
