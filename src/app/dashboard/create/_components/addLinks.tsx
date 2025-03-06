@@ -29,9 +29,11 @@ export function AddLinks() {
                 label="Link's Icon"
                 name={`links.${index}.icon` as const}
               />
-              <button type="button" onClick={() => remove(index)}>
-                DELETE
-              </button>
+              {index >= 1 && (
+                <button type="button" onClick={() => remove(index)}>
+                  DELETE
+                </button>
+              )}
             </div>
           </li>
         ))}
