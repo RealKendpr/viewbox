@@ -1,5 +1,6 @@
 import { useFieldArray } from "react-hook-form";
 import { Input } from "./input";
+import { WatchTitle } from "./watchLinkTitle";
 
 export function AddLinks() {
   const { fields, append, remove } = useFieldArray({
@@ -14,8 +15,10 @@ export function AddLinks() {
           <li
             className="collapse bg-base-100 border-base-200 border"
             key={field.id}>
-            <input type="checkbox" />
-            <div className="collapse-title font-semibold">Link Item </div>
+            <input type="checkbox" defaultChecked />
+            <div className="collapse-title font-semibold">
+              {WatchTitle({ name: `links.${index}.title` })}
+            </div>
             <div className="collapse-content">
               <Input
                 label="Link Title"
