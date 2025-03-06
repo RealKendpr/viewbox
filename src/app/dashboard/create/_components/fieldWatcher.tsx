@@ -21,17 +21,25 @@ export function WatchLinks({ name }: { name: string }) {
 
   useEffect(() => {
     // goodness this one took me ages
-    try {
-      const domain = new URL(linkIcon).hostname;
-      setFavicon(`https://api.faviconkit.com/${domain}/32`);
-    } catch (error) {
-      return;
-    }
+    const timeoutId = setTimeout(() => {
+      // added a delay before setting favicon to prevent the image from fetching too often and with an invalid url; debouncing
+      try {
+        const domain = new URL(linkIcon).hostname;
+        setFavicon(`https://api.faviconkit.com/${domain}/32`);
+      } catch (error) {
+        setFavicon("");
+        return;
+      }
+    }, 1000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [linkIcon]);
 
   // render the img, only if the linkIcon is a valid regex to make sure there is already a valid domain for the api and already set as the favicon
   return (
     urlRegex.test(linkIcon) &&
-    favicon && <img src={favicon} alt="" width={32} height={32} />
+    favicon != "" && <img src={favicon} alt="" width={32} height={32} />
   );
 }

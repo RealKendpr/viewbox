@@ -20,7 +20,9 @@ export function AddLinks() {
               defaultChecked
             />
             <div className="collapse-title font-semibold flex items-center gap-x-2">
-              <WatchLinks name={`links.${index}.href`} />
+              <div className="size-8 rounded overflow-hidden">
+                <WatchLinks name={`links.${index}.href`} />
+              </div>
               <WatchTitle name={`links.${index}.title`} />
             </div>
             <div className="collapse-content grid gap-y-3">
