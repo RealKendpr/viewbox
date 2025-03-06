@@ -31,8 +31,18 @@ export function CreateForm() {
     <FormProvider {...methods}>
       <form className="max-w-md" onSubmit={methods.handleSubmit(onSubmit)}>
         <div className="grid gap-y-4">
-          <Input label="Page Title" name="page-title" />
-          <Input label="Icon External Link" name="page-icon" />
+          <Input
+            label="Page Title"
+            name="page-title"
+            placeholder="Awesome Delight"
+            required={true}
+          />
+          <Input
+            label="Icon External Link"
+            name="page-icon"
+            placeholder="https://icons.com/icon"
+            type="url"
+          />
         </div>
 
         <fieldset className="fieldset my-2">

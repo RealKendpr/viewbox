@@ -3,11 +3,15 @@ import { useFormContext } from "react-hook-form";
 export function Input({
   label,
   name,
-  placeholder
+  placeholder,
+  type,
+  required
 }: {
   label: string;
   name: string;
   placeholder?: string;
+  type?: "url" | "text";
+  required?: boolean;
 }) {
   const {
     register,
@@ -15,7 +19,11 @@ export function Input({
   } = useFormContext();
 
   const validationRule = {
-    required: true
+    required: required,
+    pattern:
+      type === "url"
+        ? /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+        : undefined
   };
 
   return (

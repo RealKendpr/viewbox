@@ -12,7 +12,7 @@ export function AddLinks() {
       <ul className="grid gap-y-3 mb-4">
         {fields.map((field, index) => (
           <li
-            className="collapse bg-base-100 border-base-200 border"
+            className="collapse collapse-arrow bg-base-100 border-base-200 border"
             key={field.id}>
             <input
               type="checkbox"
@@ -27,11 +27,21 @@ export function AddLinks() {
                 <Input
                   label="Link Title"
                   name={`links.${index}.title` as const}
+                  placeholder="Youtube"
+                  required={true}
                 />
-                <Input label="Link" name={`links.${index}.href` as const} />
+                <Input
+                  label="Link"
+                  name={`links.${index}.href` as const}
+                  placeholder="https://youtube.com/channel"
+                  type="url"
+                  required={true}
+                />
                 <Input
                   label="Link's Icon"
                   name={`links.${index}.icon` as const}
+                  placeholder="https://icons.com/icon"
+                  type="url"
                 />
               </div>
               {index >= 1 && (
