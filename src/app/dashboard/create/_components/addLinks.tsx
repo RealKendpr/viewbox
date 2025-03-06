@@ -1,6 +1,6 @@
 import { useFieldArray } from "react-hook-form";
 import { Input } from "./input";
-import { WatchTitle } from "./watchLinkTitle";
+import { WatchLinks, WatchTitle } from "./fieldWatcher";
 
 export function AddLinks() {
   const { fields, append, remove } = useFieldArray({
@@ -19,7 +19,8 @@ export function AddLinks() {
               name={`accordion-${index + 1}`}
               defaultChecked
             />
-            <div className="collapse-title font-semibold">
+            <div className="collapse-title font-semibold flex items-center gap-x-2">
+              <WatchLinks name={`links.${index}.href`} />
               <WatchTitle name={`links.${index}.title`} />
             </div>
             <div className="collapse-content grid gap-y-3">
