@@ -13,7 +13,7 @@ export async function createSession(userId: string) {
   (await cookies()).set("session", session, {
     httpOnly: true,
     secure: true,
-    expires: expiresAt,
+    expires: expiresAt
   });
 }
 
@@ -43,7 +43,7 @@ export async function decrypt(
       throw new Error("no session found");
 
     const { payload } = await jwtVerify(session, encodedKey, {
-      algorithms: ["HS256"],
+      algorithms: ["HS256"]
     });
 
     return payload;

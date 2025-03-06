@@ -39,16 +39,14 @@ export function RegisterForm() {
             placeholder="Username"
             pattern={/[A-Za-z][A-Za-z0-9\-]*/}
             minL={6}
-            maxL={24}
-          ></Inputs>
+            maxL={24}></Inputs>
           <Inputs
             name="password"
             label="Password"
             placeholder="Password"
             // pattern={/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/}
             type="password"
-            minL={6}
-          ></Inputs>
+            minL={6}></Inputs>
           <FormOperations submitBtn="Register" type="register" />
         </form>
       </FormProvider>

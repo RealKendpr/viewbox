@@ -18,37 +18,37 @@ export interface PageDocument extends Document {
 const linkSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
+    required: true
   },
   href: {
     type: String,
-    required: true,
+    required: true
   },
   icon: {
     type: String,
-    default: "",
-  },
+    default: ""
+  }
 });
 
 const PageSchema = new Schema<PageDocument>(
   {
     name: {
       type: String,
-      required: true,
+      required: true
     },
     pageIcon: {
       type: String,
-      default: "",
+      default: ""
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: true
     },
-    links: [linkSchema],
+    links: [linkSchema]
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
