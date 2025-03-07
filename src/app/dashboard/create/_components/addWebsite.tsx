@@ -1,12 +1,18 @@
 import { useFieldArray } from "react-hook-form";
-import { Input } from "./input";
 import { WatchUrl, WatchTitle } from "./fieldWatcher";
+import { AccordionContents } from "./accordionContent";
+import { useAccordionContext } from "../_context/accordionContext";
 
 export function AddWebsite() {
   const { fields, append, remove } = useFieldArray({
     name: "websites"
   });
 
+  const { openAccordion, setOpenAccordion } = useAccordionContext();
+
+  const accordionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setOpenAccordion(event.target.checked);
+  };
   return (
     <>
       <ul className="grid gap-y-3 mb-4">
@@ -17,7 +23,8 @@ export function AddWebsite() {
             <input
               type="checkbox"
               name={`accordion-${index + 1}`}
-              defaultChecked
+              checked={openAccordion}
+              onChange={accordionChange}
             />
             <div className="collapse-title font-semibold flex items-center gap-x-2">
               <div className="size-8 rounded overflow-hidden">
@@ -27,28 +34,7 @@ export function AddWebsite() {
             </div>
             <div className="collapse-content grid gap-y-3">
               <div className="grid gap-y-3">
-                <Input
-                  label="Website Name"
-                  name={`websites.${index}.webName` as const}
-                  placeholder="Youtube"
-                  required={true}
-                  index={index}
-                />
-                <Input
-                  label="Website URL"
-                  name={`websites.${index}.webUrl` as const}
-                  placeholder="https://youtube.com/channel"
-                  type="url"
-                  required={true}
-                  index={index}
-                />
-                <Input
-                  label="Website Icon"
-                  name={`websites.${index}.webIcon` as const}
-                  placeholder="https://icons.com/icon"
-                  type="url"
-                  index={index}
-                />
+                <AccordionContents index={index} />
               </div>
               {index >= 1 && (
                 <button

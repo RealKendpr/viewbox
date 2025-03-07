@@ -3,6 +3,7 @@
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { Input } from "./input";
 import { AddWebsite } from "./addWebsite";
+import AccordionContextProvider from "../_context/accordionContext";
 
 interface PageType {
   pageName: string;
@@ -47,7 +48,9 @@ export function CreateForm() {
 
         <fieldset className="fieldset my-2">
           <legend className="fieldset-legend">Websites</legend>
-          <AddWebsite />
+          <AccordionContextProvider>
+            <AddWebsite />
+          </AccordionContextProvider>
         </fieldset>
 
         <button className="btn btn-primary w-full">Create</button>

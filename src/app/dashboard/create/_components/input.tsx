@@ -1,5 +1,7 @@
 import RequiredAlert from "@/_components/requiredAlert";
 import { useFormContext } from "react-hook-form";
+import { useAccordionContext } from "../_context/accordionContext";
+import { useEffect } from "react";
 
 export function Input({
   label,
@@ -29,36 +31,44 @@ export function Input({
         : undefined
   };
 
-  const ErrorAlert = () => {
-    const arrayFieldName = name.substring(name.lastIndexOf(".") + 1);
+  useEffect(() => {
+    console.log(errors.websites && errors.websites);
+  });
 
-    // errors for fields inside the  useFieldArray
-    if (index !== undefined)
-      return (
-        // errors.websites[index] is not an array or is undefined on first page load since there is no errors yet, so, erros.websites needs to be checked as an array before checking which field has an error, else the application will crash.
-        // this is the way I check for field errors because I cant find a documentation/guide on how to retrieve errors from useFieldArray
-        // this also took me hours :/
-        Array.isArray(errors.websites) &&
-        errors.websites[index][arrayFieldName] && (
-          <RequiredAlert
-            errorMsg={`Please enter a valid ${
-              type === "url" ? "URL" : label.toLowerCase()
-            }`}
-          />
-        )
-      );
+  // const ErrorAlert = () => {
+  //   const arrayFieldName = name.substring(name.lastIndexOf(".") + 1);
 
-    // errors for normal fields
-    return (
-      errors[name] && (
-        <RequiredAlert
-          errorMsg={`Please enter a valid ${
-            type === "url" ? "URL" : label.toLowerCase()
-          }`}
-        />
-      )
-    );
-  };
+  //   // errors for fields inside the  useFieldArray
+  //   if (index !== undefined) {
+  //     if (
+  //       Array.isArray(errors.websites) &&
+  //       errors.websites[index][arrayFieldName]
+  //     ) {
+  //       const { setOpenAccordion } = useAccordionContext();
+
+  //       setOpenAccordion(true);
+  //       return (
+  //         // errors.websites[index] is not an array or is undefined on first page load since there is no errors yet, so, erros.websites needs to be checked as an array before checking which field has an error, else the application will crash.
+  //         // this is the way I check for field errors because I cant find a documentation/guide on how to retrieve errors from useFieldArray
+  //         // this also took me hours :/
+  //         <RequiredAlert
+  //           errorMsg={`Please enter a valid ${
+  //             type === "url" ? "URL" : label.toLowerCase()
+  //           }`}
+  //         />
+  //       );
+  //     }
+  //   }
+  //   // errors for normal fields
+  //   else if (errors[name])
+  //     return (
+  //       <RequiredAlert
+  //         errorMsg={`Please enter a valid ${
+  //           type === "url" ? "URL" : label.toLowerCase()
+  //         }`}
+  //       />
+  //     );
+  // };
 
   return (
     <div>
@@ -72,7 +82,7 @@ export function Input({
         placeholder={placeholder}
         {...register(name, validationRule)}
       />
-      <ErrorAlert />
+      {/* <ErrorAlert /> */}
     </div>
   );
 }
