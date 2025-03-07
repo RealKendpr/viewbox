@@ -32,6 +32,7 @@ export function AddLinks() {
                   name={`links.${index}.title` as const}
                   placeholder="Youtube"
                   required={true}
+                  index={index}
                 />
                 <Input
                   label="Link"
@@ -39,12 +40,14 @@ export function AddLinks() {
                   placeholder="https://youtube.com/channel"
                   type="url"
                   required={true}
+                  index={index}
                 />
                 <Input
                   label="Link's Icon"
                   name={`links.${index}.icon` as const}
                   placeholder="https://icons.com/icon"
                   type="url"
+                  index={index}
                 />
               </div>
               {index >= 1 && (
