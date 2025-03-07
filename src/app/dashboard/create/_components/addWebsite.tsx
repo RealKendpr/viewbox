@@ -1,18 +1,12 @@
 import { useFieldArray } from "react-hook-form";
 import { WatchUrl, WatchTitle } from "./fieldWatcher";
 import { AccordionContents } from "./accordionContent";
-import { useAccordionContext } from "../_context/accordionContext";
 
 export function AddWebsite() {
   const { fields, append, remove } = useFieldArray({
     name: "websites"
   });
 
-  const { openAccordion, setOpenAccordion } = useAccordionContext();
-
-  const accordionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setOpenAccordion(event.target.checked);
-  };
   return (
     <>
       <ul className="grid gap-y-3 mb-4">
@@ -23,8 +17,7 @@ export function AddWebsite() {
             <input
               type="checkbox"
               name={`accordion-${index + 1}`}
-              checked={openAccordion}
-              onChange={accordionChange}
+              defaultChecked
             />
             <div className="collapse-title font-semibold flex items-center gap-x-2">
               <div className="size-8 rounded overflow-hidden">
@@ -36,7 +29,7 @@ export function AddWebsite() {
               <div className="grid gap-y-3">
                 <AccordionContents index={index} />
               </div>
-              {index >= 1 && (
+              {fields.length > 1 && (
                 <button
                   className="btn btn-warning btn-sm place-self-end"
                   type="button"
