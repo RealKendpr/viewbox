@@ -2,16 +2,16 @@
 
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { Input } from "./input";
-import { AddLinks } from "./addLinks";
+import { AddWebsite } from "./addWebsite";
 
 interface PageType {
-  name: string;
+  pageName: string;
   pageIcon: string;
-  links: [
+  websites: [
     {
-      title: string;
-      href: string;
-      icon: string;
+      webName: string;
+      webUrl: string;
+      webIcon?: string;
     }
   ];
   createdAt: Date;
@@ -21,7 +21,7 @@ interface PageType {
 export function CreateForm() {
   const methods = useForm<PageType>({
     defaultValues: {
-      links: [{}]
+      websites: [{}]
     }
   });
 
@@ -33,21 +33,21 @@ export function CreateForm() {
         <div className="grid gap-y-4">
           <Input
             label="Page Title"
-            name="page-title"
+            name="pageName"
             placeholder="Awesome Delight"
             required={true}
           />
           <Input
             label="External icon URL"
-            name="page-icon"
+            name="pageIcon"
             placeholder="https://icons.com/icon"
             type="url"
           />
         </div>
 
         <fieldset className="fieldset my-2">
-          <legend className="fieldset-legend">Links</legend>
-          <AddLinks />
+          <legend className="fieldset-legend">Websites</legend>
+          <AddWebsite />
         </fieldset>
 
         <button className="btn btn-primary w-full">Create</button>

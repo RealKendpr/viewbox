@@ -4,7 +4,7 @@ export interface PageDocument extends Document {
   name: string;
   pageIcon: string;
   userId: mongoose.Types.ObjectId;
-  links: [
+  websites: [
     {
       title: string;
       href: string;
@@ -15,7 +15,7 @@ export interface PageDocument extends Document {
   updatedAt: Date;
 }
 
-const linkSchema = new mongoose.Schema({
+const websitesSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true
@@ -45,7 +45,7 @@ const PageSchema = new Schema<PageDocument>(
       ref: "User",
       required: true
     },
-    links: [linkSchema]
+    websites: [websitesSchema]
   },
   {
     timestamps: true

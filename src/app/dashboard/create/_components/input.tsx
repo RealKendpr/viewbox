@@ -35,11 +35,11 @@ export function Input({
     // errors for fields inside the  useFieldArray
     if (index !== undefined)
       return (
-        // errors.links[index] is not an array or is undefined on first page load since there is no errors yet, so, erros.links needs to be checked as an array before checking which field has an error, else the application will crash.
+        // errors.websites[index] is not an array or is undefined on first page load since there is no errors yet, so, erros.websites needs to be checked as an array before checking which field has an error, else the application will crash.
         // this is the way I check for field errors because I cant find a documentation/guide on how to retrieve errors from useFieldArray
         // this also took me hours :/
-        Array.isArray(errors.links) &&
-        errors.links[index][arrayFieldName] && (
+        Array.isArray(errors.websites) &&
+        errors.websites[index][arrayFieldName] && (
           <RequiredAlert
             errorMsg={`Please enter a valid ${
               type === "url" ? "URL" : label.toLowerCase()

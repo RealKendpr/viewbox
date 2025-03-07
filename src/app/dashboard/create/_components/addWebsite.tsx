@@ -1,10 +1,10 @@
 import { useFieldArray } from "react-hook-form";
 import { Input } from "./input";
-import { WatchLinks, WatchTitle } from "./fieldWatcher";
+import { WatchUrl, WatchTitle } from "./fieldWatcher";
 
-export function AddLinks() {
+export function AddWebsite() {
   const { fields, append, remove } = useFieldArray({
-    name: "links"
+    name: "websites"
   });
 
   return (
@@ -21,30 +21,30 @@ export function AddLinks() {
             />
             <div className="collapse-title font-semibold flex items-center gap-x-2">
               <div className="size-8 rounded overflow-hidden">
-                <WatchLinks name={`links.${index}.href`} />
+                <WatchUrl name={`websites.${index}.webUrl`} />
               </div>
-              <WatchTitle name={`links.${index}.title`} />
+              <WatchTitle name={`websites.${index}.webName`} />
             </div>
             <div className="collapse-content grid gap-y-3">
               <div className="grid gap-y-3">
                 <Input
-                  label="Link Title"
-                  name={`links.${index}.title` as const}
+                  label="Website Name"
+                  name={`websites.${index}.webName` as const}
                   placeholder="Youtube"
                   required={true}
                   index={index}
                 />
                 <Input
-                  label="Link"
-                  name={`links.${index}.href` as const}
+                  label="Website URL"
+                  name={`websites.${index}.webUrl` as const}
                   placeholder="https://youtube.com/channel"
                   type="url"
                   required={true}
                   index={index}
                 />
                 <Input
-                  label="Link's Icon"
-                  name={`links.${index}.icon` as const}
+                  label="Website Icon"
+                  name={`websites.${index}.webIcon` as const}
                   placeholder="https://icons.com/icon"
                   type="url"
                   index={index}
@@ -67,12 +67,12 @@ export function AddLinks() {
         className="btn btn-secondary"
         onClick={() =>
           append({
-            linkTitle: "",
-            link: "",
-            linkIcon: ""
+            webName: "",
+            webUrl: "",
+            webIcon: ""
           })
         }>
-        Add Link
+        Add
       </button>
     </>
   );

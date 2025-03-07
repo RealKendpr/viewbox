@@ -2,16 +2,16 @@ import { useWatch } from "react-hook-form";
 import { useEffect, useState } from "react";
 
 export function WatchTitle({ name }: { name: string }) {
-  const pageTitle = useWatch({
+  const websiteName = useWatch({
     name: name
   });
 
-  if (pageTitle) return <>{pageTitle}</>;
+  if (websiteName) return <>{websiteName}</>;
   else return <p>[Empty title]</p>;
 }
 
-export function WatchLinks({ name }: { name: string }) {
-  const linkIcon = useWatch({
+export function WatchUrl({ name }: { name: string }) {
+  const websiteIcon = useWatch({
     name: name
   });
 
@@ -24,7 +24,7 @@ export function WatchLinks({ name }: { name: string }) {
     const timeoutId = setTimeout(() => {
       // added a delay before setting favicon to prevent the image from fetching too often and with an invalid url; debouncing
       try {
-        const domain = new URL(linkIcon).hostname;
+        const domain = new URL(websiteIcon).hostname;
         setFavicon(`https://api.faviconkit.com/${domain}/32`);
       } catch (error) {
         setFavicon("");
@@ -35,11 +35,11 @@ export function WatchLinks({ name }: { name: string }) {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [linkIcon]);
+  }, [websiteIcon]);
 
-  // render the img, only if the linkIcon is a valid regex to make sure there is already a valid domain for the api and already set as the favicon
+  // render the img, only if the websiteIcon is a valid regex to make sure there is already a valid domain for the api and already set as the favicon
   return (
-    urlRegex.test(linkIcon) &&
+    urlRegex.test(websiteIcon) &&
     favicon != "" && <img src={favicon} alt="" width={32} height={32} />
   );
 }
