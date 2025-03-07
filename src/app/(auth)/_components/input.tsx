@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import RequiredAlert from "./requiredAlert";
+import RequiredAlert from "@/_components/requiredAlert";
 
 export function Inputs({
   name,
@@ -8,7 +8,7 @@ export function Inputs({
   placeholder,
   type,
   minL,
-  maxL,
+  maxL
 }: {
   name: string;
   label: string;
@@ -20,22 +20,22 @@ export function Inputs({
 }) {
   const {
     register,
-    formState: { errors },
+    formState: { errors }
   } = useFormContext();
 
   const validationRule = {
     required: true,
     pattern: pattern,
     minLength: minL,
-    maxLength: maxL,
+    maxLength: maxL
   };
 
   return (
     <div>
-      <label className="floating-label" htmlFor={name}>
+      <label className="floating-label mt-4 mb-3" htmlFor={name}>
         <span>{label}</span>
         <input
-          className="input mt-4 mb-3 input-md w-full"
+          className="input  input-md w-full"
           id={name}
           type={type || "text"}
           placeholder={placeholder}

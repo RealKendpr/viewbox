@@ -38,7 +38,7 @@ export function CreateForm() {
             required={true}
           />
           <Input
-            label="Icon External Link"
+            label="External icon URL"
             name="page-icon"
             placeholder="https://icons.com/icon"
             type="url"
