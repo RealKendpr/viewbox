@@ -1,9 +1,8 @@
-import { cookies } from 'next/headers';
-import { NextRequest, NextResponse } from 'next/server';
-import { decrypt } from './_lib/session';
+import { NextRequest, NextResponse } from "next/server";
+import { hasSession } from "./_utils/hasSession";
 
-const protectedRoutes = ['/dashboard'];
-const publicRoutes = ['/login', '/register'];
+const protectedRoutes = ["/dashboard"];
+const publicRoutes = ["/login", "/register"];
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -13,15 +12,14 @@ export default async function middleware(request: NextRequest) {
   );
   const isPublic = publicRoutes.includes(pathname);
 
-  const cookie = (await cookies()).get('session')?.value;
-  const session = await decrypt(cookie, pathname);
+  const session = await hasSession(request);
 
-  if (isProtected && !session?.userId) {
-    return NextResponse.redirect(new URL('/login', request.nextUrl));
+  if (isProtected && !session) {
+    return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
 
-  if (isPublic && session?.userId) {
-    return NextResponse.redirect(new URL('/dashboard', request.nextUrl));
+  if (isPublic && session) {
+    return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
   }
 
   return NextResponse.next();
@@ -29,5 +27,5 @@ export default async function middleware(request: NextRequest) {
 
 export const config = {
   // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
-  matcher: ['/dashboard/:path*', '/login', '/register']
+  matcher: ["/dashboard/:path*", "/login", "/register"]
 };
