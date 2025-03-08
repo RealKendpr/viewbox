@@ -12,7 +12,7 @@ interface PageType {
       webName: string;
       webUrl: string;
       webIcon?: string;
-    }
+    },
   ];
   createdAt: Date;
   updatedAt: Date;
@@ -21,8 +21,8 @@ interface PageType {
 export function CreateForm() {
   const methods = useForm<PageType>({
     defaultValues: {
-      websites: [{}]
-    }
+      websites: [{}],
+    },
   });
 
   const onSubmit: SubmitHandler<PageType> = (data) => console.log(data);
@@ -49,7 +49,6 @@ export function CreateForm() {
           <legend className="fieldset-legend">Websites</legend>
           <AddWebsite />
         </fieldset>
-
         <button className="btn btn-primary w-full">Create</button>
       </form>
     </FormProvider>

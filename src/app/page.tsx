@@ -5,10 +5,9 @@ export default function Home() {
   return (
     <>
       <PublicHeader />
-      <main className="grid place-items-center min-h-screen">
+      <main className="mx-[4%] grid min-h-screen place-items-center">
         <div>
-          {/* <p className="text-2xl">One Page</p> */}
-          <h1 className="text-4xl mb-6 font-medium">
+          <h1 className="mb-6 text-3xl font-medium">
             All your social links in <br />
             <span className="font-bold">one page</span>
           </h1>

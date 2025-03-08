@@ -8,7 +8,7 @@ export default function AuthLayout({
   return (
     <>
       <PublicHeader />
-      <main className="min-h-screen grid place-items-center">
+      <main className="mx-[4%] grid min-h-screen place-items-center">
         <div className="w-full max-w-md">{children}</div>
       </main>
     </>

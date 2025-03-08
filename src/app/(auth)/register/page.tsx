@@ -6,9 +6,7 @@ export default function Register() {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <div>
-        <div>
-          <h1 className="text-3xl font-bold mb-4">Create an Account</h1>
-        </div>
+        <h1 className="mb-4 text-3xl font-bold">Create an Account</h1>
         <RegisterForm />
       </div>
     </Suspense>

@@ -1,9 +1,11 @@
-import { PageTable } from './_components/pageTable';
+import { Suspense } from "react";
+import { PageTable } from "./_components/pageTable";
+import { LoadingSpinner } from "@/_components/loading";
 
 export default function Dashboard() {
   return (
-    <div>
+    <Suspense fallback={<LoadingSpinner />}>
       <PageTable />
-    </div>
+    </Suspense>
   );
 }
