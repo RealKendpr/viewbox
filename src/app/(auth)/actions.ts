@@ -33,7 +33,7 @@ export async function login(prevState: any, formData: UserType) {
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (passwordMatch) {
-      await createSession(user.id);
+      await createSession(user.id, user.username);
 
       redirect("/dashboard");
     }
