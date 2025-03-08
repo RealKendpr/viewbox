@@ -1,8 +1,19 @@
 import Link from "next/link";
 import LogoutBtn from "./logout";
 import { SmallNav } from "./smallNav";
+import { headers } from "next/headers";
+import { getUsername } from "@/_lib/session";
+import { createAvatar } from "@dicebear/core";
+import { initials } from "@dicebear/collection";
 
-export function DashNav() {
+export async function DashNav() {
+  const headerList = headers();
+  const username = await getUsername((await headerList).get("x-pathname")!);
+
+  const avatar = createAvatar(initials, {
+    seed: username as string,
+  });
+
   return (
     <header>
       <div className="navbar bg-base-100 px-[4%] shadow-sm">
@@ -18,7 +29,10 @@ export function DashNav() {
               role="button"
               className="btn btn-ghost btn-circle avatar"
             >
-              <div className="w-10 rounded-full">{/* Image Here */}</div>
+              <div className="w-10 rounded-full">
+                {/* Image Here */}
+                <img src={avatar.toDataUri()} alt="Avatar" />
+              </div>
             </div>
             <ul
               tabIndex={0}
