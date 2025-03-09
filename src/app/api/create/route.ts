@@ -1,0 +1,55 @@
+import { getUserData } from "@/_lib/getUserData";
+import PageModel from "@/_lib/mongodb/models/Page";
+import { connectDB } from "@/_lib/mongodb/mongodb";
+import { PageType } from "@/app/dashboard/create/_components/createForm";
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+
+const websitesSchema = z.object({
+  webName: z.string(),
+  webUrl: z.string().url(),
+  webIcon: z.string().optional(),
+});
+
+const pageSchema = z.object({
+  pageName: z.string(),
+  pageIcon: z.string().optional(),
+  websites: z.array(websitesSchema),
+});
+
+export async function POST(request: NextRequest) {
+  const data: PageType = await request.json();
+
+  if (!data)
+    return NextResponse.json(
+      { error: "empty request not accepted" },
+      { status: 400 },
+    );
+
+  const result = pageSchema.safeParse(data);
+
+  if (result.success) {
+    const { pageName, pageIcon, websites } = result.data;
+
+    try {
+      await connectDB();
+      const page = await new PageModel({
+        pageName: pageName,
+        pageIcon: pageIcon,
+        websites: websites,
+      });
+      await page.save();
+
+      return NextResponse.json(
+        { message: "a new resource was created" },
+        { status: 201 },
+      );
+    } catch (error) {
+      console.error(error);
+      return NextResponse.json(
+        { error: "internal server error" },
+        { status: 500 },
+      );
+    }
+  }
+}

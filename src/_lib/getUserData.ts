@@ -13,7 +13,7 @@ export const getUserData = cache(async (pathname: string) => {
   }
 
   const session = await decrypt(cookie, pathname);
-  const _id = session?.userId;
+  const _id = await session?.userId;
 
   try {
     await connectDB();

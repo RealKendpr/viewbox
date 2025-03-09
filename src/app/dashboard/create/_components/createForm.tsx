@@ -4,7 +4,7 @@ import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { Input } from "./input";
 import { AddWebsite } from "./addWebsite";
 
-interface PageType {
+export interface PageType {
   pageName: string;
   pageIcon: string;
   websites: [
@@ -14,8 +14,6 @@ interface PageType {
       webIcon?: string;
     },
   ];
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export function CreateForm() {
@@ -25,7 +23,23 @@ export function CreateForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<PageType> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<PageType> = async (formData) => {
+    const response = await fetch("/api/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      console.log(result);
+    }
+
+    console.log(result);
+  };
 
   return (
     <FormProvider {...methods}>

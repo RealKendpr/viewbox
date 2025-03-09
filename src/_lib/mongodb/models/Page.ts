@@ -52,6 +52,6 @@ const PageSchema = new Schema<PageDocument>(
   },
 );
 
-const PageSchemaModel =
-  mongoose.models?.Page || model<PageDocument>("PageDocument", PageSchema);
-export default PageSchemaModel;
+const PageModel =
+  mongoose.models?.Page || model<PageDocument>("Page", PageSchema);
+export default PageModel;
