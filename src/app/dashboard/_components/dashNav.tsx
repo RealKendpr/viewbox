@@ -3,17 +3,11 @@ import LogoutBtn from "./logout";
 import { SmallNav } from "./smallNav";
 import { headers } from "next/headers";
 import { getUsername } from "@/_lib/session";
-import { createAvatar } from "@dicebear/core";
-import { initials } from "@dicebear/collection";
+import { UserAvatar } from "./userAvatar";
 
 export async function DashNav() {
   const headerList = headers();
   const username = await getUsername((await headerList).get("x-pathname")!);
-
-  const avatar = createAvatar(initials, {
-    seed: username as string,
-    size: 48,
-  });
 
   return (
     <header>
@@ -31,7 +25,7 @@ export async function DashNav() {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <img src={avatar.toDataUri()} alt="Avatar" />
+                <UserAvatar username={username as string} />
               </div>
             </div>
             <ul
