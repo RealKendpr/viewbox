@@ -38,9 +38,10 @@ export async function decrypt(
   session: string | undefined = "",
   pathname: string,
 ) {
+  const clientPath = pathname.startsWith("/dashboard");
+
   try {
-    if (!session && pathname === "/dashboard")
-      throw new Error("no session found");
+    if (!session && clientPath) throw new Error("no session found");
 
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ["HS256"],
@@ -49,8 +50,7 @@ export async function decrypt(
     return payload;
   } catch (error) {
     // log expected error only when trying visiting /dashboard without a session
-    if (!session && pathname === "/dashboard")
-      console.log((error as Error).message);
+    if (!session && clientPath) console.log((error as Error).message);
   }
 }
 
