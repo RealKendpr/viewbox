@@ -19,6 +19,7 @@ const pageSchema = z.object({
 
 export async function POST(request: NextRequest) {
   const data: PageType = await request.json();
+  const pathname = request.headers.get("X-Pathname");
 
   if (!data)
     return NextResponse.json(
@@ -28,28 +29,29 @@ export async function POST(request: NextRequest) {
 
   const result = pageSchema.safeParse(data);
 
-  if (result.success) {
-    const { pageName, pageIcon, websites } = result.data;
+  if (!result.success) {
+    return NextResponse.json(result.error);
+  }
+  const { pageName, pageIcon, websites } = result.data;
 
-    try {
-      await connectDB();
-      const page = await new PageModel({
-        pageName: pageName,
-        pageIcon: pageIcon,
-        websites: websites,
-      });
-      await page.save();
+  try {
+    await connectDB();
+    const page = await new PageModel({
+      pageName: pageName,
+      pageIcon: pageIcon,
+      websites: websites,
+    });
+    await page.save();
 
-      return NextResponse.json(
-        { message: "a new resource was created" },
-        { status: 201 },
-      );
-    } catch (error) {
-      console.error(error);
-      return NextResponse.json(
-        { error: "internal server error" },
-        { status: 500 },
-      );
-    }
+    return NextResponse.json(
+      { message: "a new resource was created" },
+      { status: 201 },
+    );
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { error: "internal server error" },
+      { status: 500 },
+    );
   }
 }

@@ -1,13 +1,12 @@
 import Link from "next/link";
 import LogoutBtn from "./logout";
 import { SmallNav } from "./smallNav";
-import { headers } from "next/headers";
 import { getUserData } from "@/_lib/getUserData";
 import { UserAvatar } from "./userAvatar";
+import { getPathname } from "../create/_utils/getPathname";
 
 export async function DashNav() {
-  const headerList = headers();
-  const userData = await getUserData((await headerList).get("x-pathname")!);
+  const userData = await getUserData(await getPathname());
 
   return (
     <header>

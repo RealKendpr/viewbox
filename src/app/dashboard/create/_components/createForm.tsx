@@ -3,6 +3,7 @@
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { Input } from "./input";
 import { AddWebsite } from "./addWebsite";
+import { getPathname } from "../_utils/getPathname";
 
 export interface PageType {
   pageName: string;
@@ -28,6 +29,7 @@ export function CreateForm() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-Pathname": await getPathname(),
       },
       body: JSON.stringify(formData),
     });
