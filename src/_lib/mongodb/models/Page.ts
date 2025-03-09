@@ -1,55 +1,55 @@
 import mongoose, { Document, Schema, model } from "mongoose";
 
 export interface PageDocument extends Document {
-  name: string;
+  pageName: string;
   pageIcon: string;
   userId: mongoose.Types.ObjectId;
   websites: [
     {
-      title: string;
-      href: string;
-      icon: string;
-    }
+      webName: string;
+      webUrl: string;
+      webIcon?: string;
+    },
   ];
   createdAt: Date;
   updatedAt: Date;
 }
 
 const websitesSchema = new mongoose.Schema({
-  title: {
+  webName: {
     type: String,
-    required: true
+    required: true,
   },
-  href: {
+  webUrl: {
     type: String,
-    required: true
+    required: true,
   },
-  icon: {
+  webIcon: {
     type: String,
-    default: ""
-  }
+    default: "",
+  },
 });
 
 const PageSchema = new Schema<PageDocument>(
   {
-    name: {
+    pageName: {
       type: String,
-      required: true
+      required: true,
     },
     pageIcon: {
       type: String,
-      default: ""
+      default: "",
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true
+      required: true,
     },
-    websites: [websitesSchema]
+    websites: [websitesSchema],
   },
   {
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
 
 const PageSchemaModel =

@@ -12,6 +12,7 @@ export async function DashNav() {
 
   const avatar = createAvatar(initials, {
     seed: username as string,
+    size: 48,
   });
 
   return (
@@ -30,7 +31,6 @@ export async function DashNav() {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                {/* Image Here */}
                 <img src={avatar.toDataUri()} alt="Avatar" />
               </div>
             </div>
