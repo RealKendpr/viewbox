@@ -5,7 +5,7 @@ import { UserType } from "@/app/(auth)/_components/loginForm";
 import bcrypt from "bcryptjs";
 import { createSession, deleteSession } from "@/_lib/session";
 import { redirect } from "next/navigation";
-import { getUser } from "@/_lib/mongodb/getUser";
+import { connectDB } from "@/_lib/mongodb/mongodb";
 import UserModel from "@/_lib/mongodb/models/User";
 
 const userSchema = z.object({
@@ -14,6 +14,18 @@ const userSchema = z.object({
     .string()
     .min(8, { message: "Password must be at least 8 characters" }),
 });
+
+async function getUser(username: string) {
+  try {
+    await connectDB();
+    const user = await UserModel.findOne({ username });
+
+    return user;
+  } catch (error) {
+    console.error("Failed to fetch user", error);
+    throw new Error("Failed to fetch user.");
+  }
+}
 
 export async function login(prevState: any, formData: UserType) {
   const result = userSchema.safeParse(formData);
@@ -33,7 +45,7 @@ export async function login(prevState: any, formData: UserType) {
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (passwordMatch) {
-      await createSession(user.id, user.username);
+      await createSession(user.id);
 
       redirect("/dashboard");
     }

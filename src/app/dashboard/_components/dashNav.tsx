@@ -2,12 +2,12 @@ import Link from "next/link";
 import LogoutBtn from "./logout";
 import { SmallNav } from "./smallNav";
 import { headers } from "next/headers";
-import { getUsername } from "@/_lib/session";
+import { getUserData } from "@/_lib/getUserData";
 import { UserAvatar } from "./userAvatar";
 
 export async function DashNav() {
   const headerList = headers();
-  const username = await getUsername((await headerList).get("x-pathname")!);
+  const userData = await getUserData((await headerList).get("x-pathname")!);
 
   return (
     <header>
@@ -25,7 +25,7 @@ export async function DashNav() {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <UserAvatar username={username as string} />
+                <UserAvatar username={userData.username} />
               </div>
             </div>
             <ul

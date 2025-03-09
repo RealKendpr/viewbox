@@ -5,10 +5,10 @@ import { cookies } from "next/headers";
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
 
-export async function createSession(userId: string, username: string) {
+export async function createSession(userId: string) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-  const session = await encrypt({ userId, username, expiresAt });
+  const session = await encrypt({ userId, expiresAt });
 
   (await cookies()).set("session", session, {
     httpOnly: true,
@@ -23,7 +23,6 @@ export async function deleteSession() {
 
 type SessionPayload = {
   userId: string;
-  username: string;
   expiresAt: Date;
 };
 
@@ -55,23 +54,12 @@ export async function decrypt(
   }
 }
 
-import { NextRequest } from "next/server";
-
-export async function hasSession(request: NextRequest) {
+// I no longer remember why I decided to separate this logic, but this can also be called as verifySession; and can check if the user has a valid session
+export async function hasSession(pathname: string) {
   const cookie = (await cookies()).get("session")?.value;
 
-  const session = await decrypt(cookie, request.nextUrl.pathname);
+  const session = await decrypt(cookie, pathname);
 
   if (session?.userId) return true;
   else return false;
-}
-
-export async function getUsername(pathname: string) {
-  const cookie = (await cookies()).get("session")?.value;
-
-  if (!cookie) {
-    return null;
-  }
-  const sessionData = await decrypt(cookie, pathname);
-  return sessionData?.username;
 }
