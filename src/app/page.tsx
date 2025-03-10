@@ -3,9 +3,9 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <>
+    <div className="grid min-h-screen grid-rows-[auto_1fr]">
       <PublicHeader />
-      <main className="mx-[4%] grid min-h-screen place-items-center">
+      <main className="mx-[4%] grid place-items-center">
         <div>
           <h1 className="mb-6 text-3xl font-medium">
             All your social links in <br />
@@ -21,6 +21,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 }
