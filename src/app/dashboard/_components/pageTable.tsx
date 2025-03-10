@@ -28,8 +28,8 @@ export async function PageTable() {
           {pagesResult &&
             pagesResult.map((i, index) => (
               <tr key={index}>
-                <th>
-                  <div>
+                <th className="hidden text-end md:table-cell">
+                  <div className="inline-block overflow-hidden rounded-xl">
                     {i.pageIcon && (
                       <Image
                         className="size-[64px] object-cover"
