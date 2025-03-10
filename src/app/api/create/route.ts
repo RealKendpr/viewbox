@@ -18,13 +18,21 @@ const pageSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
-  const data: PageType = await request.json();
   const pathname = request.headers.get("X-Pathname");
+  const data: PageType = await request.json();
 
-  if (!data)
+  if (!data || pathname == null)
     return NextResponse.json(
       { error: "empty request not accepted" },
       { status: 400 },
+    );
+
+  const userId = await getUserData(pathname);
+
+  if (!userId)
+    return NextResponse.json(
+      { error: "request is unauthenticated" },
+      { status: 401 },
     );
 
   const result = pageSchema.safeParse(data);
@@ -32,6 +40,7 @@ export async function POST(request: NextRequest) {
   if (!result.success) {
     return NextResponse.json(result.error);
   }
+
   const { pageName, pageIcon, websites } = result.data;
 
   try {
@@ -39,6 +48,7 @@ export async function POST(request: NextRequest) {
     const page = await new PageModel({
       pageName: pageName,
       pageIcon: pageIcon,
+      userId: userId.id,
       websites: websites,
     });
     await page.save();

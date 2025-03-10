@@ -51,6 +51,7 @@ export async function decrypt(
   } catch (error) {
     // log expected error only when trying visiting /dashboard without a session
     if (!session && clientPath) console.log((error as Error).message);
+    return null;
   }
 }
 

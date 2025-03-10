@@ -65,24 +65,30 @@ export async function register(formData: UserType) {
 
   if (result.success) {
     const { username, password } = result.data;
-    const userFound = await getUser(username);
 
-    if (!userFound) {
-      const hashPassword = await bcrypt.hash(password, 12);
-      const user = new UserModel({
-        username: username,
-        password: hashPassword,
-      });
-      await user.save();
+    try {
+      const userFound = await getUser(username);
+
+      if (!userFound) {
+        const hashPassword = await bcrypt.hash(password, 12);
+
+        const user = new UserModel({
+          username: username,
+          password: hashPassword,
+        });
+        await user.save();
+        return {
+          status: "success",
+        };
+      }
       return {
-        status: "success",
+        errors: {
+          username: "Username already exist",
+        },
       };
+    } catch (error) {
+      return null;
     }
-    return {
-      errors: {
-        username: "Username already exist",
-      },
-    };
   } else
     return {
       errors: result.error.flatten().fieldErrors,
