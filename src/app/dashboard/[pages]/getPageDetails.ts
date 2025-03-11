@@ -19,7 +19,10 @@ export async function getPagesDetails(slug: string) {
       userId,
     });
 
+    if (!page) return null;
+
     const pageDTO = {
+      _id: page?._id as string,
       pageName: page?.pageName,
       pageIcon: page?.pageIcon,
       createdAt: page?.createdAt,

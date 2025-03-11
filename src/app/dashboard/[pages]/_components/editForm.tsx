@@ -5,7 +5,8 @@ import { InputSet } from "../../_components/inputSet";
 import { EditPageType } from "@/types/PageTypes";
 
 export function EditForm({ pageDetails }: { pageDetails: string | null }) {
-  const pageDetailsResult = pageDetails && JSON.parse(pageDetails);
+  const pageDetailsResult: EditPageType =
+    pageDetails && JSON.parse(pageDetails);
 
   const methods = useForm<EditPageType>({
     defaultValues: {

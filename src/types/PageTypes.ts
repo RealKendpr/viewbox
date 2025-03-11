@@ -30,5 +30,6 @@ export interface PagePreviewType {
 }
 
 export interface EditPageType extends FormPageType {
+  _id: string;
   createdAt: Date;
 }
