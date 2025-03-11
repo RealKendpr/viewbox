@@ -1,4 +1,4 @@
-import UserModel from "./mongodb/models/User";
+import UserModel from "./mongodb/models/UserModel";
 import { connectDB } from "./mongodb/mongodb";
 import { cache } from "react";
 import { cookies } from "next/headers";

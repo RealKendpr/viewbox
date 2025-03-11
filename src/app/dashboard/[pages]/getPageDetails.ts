@@ -3,7 +3,7 @@
 import { getUserData } from "@/_lib/getUserData";
 import { getPathname } from "../create/_utils/getPathname";
 import { connectDB } from "@/_lib/mongodb/mongodb";
-import PageModel, { PageDocument } from "@/_lib/mongodb/models/Page";
+import PageModel, { PageDocument } from "@/_lib/mongodb/models/PageModel";
 
 export async function getPagesDetails(slug: string) {
   const userData = await getUserData(await getPathname());

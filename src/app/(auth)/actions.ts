@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import { createSession, deleteSession } from "@/_lib/session";
 import { redirect } from "next/navigation";
 import { connectDB } from "@/_lib/mongodb/mongodb";
-import UserModel from "@/_lib/mongodb/models/User";
+import UserModel from "@/_lib/mongodb/models/UserModel";
 
 const userSchema = z.object({
   username: z.string().min(6),

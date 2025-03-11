@@ -1,17 +1,17 @@
 import mongoose, { Document, Schema, model } from "mongoose";
 
+export interface WebsiteType {
+  webName: string;
+  webUrl: string;
+  webIcon?: string;
+}
+
 export interface PageDocument extends Document {
   pageName: string;
   pageIcon: string;
   slug: string;
   userId: mongoose.Types.ObjectId;
-  websites: [
-    {
-      webName: string;
-      webUrl: string;
-      webIcon?: string;
-    },
-  ];
+  websites: WebsiteType[];
   createdAt: Date;
   updatedAt: Date;
 }

@@ -1,5 +1,5 @@
 import { getUserData } from "@/_lib/getUserData";
-import PageModel from "@/_lib/mongodb/models/Page";
+import PageModel from "@/_lib/mongodb/models/PageModel";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import { PageType } from "@/app/dashboard/create/_components/createForm";
 import { NextRequest, NextResponse } from "next/server";
