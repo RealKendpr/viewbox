@@ -18,7 +18,6 @@ export default async function EditPage({
 
   return (
     <div>
-      {pages}
       <EditForm pageDetails={pageDetailsResult} />
     </div>
   );
