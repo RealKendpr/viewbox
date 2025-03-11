@@ -3,6 +3,7 @@ import mongoose, { Document, Schema, model } from "mongoose";
 export interface PageDocument extends Document {
   pageName: string;
   pageIcon: string;
+  slug: string;
   userId: mongoose.Types.ObjectId;
   websites: [
     {
@@ -37,6 +38,10 @@ const PageSchema = new Schema<PageDocument>(
       required: true,
     },
     pageIcon: {
+      type: String,
+      default: "",
+    },
+    slug: {
       type: String,
       default: "",
     },

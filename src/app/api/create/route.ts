@@ -42,15 +42,18 @@ export async function POST(request: NextRequest) {
   }
 
   const { pageName, pageIcon, websites } = result.data;
+  const getSlug = pageName.trim().replace(/\s+/g, "-").toLowerCase();
 
   try {
     await connectDB();
     const page = await new PageModel({
       pageName: pageName,
       pageIcon: pageIcon,
+      slug: getSlug,
       userId: userId.id,
       websites: websites,
     });
+
     await page.save();
 
     return NextResponse.json(
