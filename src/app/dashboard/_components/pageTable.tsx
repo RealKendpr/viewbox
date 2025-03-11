@@ -5,6 +5,7 @@ import { getPages } from "../getPages";
 interface PagesResultType {
   pageName: string;
   pageIcon: string;
+  slug: string;
   createdAt: Date;
 }
 
@@ -47,7 +48,10 @@ export async function PageTable() {
                 </th>
                 <th>{createdDate(i.createdAt)}</th>
                 <th className="">
-                  <Link className="btn-ghost btn btn-square" href={""}>
+                  <Link
+                    className="btn-ghost btn btn-square"
+                    href={`/dashboard/${i.slug}`}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width={24}

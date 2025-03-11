@@ -22,6 +22,7 @@ export async function getPages() {
       const items = {
         pageName: i.pageName,
         pageIcon: i.pageIcon,
+        slug: i.slug,
         createdAt: i.createdAt,
       };
 
