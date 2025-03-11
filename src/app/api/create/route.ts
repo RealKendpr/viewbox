@@ -3,19 +3,7 @@ import PageModel from "@/_lib/mongodb/models/PageModel";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import { FormPageType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-
-const websitesSchema = z.object({
-  webName: z.string(),
-  webUrl: z.string().url(),
-  webIcon: z.string().optional(),
-});
-
-const pageSchema = z.object({
-  pageName: z.string(),
-  pageIcon: z.string().optional(),
-  websites: z.array(websitesSchema),
-});
+import { pageSchema } from "../_schema/pageSchema";
 
 export async function POST(request: NextRequest) {
   const pathname = request.headers.get("X-Pathname");
