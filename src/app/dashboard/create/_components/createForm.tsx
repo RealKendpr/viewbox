@@ -1,9 +1,8 @@
 "use client";
 
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
-import { Input } from "./input";
-import { AddWebsite } from "./addWebsite";
 import { getPathname } from "../_utils/getPathname";
+import { InputSet } from "../../_components/inputSet";
 
 export interface PageType {
   pageName: string;
@@ -46,25 +45,7 @@ export function CreateForm() {
   return (
     <FormProvider {...methods}>
       <form className="max-w-md" onSubmit={methods.handleSubmit(onSubmit)}>
-        <div className="grid gap-y-4">
-          <Input
-            label="Page Title"
-            name="pageName"
-            placeholder="Awesome Delight"
-            required={true}
-          />
-          <Input
-            label="External icon URL"
-            name="pageIcon"
-            placeholder="https://icons.com/icon"
-            type="url"
-          />
-        </div>
-
-        <fieldset className="fieldset my-2">
-          <legend className="fieldset-legend">Websites</legend>
-          <AddWebsite />
-        </fieldset>
+        <InputSet />
         <button className="btn btn-primary w-full">Create</button>
       </form>
     </FormProvider>
