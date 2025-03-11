@@ -3,17 +3,18 @@
 import { getUserData } from "@/_lib/getUserData";
 import { getPathname } from "../create/_utils/getPathname";
 import { connectDB } from "@/_lib/mongodb/mongodb";
-import PageModel, { PageDocument } from "@/_lib/mongodb/models/PageModel";
+import PageModel from "@/_lib/mongodb/models/PageModel";
+import { PageDocumentType } from "@/types/PageTypes";
 
 export async function getPagesDetails(slug: string) {
   const userData = await getUserData(await getPathname());
-  const userId = await userData.id;
+  const userId = userData?._id;
 
   if (!userData) return null;
 
   try {
     await connectDB();
-    const page: PageDocument | null = await PageModel.findOne({
+    const page: PageDocumentType | null = await PageModel.findOne({
       slug,
       userId,
     });

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
 export interface WebsiteType {
   webName: string;
@@ -16,7 +16,7 @@ export interface PageDocumentType extends Document {
   updatedAt: Date;
 }
 
-export interface PageType {
+export interface FormPageType {
   pageName: string;
   pageIcon: string;
   websites: WebsiteType[];
@@ -29,6 +29,6 @@ export interface PagePreviewType {
   createdAt: Date;
 }
 
-export interface EditPageType extends PageType {
+export interface EditPageType extends FormPageType {
   createdAt: Date;
 }

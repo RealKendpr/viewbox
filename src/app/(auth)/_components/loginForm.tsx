@@ -5,18 +5,16 @@ import { Inputs } from "./input";
 import { startTransition, useActionState } from "react";
 import { login } from "@/app/(auth)/actions";
 import FormOperations from "./formOperations";
-
-export interface UserType {
-  username: string;
-  password: string;
-}
+import { FormUserType } from "@/types/UserTypes";
 
 export function LoginForm() {
-  const methods = useForm<UserType>();
+  const methods = useForm<FormUserType>();
 
   const [state, loginAction] = useActionState(login, undefined);
 
-  const onSubmit: SubmitHandler<UserType> = async (formData: UserType) => {
+  const onSubmit: SubmitHandler<FormUserType> = async (
+    formData: FormUserType,
+  ) => {
     startTransition(() => {
       loginAction(formData);
     });

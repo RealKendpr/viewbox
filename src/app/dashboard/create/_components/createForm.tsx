@@ -3,27 +3,16 @@
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { getPathname } from "../_utils/getPathname";
 import { InputSet } from "../../_components/inputSet";
-
-export interface PageType {
-  pageName: string;
-  pageIcon: string;
-  websites: [
-    {
-      webName: string;
-      webUrl: string;
-      webIcon?: string;
-    },
-  ];
-}
+import { FormPageType } from "@/types/PageTypes";
 
 export function CreateForm() {
-  const methods = useForm<PageType>({
+  const methods = useForm<FormPageType>({
     defaultValues: {
       websites: [{}],
     },
   });
 
-  const onSubmit: SubmitHandler<PageType> = async (formData) => {
+  const onSubmit: SubmitHandler<FormPageType> = async (formData) => {
     const response = await fetch("/api/create", {
       method: "POST",
       headers: {

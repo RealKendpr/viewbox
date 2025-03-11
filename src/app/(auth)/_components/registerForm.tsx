@@ -5,21 +5,19 @@ import { register } from "@/app/(auth)/actions";
 import { useState } from "react";
 import Link from "next/link";
 import FormOperations from "./formOperations";
-
-export interface UserType {
-  username: string;
-  password: string;
-}
+import { FormUserType } from "@/types/UserTypes";
 
 export function RegisterForm() {
-  const methods = useForm<UserType>();
+  const methods = useForm<FormUserType>();
 
   const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
 
-  const onSubmit: SubmitHandler<UserType> = async (formData: UserType) => {
+  const onSubmit: SubmitHandler<FormUserType> = async (
+    formData: FormUserType,
+  ) => {
     const registerAction = await register(formData);
 
-    if (registerAction.status === "success") {
+    if (registerAction?.status === "success") {
       setShowConfirmation(true);
       methods.reset();
     }
@@ -39,14 +37,16 @@ export function RegisterForm() {
             placeholder="Username"
             pattern={/[A-Za-z][A-Za-z0-9\-]*/}
             minL={6}
-            maxL={24}></Inputs>
+            maxL={24}
+          ></Inputs>
           <Inputs
             name="password"
             label="Password"
             placeholder="Password"
             // pattern={/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/}
             type="password"
-            minL={6}></Inputs>
+            minL={6}
+          ></Inputs>
           <FormOperations submitBtn="Register" type="register" />
         </form>
       </FormProvider>

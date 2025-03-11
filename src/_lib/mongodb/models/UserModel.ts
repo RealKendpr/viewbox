@@ -1,14 +1,7 @@
+import { UserDocumentType } from "@/types/UserTypes";
 import mongoose, { Schema, model } from "mongoose";
 
-export interface UserDocument {
-  _id: string;
-  username: string;
-  password: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const UserSchema = new Schema<UserDocument>(
+const UserSchema = new Schema<UserDocumentType>(
   {
     username: {
       type: String,
@@ -23,9 +16,9 @@ const UserSchema = new Schema<UserDocument>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const UserModel =
-  mongoose.models?.User || model<UserDocument>("User", UserSchema);
+  mongoose.models?.User || model<UserDocumentType>("User", UserSchema);
 export default UserModel;

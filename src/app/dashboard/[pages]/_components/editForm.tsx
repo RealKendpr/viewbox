@@ -2,19 +2,12 @@
 
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { InputSet } from "../../_components/inputSet";
-import { WebsiteType } from "@/_lib/mongodb/models/PageModel";
-
-interface PageDetailsType {
-  pageName: string | undefined;
-  pageIcon: string | undefined;
-  createdAt: Date | undefined;
-  websites: WebsiteType[] | undefined;
-}
+import { EditPageType } from "@/types/PageTypes";
 
 export function EditForm({ pageDetails }: { pageDetails: string | null }) {
   const pageDetailsResult = pageDetails && JSON.parse(pageDetails);
 
-  const methods = useForm<PageDetailsType>({
+  const methods = useForm<EditPageType>({
     defaultValues: {
       pageName: pageDetailsResult?.pageName,
       pageIcon: pageDetailsResult?.pageIcon,
@@ -22,7 +15,7 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
     },
   });
 
-  const onSubmit: SubmitHandler<PageDetailsType> = () => {};
+  const onSubmit: SubmitHandler<EditPageType> = () => {};
 
   return (
     <FormProvider {...methods}>

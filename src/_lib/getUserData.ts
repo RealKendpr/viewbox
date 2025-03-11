@@ -1,8 +1,11 @@
+"use server";
+
 import UserModel from "./mongodb/models/UserModel";
 import { connectDB } from "./mongodb/mongodb";
 import { cache } from "react";
 import { cookies } from "next/headers";
 import { decrypt } from "./session";
+import { UserDocumentType } from "@/types/UserTypes";
 
 // this is to get user's data such as username to for the avatar, and also to get the user's _id for when they create pages
 export const getUserData = cache(async (pathname: string) => {
@@ -17,7 +20,7 @@ export const getUserData = cache(async (pathname: string) => {
 
   try {
     await connectDB();
-    const userData = await UserModel.findOne({ _id });
+    const userData: UserDocumentType | null = await UserModel.findOne({ _id });
 
     return userData;
   } catch (error) {

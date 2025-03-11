@@ -7,6 +7,7 @@ import { getPathname } from "../create/_utils/getPathname";
 
 export async function DashNav() {
   const userData = await getUserData(await getPathname());
+  const username = userData?.username || "";
 
   return (
     <header>
@@ -24,7 +25,7 @@ export async function DashNav() {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <UserAvatar username={userData.username} />
+                <UserAvatar username={username} />
               </div>
             </div>
             <ul

@@ -1,17 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getPagesInfo } from "../getPagesInfo";
-
-interface PagesResultType {
-  pageName: string;
-  pageIcon: string;
-  slug: string;
-  createdAt: Date;
-}
+import { PagePreviewType } from "@/types/PageTypes";
 
 export async function PageTable() {
   const pages: any = await getPagesInfo();
-  const pagesResult: PagesResultType[] = await pages;
+  const pagesResult: PagePreviewType[] = await pages;
 
   const createdDate = (date: Date) => new Date(date).toLocaleDateString();
 

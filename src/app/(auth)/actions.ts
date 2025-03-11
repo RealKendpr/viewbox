@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { UserType } from "@/app/(auth)/_components/loginForm";
+import { FormUserType } from "@/types/UserTypes";
 import bcrypt from "bcryptjs";
 import { createSession, deleteSession } from "@/_lib/session";
 import { redirect } from "next/navigation";
@@ -27,7 +27,7 @@ async function getUser(username: string) {
   }
 }
 
-export async function login(prevState: any, formData: UserType) {
+export async function login(prevState: any, formData: FormUserType) {
   const result = userSchema.safeParse(formData);
 
   if (result.success) {
@@ -60,7 +60,7 @@ export async function logout() {
   redirect("/login");
 }
 
-export async function register(formData: UserType) {
+export async function register(formData: FormUserType) {
   const result = userSchema.safeParse(formData);
 
   if (result.success) {

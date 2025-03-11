@@ -1,20 +1,5 @@
-import mongoose, { Document, Schema, model } from "mongoose";
-
-export interface WebsiteType {
-  webName: string;
-  webUrl: string;
-  webIcon?: string;
-}
-
-export interface PageDocument extends Document {
-  pageName: string;
-  pageIcon: string;
-  slug: string;
-  userId: mongoose.Types.ObjectId;
-  websites: WebsiteType[];
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { PageDocumentType } from "@/types/PageTypes";
+import mongoose, { Schema, model } from "mongoose";
 
 const websitesSchema = new mongoose.Schema({
   webName: {
@@ -31,7 +16,7 @@ const websitesSchema = new mongoose.Schema({
   },
 });
 
-const PageSchema = new Schema<PageDocument>(
+const PageSchema = new Schema<PageDocumentType>(
   {
     pageName: {
       type: String,
@@ -58,5 +43,5 @@ const PageSchema = new Schema<PageDocument>(
 );
 
 const PageModel =
-  mongoose.models?.Page || model<PageDocument>("Page", PageSchema);
+  mongoose.models?.Page || model<PageDocumentType>("Page", PageSchema);
 export default PageModel;

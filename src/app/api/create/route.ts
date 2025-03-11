@@ -1,7 +1,7 @@
 import { getUserData } from "@/_lib/getUserData";
 import PageModel from "@/_lib/mongodb/models/PageModel";
 import { connectDB } from "@/_lib/mongodb/mongodb";
-import { PageType } from "@/app/dashboard/create/_components/createForm";
+import { FormPageType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -19,7 +19,7 @@ const pageSchema = z.object({
 
 export async function POST(request: NextRequest) {
   const pathname = request.headers.get("X-Pathname");
-  const data: PageType = await request.json();
+  const data: FormPageType = await request.json();
 
   if (!data || pathname == null)
     return NextResponse.json(
@@ -27,7 +27,8 @@ export async function POST(request: NextRequest) {
       { status: 400 },
     );
 
-  const userId = await getUserData(pathname);
+  const userData = await getUserData(pathname);
+  const userId = userData?._id;
 
   if (!userId)
     return NextResponse.json(
@@ -50,7 +51,7 @@ export async function POST(request: NextRequest) {
       pageName: pageName,
       pageIcon: pageIcon,
       slug: getSlug,
-      userId: userId.id,
+      userId: userId,
       websites: websites,
     });
 
