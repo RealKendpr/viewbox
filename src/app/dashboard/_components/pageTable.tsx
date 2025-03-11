@@ -10,7 +10,7 @@ export async function PageTable() {
   const createdDate = (date: Date) => new Date(date).toLocaleDateString();
 
   return (
-    <div className="overflow-x-auto border shadow-md">
+    <div className="overflow-x-auto shadow-md">
       <table className="table">
         <thead>
           <tr>
