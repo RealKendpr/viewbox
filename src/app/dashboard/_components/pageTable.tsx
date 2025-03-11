@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import { getPages } from "../getPages";
 
@@ -29,7 +30,7 @@ export async function PageTable() {
             pagesResult.map((i, index) => (
               <tr key={index}>
                 <th className="hidden text-end md:table-cell">
-                  <div className="inline-block overflow-hidden rounded-xl">
+                  <div className="inline-block h-[64px] w-[64px] overflow-hidden rounded-xl">
                     {i.pageIcon && (
                       <Image
                         className="size-[64px] object-cover"
@@ -45,22 +46,20 @@ export async function PageTable() {
                   <div>{i.pageName}</div>
                 </th>
                 <th>{createdDate(i.createdAt)}</th>
-                <th>
-                  <button className="btn-ghost btn btn-xs">
+                <th className="">
+                  <Link className="btn-ghost btn btn-square" href={""}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width={32}
-                      height={32}
-                      viewBox="0 0 32 32"
+                      width={24}
+                      height={24}
+                      viewBox="0 0 24 24"
                     >
                       <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        d="M8 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2a1 1 0 0 0 0 2Z"
+                        fill="currentColor"
+                        d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"
                       ></path>
                     </svg>
-                  </button>
+                  </Link>
                 </th>
               </tr>
             ))}
