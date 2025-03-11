@@ -5,7 +5,7 @@ import { getPathname } from "./create/_utils/getPathname";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import PageModel, { PageDocument } from "@/_lib/mongodb/models/Page";
 
-export async function getPages() {
+export async function getPagesInfo() {
   const userData = await getUserData(await getPathname());
   const userId = await userData.id;
 
@@ -31,6 +31,7 @@ export async function getPages() {
 
     return pagesDTO;
   } catch (error) {
-    return error;
+    console.log(error);
+    return null;
   }
 }
