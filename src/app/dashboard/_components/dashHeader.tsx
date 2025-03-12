@@ -5,7 +5,7 @@ import { getUserData } from "@/_lib/getUserData";
 import { UserAvatar } from "./userAvatar";
 import { getPathname } from "../create/_utils/getPathname";
 
-export async function DashNav() {
+export async function DashHeader() {
   const userData = await getUserData(await getPathname());
   const username = userData?.username || "";
 
@@ -13,8 +13,8 @@ export async function DashNav() {
     <header>
       <div className="navbar bg-base-100 px-[4%] shadow-sm">
         <div className="flex-1">
-          <Link className="btn-link text-xl" href="/">
-            OnePage
+          <Link className="text-accent text-2xl font-bold" href="/">
+            One Page
           </Link>
         </div>
         <div className="flex gap-2">

@@ -1,4 +1,4 @@
-import { DashNav } from "./_components/dashNav";
+import { DashHeader } from "./_components/dashHeader";
 
 export default function DashboardLayout({
   children,
@@ -7,7 +7,7 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <DashNav />
+      <DashHeader />
       <main className="mb-28 px-[4%]">{children}</main>
     </>
   );
