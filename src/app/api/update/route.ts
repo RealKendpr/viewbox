@@ -47,7 +47,7 @@ export async function PUT(request: NextRequest) {
     if (!findPage)
       return NextResponse.json(
         {
-          message: `client does not have access rights to the content ${pageId} , ${userId}`,
+          message: "client does not have access rights to the content",
         },
         { status: 403 },
       );
