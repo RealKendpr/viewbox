@@ -38,7 +38,6 @@ export async function PUT(request: NextRequest) {
 
     // must check first if there is any page document that has the user's id,
     // and that have the requested page id
-
     const findPage: PageDocumentType | null = await PageModel.findOne({
       _id: pageId,
       userId: userId,
@@ -60,8 +59,8 @@ export async function PUT(request: NextRequest) {
     await updatedPage.save();
 
     return NextResponse.json(
-      { message: "a new resource was created" },
-      { status: 201 },
+      { message: "selected resource updated" },
+      { status: 200 },
     );
   } catch (error) {
     console.error(error);
