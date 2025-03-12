@@ -32,13 +32,18 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
     }
     setIsSame(false);
 
+    const extendedKeys = {
+      _id: pageDetailsResult._id,
+      createdAt: pageDetailsResult.createdAt,
+    };
+
     const response = await fetch("/api/update", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "X-Pathname": await getPathname(),
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({ ...formData, ...extendedKeys }),
     });
 
     const result = await response.json();
