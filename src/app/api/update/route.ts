@@ -40,18 +40,20 @@ export async function PUT(request: NextRequest) {
     // and that have the requested page id
 
     const findPage: PageDocumentType | null = await PageModel.findOne({
-      pageId,
-      userId,
+      _id: pageId,
+      userId: userId,
     });
 
     if (!findPage)
       return NextResponse.json(
-        { message: "client does not have access rights to the content" },
+        {
+          message: `client does not have access rights to the content ${pageId} , ${userId}`,
+        },
         { status: 403 },
       );
 
     const updatedPage = await PageModel.findOneAndUpdate(
-      { pageId },
+      { _id: pageId },
       result.data,
     );
 
