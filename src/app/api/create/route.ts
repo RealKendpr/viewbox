@@ -35,6 +35,18 @@ export async function POST(request: NextRequest) {
 
   try {
     await connectDB();
+
+    const findDuplicates = await PageModel.findOne({ pageName: pageName });
+
+    // must check if theres a duplicate page name to avoid slug/url problem later
+    // this check is global; will check same page name with other users as well
+    if (findDuplicates) {
+      return NextResponse.json(
+        { error: "page with the same name alreadt exist" },
+        { status: 400 },
+      );
+    }
+
     const page = await new PageModel({
       pageName: pageName,
       pageIcon: pageIcon,
