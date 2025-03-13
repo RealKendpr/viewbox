@@ -6,7 +6,7 @@ import PageModel from "@/_lib/mongodb/models/PageModel";
 
 const checks = async (request: NextRequest) => {
   const pathname = request.headers.get("X-Pathname");
-  const pageId: { _id: string } = await request.json();
+  const pageId = await request.text();
 
   if (!pageId || pathname == null)
     return NextResponse.json(
@@ -24,7 +24,7 @@ const checks = async (request: NextRequest) => {
     );
 
   const requestObj = {
-    ...pageId,
+    _id: pageId,
     userId: userId,
   };
 
@@ -47,7 +47,8 @@ export async function DELETE(request: NextRequest) {
       userId: passedChecks.userId,
     });
 
-    findPage?.save();
+    findPage;
+
     return NextResponse.json(
       { message: "selected resource updated" },
       { status: 200 },

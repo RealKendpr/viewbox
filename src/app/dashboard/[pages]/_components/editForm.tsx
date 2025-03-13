@@ -5,8 +5,13 @@ import { InputSet } from "../../_components/inputSet";
 import { EditPageType, FormPageType } from "@/types/PageTypes";
 import { useState } from "react";
 import { getPathname } from "../../create/_utils/getPathname";
+import { deletePage } from "../deletePage";
+import { useRouter } from "next/navigation";
 
 export function EditForm({ pageDetails }: { pageDetails: string | null }) {
+  const router = useRouter();
+  const [isSame, setIsSame] = useState<boolean>(false);
+
   const pageDetailsResult: EditPageType =
     pageDetails && JSON.parse(pageDetails);
 
@@ -16,11 +21,14 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
     websites: pageDetailsResult?.websites,
   };
 
+  const extendedKeys = {
+    _id: pageDetailsResult._id,
+    createdAt: pageDetailsResult.createdAt,
+  };
+
   const methods = useForm<FormPageType>({
     defaultValues: formDefaultValues,
   });
-
-  const [isSame, setIsSame] = useState<boolean>(false);
 
   const onSubmit: SubmitHandler<FormPageType> = async (formData) => {
     // check if submitted data and current value is the same,
@@ -31,11 +39,6 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
       return null;
     }
     setIsSame(false);
-
-    const extendedKeys = {
-      _id: pageDetailsResult._id,
-      createdAt: pageDetailsResult.createdAt,
-    };
 
     const response = await fetch("/api/update", {
       method: "PUT",
@@ -60,6 +63,12 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
       <form className="max-w-md" onSubmit={methods.handleSubmit(onSubmit)}>
         <InputSet />
         <button className="btn btn-primary w-full">Update</button>
+        <button
+          className="btn btn-warning mt-[8.25px] w-full"
+          onClick={() => deletePage(extendedKeys._id, router)}
+        >
+          Delete Page
+        </button>
       </form>
     </FormProvider>
   );
