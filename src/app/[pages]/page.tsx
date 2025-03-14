@@ -1,6 +1,20 @@
 import { notFound } from "next/navigation";
 import { getPage } from "./getPage";
-import Link from "next/link";
+import { PageDetails } from "./_components/pageDetails";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ pages: string }>;
+}): Promise<Metadata> {
+  const { pages } = await params;
+  const pageResult = await getPage(pages);
+
+  return {
+    title: pageResult?.pageName,
+  };
+}
 
 export default async function Pages({
   params,
@@ -8,20 +22,15 @@ export default async function Pages({
   params: Promise<{ pages: string }>;
 }) {
   const { pages } = await params;
-
   const pageResult = await getPage(pages);
-  if (!pageResult) notFound();
+
+  if (!pageResult) return notFound();
 
   return (
-    <div>
-      <div>{pageResult.pageName}</div>
-      <ul>
-        {pageResult.websites.map((i) => (
-          <li>
-            <Link href={i.webUrl}>{i.webName}</Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <div className="grid min-h-svh place-items-center">
+        <PageDetails page={pageResult} />
+      </div>
+    </>
   );
 }
