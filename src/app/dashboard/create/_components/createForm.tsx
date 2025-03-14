@@ -7,16 +7,21 @@ import { FormPageType } from "@/types/PageTypes";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SubmitBtn } from "../../_components/submitBtns";
+import dynamic from "next/dynamic";
+const DuplicateAlert = dynamic(() => import("./duplicateAlert"));
 
 export function CreateForm() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+  const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
 
   const methods = useForm<FormPageType>({
     defaultValues: {
       websites: [{}],
     },
   });
+
+  const handleModal = () => setIsDuplicate((isDuplicate) => !isDuplicate);
 
   const onSubmit: SubmitHandler<FormPageType> = async (formData) => {
     setLoading(true);
@@ -28,10 +33,11 @@ export function CreateForm() {
       },
       body: JSON.stringify(formData),
     });
-
-    // const result = await response.json();
-
     if (!response.ok) {
+      if (response.status === 400) {
+        setLoading(false);
+        handleModal();
+      }
       return;
     }
     setLoading(false);
@@ -39,11 +45,20 @@ export function CreateForm() {
   };
 
   return (
-    <FormProvider {...methods}>
-      <form className="max-w-md" onSubmit={methods.handleSubmit(onSubmit)}>
-        <InputSet />
-        <SubmitBtn loading={loading} name="Create" />
-      </form>
-    </FormProvider>
+    <>
+      {isDuplicate && (
+        <DuplicateAlert
+          isDuplicate={isDuplicate}
+          handleModal={handleModal}
+          setIsDuplicate={setIsDuplicate}
+        />
+      )}
+      <FormProvider {...methods}>
+        <form className="max-w-md" onSubmit={methods.handleSubmit(onSubmit)}>
+          <InputSet />
+          <SubmitBtn loading={loading} name="Create" />
+        </form>
+      </FormProvider>
+    </>
   );
 }
