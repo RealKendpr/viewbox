@@ -5,3 +5,7 @@ Page UI variations:
 - free
 - link bento grid
 - ...
+
+Other options:
+
+- open link in current or new tab
