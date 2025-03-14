@@ -1,13 +1,13 @@
 import { getUserData } from "@/_lib/getUserData";
 import PageModel from "@/_lib/mongodb/models/PageModel";
 import { connectDB } from "@/_lib/mongodb/mongodb";
-import { FormPageType } from "@/types/PageTypes";
+import { PageType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
 import { pageSchema } from "../_schema/pageSchema";
 
 export async function POST(request: NextRequest) {
   const pathname = request.headers.get("X-Pathname");
-  const data: FormPageType = await request.json();
+  const data: PageType = await request.json();
 
   if (!data || pathname == null)
     return NextResponse.json(

@@ -2,7 +2,7 @@
 
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { InputSet } from "../../_components/inputSet";
-import { EditPageType, FormPageType } from "@/types/PageTypes";
+import { EditPageType, PageType } from "@/types/PageTypes";
 import { useState } from "react";
 import { getPathname } from "../../create/_utils/getPathname";
 import { deletePage } from "../deletePage";
@@ -15,7 +15,7 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
   const pageDetailsResult: EditPageType =
     pageDetails && JSON.parse(pageDetails);
 
-  const formDefaultValues: FormPageType = {
+  const formDefaultValues: PageType = {
     pageName: pageDetailsResult?.pageName,
     pageIcon: pageDetailsResult?.pageIcon,
     websites: pageDetailsResult?.websites,
@@ -26,11 +26,11 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
     createdAt: pageDetailsResult.createdAt,
   };
 
-  const methods = useForm<FormPageType>({
+  const methods = useForm<PageType>({
     defaultValues: formDefaultValues,
   });
 
-  const onSubmit: SubmitHandler<FormPageType> = async (formData) => {
+  const onSubmit: SubmitHandler<PageType> = async (formData) => {
     // check if submitted data and current value is the same,
     // before making a proceeding to avoid unnecessary request
     // and show an alert about it

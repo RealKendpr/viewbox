@@ -16,7 +16,7 @@ export interface PageDocumentType extends Document {
   updatedAt: Date;
 }
 
-export interface FormPageType {
+export interface PageType {
   pageName: string;
   pageIcon: string;
   websites: WebsiteType[];
@@ -29,7 +29,7 @@ export interface PagePreviewType {
   createdAt: Date;
 }
 
-export interface EditPageType extends FormPageType {
+export interface EditPageType extends PageType {
   _id: string;
   createdAt: Date;
 }

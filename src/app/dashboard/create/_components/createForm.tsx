@@ -3,7 +3,7 @@
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { getPathname } from "../_utils/getPathname";
 import { InputSet } from "../../_components/inputSet";
-import { FormPageType } from "@/types/PageTypes";
+import { PageType } from "@/types/PageTypes";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SubmitBtn } from "../../_components/submitBtns";
@@ -15,7 +15,7 @@ export function CreateForm() {
   const [loading, setLoading] = useState<boolean>(false);
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
 
-  const methods = useForm<FormPageType>({
+  const methods = useForm<PageType>({
     defaultValues: {
       websites: [{}],
     },
@@ -23,7 +23,7 @@ export function CreateForm() {
 
   const handleModal = () => setIsDuplicate((isDuplicate) => !isDuplicate);
 
-  const onSubmit: SubmitHandler<FormPageType> = async (formData) => {
+  const onSubmit: SubmitHandler<PageType> = async (formData) => {
     setLoading(true);
     const response = await fetch("/api/create", {
       method: "POST",
