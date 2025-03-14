@@ -26,7 +26,9 @@ export function DropdownOptions({ slug }: { slug: string }) {
           <Link href={`/dashboard/${slug}`}>Edit</Link>
         </li>
         <li>
-          <a>Preview</a>
+          <Link href={`/${slug}`} target="_blank">
+            Visit
+          </Link>
         </li>
       </ul>
     </div>
