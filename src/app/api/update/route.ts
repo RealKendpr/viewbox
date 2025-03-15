@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { pageSchema } from "../_schema/pageSchema";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import PageModel from "@/_lib/mongodb/models/PageModel";
+import { getSlug } from "../_utils/getSlug";
 
 export async function PUT(request: NextRequest) {
   const pathname = request.headers.get("X-Pathname");
@@ -31,7 +32,10 @@ export async function PUT(request: NextRequest) {
   }
 
   const pageId = data._id;
-  const { pageName, pageIcon, websites } = result.data;
+  const newData = {
+    ...result.data,
+    slug: getSlug(result.data.pageName),
+  };
 
   try {
     await connectDB();
@@ -51,12 +55,12 @@ export async function PUT(request: NextRequest) {
         { status: 403 },
       );
 
-    const updatedPage = await PageModel.findOneAndUpdate(
+    const updatePage = await PageModel.findOneAndUpdate(
       { _id: pageId },
-      result.data,
+      newData,
     );
 
-    await updatedPage.save();
+    await updatePage.save();
 
     return NextResponse.json(
       { message: "selected resource updated" },
