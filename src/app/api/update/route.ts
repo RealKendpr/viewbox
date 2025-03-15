@@ -5,6 +5,7 @@ import { pageSchema } from "../_schema/pageSchema";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import PageModel from "@/_lib/mongodb/models/PageModel";
 import { getSlug } from "../_utils/getSlug";
+import { findDuplicates } from "../_utils/findDuplicates";
 
 export async function PUT(request: NextRequest) {
   const pathname = request.headers.get("X-Pathname");
@@ -46,14 +47,16 @@ export async function PUT(request: NextRequest) {
       _id: pageId,
       userId: userId,
     });
-
     if (!findPage)
       return NextResponse.json(
-        {
-          message: "client does not have access rights to the content",
-        },
+        { message: "client does not have access rights to the content" },
         { status: 403 },
       );
+
+    const isDuplicate = await findDuplicates(result.data.pageName);
+    if (isDuplicate) {
+      return;
+    }
 
     const updatePage = await PageModel.findOneAndUpdate(
       { _id: pageId },
