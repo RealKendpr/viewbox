@@ -1,5 +1,4 @@
 import { PageType } from "@/types/PageTypes";
-import { Metadata } from "next";
 import Image from "next/image";
 
 const favicon = (url: string) => {
@@ -13,9 +12,15 @@ export function PageDetails({ page }: { page: PageType }) {
   return (
     <div className="mx-auto min-h-[60%] w-[calc(80%+12px)] rounded-lg border p-3">
       <div className="mb-6">
-        <div className="bg-accent mx-auto size-16">
+        <div className="mx-auto size-24">
           {page.pageIcon && (
-            <Image src={page.pageIcon} width={100} height={100} alt="" />
+            <Image
+              className="size-24 rounded-full object-cover"
+              src={page.pageIcon}
+              width={100}
+              height={100}
+              alt=""
+            />
           )}
         </div>
         <h1 className="text-center text-xl font-semibold">{page.pageName}</h1>
