@@ -5,6 +5,7 @@ import { PageType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
 import { pageSchema } from "../_schema/pageSchema";
 import { getSlug } from "../_utils/getSlug";
+import { findDuplicates } from "../_utils/findDuplicates";
 
 export async function POST(request: NextRequest) {
   const pathname = request.headers.get("X-Pathname");
@@ -35,11 +36,9 @@ export async function POST(request: NextRequest) {
 
   try {
     await connectDB();
-    const findDuplicates = await PageModel.findOne({ pageName: pageName });
 
-    // must check if theres a duplicate page name to avoid slug/url problem later
-    // this check is global; will check same page name with other users as well
-    if (findDuplicates) {
+    const isDuplicate = await findDuplicates(pageName);
+    if (isDuplicate) {
       return NextResponse.json(
         { error: "page with the same name already exist" },
         { status: 400 },
