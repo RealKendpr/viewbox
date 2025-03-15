@@ -22,17 +22,18 @@ export function PageDetails({ page }: { page: PageType }) {
       </div>
       <ul className="grid gap-y-4">
         {page.websites.map((item, index) => (
-          <li className="flex items-center gap-x-2" key={index}>
-            <div className="size-6">
+          <li key={index}>
+            <a
+              className="btn btn-soft btn-block grid grid-cols-[24px_1fr]"
+              href={item.webUrl}
+            >
               <img
                 src={item.webIcon ? item.webIcon : favicon(item.webUrl)}
                 width={24}
                 height={24}
                 alt=""
               />
-            </div>
-            <a className="link link-hover" href={item.webUrl}>
-              {item.webName}
+              <span>{item.webName}</span>
             </a>
           </li>
         ))}
