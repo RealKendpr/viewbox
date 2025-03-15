@@ -4,6 +4,7 @@ import { connectDB } from "@/_lib/mongodb/mongodb";
 import { PageType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
 import { pageSchema } from "../_schema/pageSchema";
+import { getSlug } from "../_utils/getSlug";
 
 export async function POST(request: NextRequest) {
   const pathname = request.headers.get("X-Pathname");
@@ -31,18 +32,16 @@ export async function POST(request: NextRequest) {
   }
 
   const { pageName, pageIcon, websites } = result.data;
-  const getSlug = pageName.trim().replace(/\s+/g, "-").toLowerCase();
 
   try {
     await connectDB();
-
     const findDuplicates = await PageModel.findOne({ pageName: pageName });
 
     // must check if theres a duplicate page name to avoid slug/url problem later
     // this check is global; will check same page name with other users as well
     if (findDuplicates) {
       return NextResponse.json(
-        { error: "page with the same name alreadt exist" },
+        { error: "page with the same name already exist" },
         { status: 400 },
       );
     }
@@ -50,7 +49,7 @@ export async function POST(request: NextRequest) {
     const page = await new PageModel({
       pageName: pageName,
       pageIcon: pageIcon,
-      slug: getSlug,
+      slug: getSlug(pageName),
       userId: userId,
       websites: websites,
     });
