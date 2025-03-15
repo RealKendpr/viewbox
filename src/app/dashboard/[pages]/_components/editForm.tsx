@@ -16,8 +16,9 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
     pageDetails && JSON.parse(pageDetails);
 
   const formDefaultValues: PageType = {
-    pageName: pageDetailsResult?.pageName,
     pageIcon: pageDetailsResult?.pageIcon,
+    pageName: pageDetailsResult?.pageName,
+    pageDescription: pageDetailsResult.pageDescription,
     websites: pageDetailsResult?.websites,
   };
 

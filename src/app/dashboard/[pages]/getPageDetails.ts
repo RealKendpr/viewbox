@@ -23,8 +23,9 @@ export async function getPagesDetails(slug: string) {
 
     const pageDTO = {
       _id: page?._id as string,
-      pageName: page?.pageName,
       pageIcon: page?.pageIcon,
+      pageName: page?.pageName,
+      pageDescription: page?.pageDescription,
       createdAt: page?.createdAt,
       websites: page?.websites,
     };

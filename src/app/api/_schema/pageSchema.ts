@@ -7,7 +7,8 @@ export const websitesSchema = z.object({
 });
 
 export const pageSchema = z.object({
-  pageName: z.string(),
   pageIcon: z.string().optional(),
+  pageName: z.string(),
+  pageDescription: z.string().optional(),
   websites: z.array(websitesSchema),
 });

@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(result.error);
   }
 
-  const { pageName, pageIcon, websites } = result.data;
+  const { pageIcon, pageName, pageDescription, websites } = result.data;
 
   try {
     await connectDB();
@@ -46,8 +46,9 @@ export async function POST(request: NextRequest) {
     }
 
     const page = await new PageModel({
-      pageName: pageName,
       pageIcon: pageIcon,
+      pageName: pageName,
+      pageDescription: pageDescription,
       slug: getSlug(pageName),
       userId: userId,
       websites: websites,

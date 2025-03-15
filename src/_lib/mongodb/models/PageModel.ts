@@ -18,11 +18,15 @@ const websitesSchema = new mongoose.Schema({
 
 const PageSchema = new Schema<PageDocumentType>(
   {
+    pageIcon: {
+      type: String,
+      default: "",
+    },
     pageName: {
       type: String,
       required: true,
     },
-    pageIcon: {
+    pageDescription: {
       type: String,
       default: "",
     },

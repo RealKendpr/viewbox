@@ -9,6 +9,7 @@ export interface WebsiteType {
 export interface PageDocumentType extends Document {
   pageName: string;
   pageIcon: string;
+  pageDescription: string;
   slug: string;
   userId: mongoose.Types.ObjectId;
   websites: WebsiteType[];
@@ -17,14 +18,15 @@ export interface PageDocumentType extends Document {
 }
 
 export interface PageType {
-  pageName: string;
   pageIcon: string;
+  pageName: string;
+  pageDescription: string;
   websites: WebsiteType[];
 }
 
 export interface PagePreviewType {
-  pageName: string;
   pageIcon: string;
+  pageName: string;
   slug: string;
   createdAt: Date;
 }
