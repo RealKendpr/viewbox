@@ -13,6 +13,9 @@ export async function generateMetadata({
 
   return {
     title: pageResult?.pageName,
+    icons: {
+      icon: pageResult?.pageIcon,
+    },
   };
 }
 
