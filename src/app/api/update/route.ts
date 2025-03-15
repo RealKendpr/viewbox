@@ -33,16 +33,18 @@ export async function PUT(request: NextRequest) {
   }
 
   const pageId = data._id;
+  const { pageName, ...rest } = result.data;
+
   const newData = {
-    ...result.data,
-    slug: getSlug(result.data.pageName),
+    ...rest,
+    pageName: pageName,
+    slug: getSlug(pageName),
   };
 
   try {
     await connectDB();
 
-    // must check first if there is any page document that has the user's id,
-    // and that have the requested page id
+    // must check if the page that is being updated belongs to the user making the request
     const findPage: PageDocumentType | null = await PageModel.findOne({
       _id: pageId,
       userId: userId,
@@ -52,10 +54,15 @@ export async function PUT(request: NextRequest) {
         { message: "client does not have access rights to the content" },
         { status: 403 },
       );
-
-    const isDuplicate = await findDuplicates(result.data.pageName);
-    if (isDuplicate) {
-      return;
+    // check if the slug of the current page is different than what was submitted,
+    // if it is the check if that new slug already exist
+    if (findPage.slug !== getSlug(pageName)) {
+      const isDuplicate = await findDuplicates(pageName);
+      if (isDuplicate)
+        return NextResponse.json(
+          { error: "page with the same name already exist" },
+          { status: 409 },
+        );
     }
 
     const updatePage = await PageModel.findOneAndUpdate(

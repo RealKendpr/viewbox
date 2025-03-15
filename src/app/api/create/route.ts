@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     if (isDuplicate) {
       return NextResponse.json(
         { error: "page with the same name already exist" },
-        { status: 400 },
+        { status: 409 },
       );
     }
 
