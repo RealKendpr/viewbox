@@ -14,8 +14,9 @@ export async function getPage(slug: string) {
     if (!page) return null;
 
     const pageDTO = {
-      pageName: page?.pageName,
       pageIcon: page?.pageIcon,
+      pageName: page?.pageName,
+      pageDescription: page?.pageDescription,
       websites: page?.websites,
     };
 
