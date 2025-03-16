@@ -20,11 +20,16 @@ export function InputSet() {
           placeholder="Awesome Delight"
           required={true}
         />
-        <textarea
-          className="textarea"
-          id="pageDescription"
-          {...register("pageDescription")}
-        />
+        <fieldset className="fieldset">
+          <legend className="fieldset-legend">Your bio</legend>
+          <textarea
+            className="textarea h-24 w-full"
+            placeholder="Bio"
+            id="pageDescription"
+            {...register("pageDescription", { max: 100 })}
+          ></textarea>
+          <div className="fieldset-label">Optional</div>
+        </fieldset>
       </div>
       <fieldset className="fieldset my-2">
         <legend className="fieldset-legend">Websites</legend>

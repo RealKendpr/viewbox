@@ -9,6 +9,6 @@ export const websitesSchema = z.object({
 export const pageSchema = z.object({
   pageIcon: z.string().optional(),
   pageName: z.string(),
-  pageDescription: z.string().optional(),
+  pageDescription: z.string().max(100).optional(),
   websites: z.array(websitesSchema),
 });
