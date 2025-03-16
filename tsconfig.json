@@ -24,7 +24,8 @@
       "@types/*": ["./src/types/*"],
       "@api/*": ["./src/app/api/*"],
       "@(auth)/*": ["./src/app/(dashboard)/(auth)/*"],
-      "@dashboard/*": ["./src/app/(dashboard)/dashboard/*"]
+      "@dashboard/*": ["./src/app/(dashboard)/dashboard/*"],
+      "@[pages]/*": ["./src/app/(pages)/[pages]/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

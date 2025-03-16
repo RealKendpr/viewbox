@@ -1,4 +1,4 @@
-import React from "react";
+import "@[pages]/pages.css";
 
 export default function RootLayout({
   children,
@@ -7,7 +7,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-svh">{children}</body>
+      <body className="bg-base-300 min-h-svh">{children}</body>
     </html>
   );
 }
