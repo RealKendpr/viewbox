@@ -1,16 +1,14 @@
 "use server";
 
 import { getUserData } from "@/_lib/getUserData";
-import { getPathname } from "./create/_utils/getPathname";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import PageModel from "@/_lib/mongodb/models/PageModel";
 import { PageDocumentType } from "@/types/PageTypes";
 
 export async function getPagesInfo() {
-  const userData = await getUserData(await getPathname());
-  const userId = userData?._id;
+  const userId = await getUserData("userId");
 
-  if (!userData) {
+  if (!userId) {
     return null;
   }
 

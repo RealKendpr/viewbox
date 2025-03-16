@@ -17,8 +17,7 @@ export async function POST(request: NextRequest) {
       { status: 400 },
     );
 
-  const userData = await getUserData(pathname);
-  const userId = userData?._id;
+  const userId = (await getUserData("userId")) as string;
 
   if (!userId)
     return NextResponse.json(

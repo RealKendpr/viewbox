@@ -3,27 +3,38 @@
 import UserModel from "./mongodb/models/UserModel";
 import { connectDB } from "./mongodb/mongodb";
 import { cache } from "react";
-import { cookies } from "next/headers";
-import { decrypt } from "./session";
+import { hasSession } from "./session";
 import { UserDocumentType } from "@/types/UserTypes";
 
 // this is to get user's data such as username to for the avatar, and also to get the user's _id for when they create pages
-export const getUserData = cache(async (pathname: string) => {
-  const cookie = (await cookies()).get("session")?.value;
+export const getUserData = cache(
+  async (data: "username" | "userId" | "allData") => {
+    const session = await hasSession();
 
-  if (!cookie) {
-    return null;
-  }
-
-  const session = await decrypt(cookie, pathname);
-  const _id = await session?.userId;
-
-  try {
     await connectDB();
-    const userData: UserDocumentType | null = await UserModel.findOne({ _id });
+    const userData: UserDocumentType | null = await UserModel.findOne({
+      _id: session?.userId,
+    });
 
-    return userData;
-  } catch (error) {
-    throw new Error("Failed to fetch user.");
-  }
-});
+    if (!userData) return null;
+
+    switch (data) {
+      case "username":
+        return getUsername(userData);
+      case "userId":
+        return getUserId(userData);
+      case "allData":
+        return userData;
+      default:
+        return null;
+    }
+  },
+);
+
+function getUsername(userData: UserDocumentType) {
+  return userData?.username;
+}
+
+function getUserId(userData: UserDocumentType) {
+  return userData._id;
+}

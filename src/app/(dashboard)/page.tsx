@@ -1,10 +1,9 @@
 import { PublicHeader } from "@/_components/publicHeader";
 import { hasSession } from "@/_lib/session";
 import Link from "next/link";
-import { getPathname } from "./dashboard/create/_utils/getPathname";
 
 export default async function Home() {
-  const isLoggedIn = await hasSession(await getPathname());
+  const isLoggedIn = await hasSession();
 
   return (
     <div className="grid min-h-screen grid-rows-[auto_1fr]">

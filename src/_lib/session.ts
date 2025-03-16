@@ -34,14 +34,9 @@ export async function encrypt(payload: SessionPayload) {
     .sign(encodedKey);
 }
 
-export async function decrypt(
-  session: string | undefined = "",
-  pathname: string,
-) {
-  const clientPath = pathname.startsWith("/dashboard");
-
+export async function decrypt(session: string | undefined) {
   try {
-    if (!session && clientPath) throw new Error("no session found");
+    if (!session) throw new Error("no session found");
 
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ["HS256"],
@@ -50,17 +45,19 @@ export async function decrypt(
     return payload;
   } catch (error) {
     // log expected error only when trying visiting /dashboard without a session
-    if (!session && clientPath) console.log((error as Error).message);
+    if (!session) console.log((error as Error).message);
     return null;
   }
 }
 
 // I no longer remember why I decided to separate this logic, but this can also be called as verifySession; and can check if the user has a valid session
-export async function hasSession(pathname: string) {
+export async function hasSession() {
   const cookie = (await cookies()).get("session")?.value;
+  const session = await decrypt(cookie);
 
-  const session = await decrypt(cookie, pathname);
+  if (!session?.userId) return null;
 
-  if (session?.userId) return true;
-  else return false;
+  return {
+    userId: session.userId,
+  };
 }

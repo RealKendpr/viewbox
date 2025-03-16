@@ -3,11 +3,9 @@ import LogoutBtn from "./logout";
 import { SmallNav } from "./smallNav";
 import { getUserData } from "@/_lib/getUserData";
 import { UserAvatar } from "./userAvatar";
-import { getPathname } from "../create/_utils/getPathname";
 
 export async function DashHeader() {
-  const userData = await getUserData(await getPathname());
-  const username = userData?.username || "";
+  const username = (await getUserData("username")) as string;
 
   return (
     <header>
