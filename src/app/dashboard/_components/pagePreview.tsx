@@ -38,7 +38,7 @@ export async function PagePreview() {
                     )}
                   </div>
                 </th>
-                <th>
+                <th className="truncate">
                   <div>{i.pageName}</div>
                 </th>
                 <th>{createdDate(i.createdAt)}</th>
