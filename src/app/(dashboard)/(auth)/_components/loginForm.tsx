@@ -3,7 +3,7 @@
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { Inputs } from "./input";
 import { startTransition, useActionState } from "react";
-import { login } from "@/app/(auth)/actions";
+import { login } from "@/app/(dashboard)/(auth)/actions";
 import FormOperations from "./formOperations";
 import { FormUserType } from "@/types/UserTypes";
 

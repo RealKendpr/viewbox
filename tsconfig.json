@@ -23,8 +23,8 @@
       "@_lib/*": ["./src/_lib/*"],
       "@types/*": ["./src/types/*"],
       "@api/*": ["./src/app/api/*"],
-      "@(auth)/*": ["./src/app/(auth)/*"],
-      "@dashboard/*": ["./src/app/dashboard/*"]
+      "@(auth)/*": ["./src/app/(dashboard)/(auth)/*"],
+      "@dashboard/*": ["./src/app/(dashboard)/dashboard/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

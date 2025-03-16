@@ -1,5 +1,5 @@
 import { LoadingSpinner } from "@/_components/loading";
-import { LoginForm } from "@/app/(auth)/_components/loginForm";
+import { LoginForm } from "@/app/(dashboard)/(auth)/_components/loginForm";
 import { Suspense } from "react";
 
 export default function Login() {

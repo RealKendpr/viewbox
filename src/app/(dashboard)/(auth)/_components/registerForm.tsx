@@ -1,7 +1,7 @@
 "use client";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { Inputs } from "./input";
-import { register } from "@/app/(auth)/actions";
+import { register } from "@/app/(dashboard)/(auth)/actions";
 import { useState } from "react";
 import Link from "next/link";
 import FormOperations from "./formOperations";
