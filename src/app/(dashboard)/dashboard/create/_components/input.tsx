@@ -7,7 +7,7 @@ export function Input({
   placeholder,
   type,
   required,
-  index
+  index,
 }: {
   label: string;
   name: string;
@@ -18,7 +18,7 @@ export function Input({
 }) {
   const {
     register,
-    formState: { errors }
+    formState: { errors },
   } = useFormContext();
 
   const validationRule = {
@@ -26,29 +26,30 @@ export function Input({
     pattern:
       type === "url"
         ? /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
-        : undefined
+        : undefined,
   };
 
   return (
     <div>
-      <label className="fieldset-label inline-flex" htmlFor={name}>
-        {label}
-      </label>
-      <input
-        className="input w-full mt-4 mb-3"
-        type="text"
-        id={name}
-        placeholder={placeholder}
-        {...register(name, validationRule)}
-      />
-      <FieldErrorAlert
-        name={name}
-        index={index}
-        errors={errors}
-        errorMsg={`Please enter a valid ${
-          type === "url" ? "URL" : label.toLowerCase()
-        }`}
-      />
+      <fieldset className="fieldset">
+        <legend className="fieldset-legend">{label}</legend>
+        <input
+          className="input w-full"
+          type="text"
+          id={name}
+          placeholder={placeholder}
+          {...register(name, validationRule)}
+        />
+        <FieldErrorAlert
+          name={name}
+          index={index}
+          errors={errors}
+          errorMsg={`Please enter a valid ${
+            type === "url" ? "URL" : label.toLowerCase()
+          }`}
+        />
+        {!required && <p className="fieldset-label">Optional</p>}
+      </fieldset>
     </div>
   );
 }
