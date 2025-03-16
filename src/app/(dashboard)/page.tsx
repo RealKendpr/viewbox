@@ -1,7 +1,11 @@
 import { PublicHeader } from "@/_components/publicHeader";
+import { hasSession } from "@/_lib/session";
 import Link from "next/link";
+import { getPathname } from "./dashboard/create/_utils/getPathname";
 
-export default function Home() {
+export default async function Home() {
+  const isLoggedIn = await hasSession(await getPathname());
+
   return (
     <div className="grid min-h-screen grid-rows-[auto_1fr]">
       <PublicHeader />
@@ -12,12 +16,20 @@ export default function Home() {
             <span className="font-bold">one page</span>
           </h1>
           <div className="flex gap-x-3">
-            <Link className="btn-primary btn" href="/login">
-              Log In
-            </Link>
-            <Link className="btn-secondary btn" href="/register">
-              Create an Account
-            </Link>
+            {!isLoggedIn ? (
+              <>
+                <Link className="btn-primary btn" href="/login">
+                  Log In
+                </Link>
+                <Link className="btn-secondary btn" href="/register">
+                  Create an Account
+                </Link>
+              </>
+            ) : (
+              <Link className="btn-primary btn" href="/dashboard">
+                Go to dashboard
+              </Link>
+            )}
           </div>
         </div>
       </main>
