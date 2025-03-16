@@ -10,8 +10,8 @@ const favicon = (url: string) => {
 
 export function PageDetails({ page }: { page: PageType }) {
   return (
-    <div className="bg-base-100 mx-auto min-h-[60%] w-[calc(80%+12px)] rounded-lg p-3 pt-12">
-      <div className="mb-6">
+    <div className="bg-base-100 mx-auto min-h-[60%] w-[calc(80%+12px)] rounded-lg px-4 py-10">
+      <div className="mb-4">
         <div className="mx-auto size-20">
           {page.pageIcon && (
             <Image
@@ -23,10 +23,12 @@ export function PageDetails({ page }: { page: PageType }) {
             />
           )}
         </div>
-        <h1 className="text-center text-xl font-semibold">{page.pageName}</h1>
+        <h1 className="mt-4 mb-5 text-center text-xl font-semibold">
+          {page.pageName}
+        </h1>
         <p className="text-center text-sm">{page.pageDescription}</p>
       </div>
-      <ul className="grid gap-y-4">
+      <ul className="grid gap-y-3">
         {page.websites.map((item, index) => (
           <li key={index}>
             <a
