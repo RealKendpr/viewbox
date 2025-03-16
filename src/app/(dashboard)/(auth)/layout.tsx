@@ -6,11 +6,9 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="grid min-h-screen grid-rows-[auto_1fr]">
       <PublicHeader />
-      <main className="mx-[4%] grid min-h-screen place-items-center">
-        <div className="w-full max-w-md">{children}</div>
-      </main>
-    </>
+      <main className="mx-[4%] grid place-items-center">{children}</main>
+    </div>
   );
 }
