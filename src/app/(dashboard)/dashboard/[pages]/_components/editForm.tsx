@@ -4,7 +4,6 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { InputSet } from "../../_components/inputSet";
 import { EditPageType, PageType } from "@/types/PageTypes";
 import { useState } from "react";
-import { getPathname } from "../../create/_utils/getPathname";
 import { deletePage } from "../deletePage";
 import { useRouter } from "next/navigation";
 
@@ -45,7 +44,6 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "X-Pathname": await getPathname(),
       },
       body: JSON.stringify({ ...formData, ...extendedKeys }),
     });

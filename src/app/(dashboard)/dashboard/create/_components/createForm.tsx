@@ -1,7 +1,6 @@
 "use client";
 
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
-import { getPathname } from "../_utils/getPathname";
 import { InputSet } from "../../_components/inputSet";
 import { PageType } from "@/types/PageTypes";
 import { useState } from "react";
@@ -29,7 +28,6 @@ export function CreateForm() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Pathname": await getPathname(),
       },
       body: JSON.stringify(formData),
     });

@@ -8,10 +8,9 @@ import { getSlug } from "../_utils/getSlug";
 import { findDuplicates } from "../_utils/findDuplicates";
 
 export async function POST(request: NextRequest) {
-  const pathname = request.headers.get("X-Pathname");
   const data: PageType = await request.json();
 
-  if (!data || pathname == null)
+  if (!data)
     return NextResponse.json(
       { error: "empty request not accepted" },
       { status: 400 },
