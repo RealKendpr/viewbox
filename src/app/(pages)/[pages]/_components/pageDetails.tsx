@@ -35,12 +35,7 @@ export function PageDetails({ page }: { page: PageType }) {
               className="btn btn-soft btn-block grid grid-cols-[24px_1fr]"
               href={item.webUrl}
             >
-              <img
-                src={item.webIcon ? item.webIcon : favicon(item.webUrl)}
-                width={24}
-                height={24}
-                alt=""
-              />
+              <img src={favicon(item.webUrl)} width={24} height={24} alt="" />
               <span>{item.webName}</span>
             </a>
           </li>

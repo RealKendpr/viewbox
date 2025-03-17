@@ -3,7 +3,6 @@ import mongoose, { Document } from "mongoose";
 export interface WebsiteType {
   webName: string;
   webUrl: string;
-  webIcon?: string;
 }
 
 export interface PageDocumentType extends Document {

@@ -1,6 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { AddWebsite } from "../create/_components/addWebsite";
-import { Input } from "../create/_components/input";
+import { Input } from "@dashboard/create/_components/input";
 
 export function InputSet() {
   const { register } = useFormContext();
@@ -30,10 +29,6 @@ export function InputSet() {
           <div className="fieldset-label">Optional</div>
         </fieldset>
       </div>
-      <fieldset className="fieldset my-2">
-        <legend className="fieldset-legend">Websites</legend>
-        <AddWebsite />
-      </fieldset>
     </>
   );
 }
