@@ -30,29 +30,19 @@ async function getUser(username: string) {
 export async function login(prevState: any, formData: FormUserType) {
   const result = userSchema.safeParse(formData);
 
-  if (result.success) {
-    const { username, password } = result.data;
+  if (!result.success) {
+    return { errors: result.error.flatten().fieldErrors };
+  }
+  const { username, password } = result.data;
 
-    const user = await getUser(username);
-    if (!user) {
-      return {
-        errors: {
-          username: ["Invalid username or password"],
-        },
-      };
-    }
+  const user = await getUser(username);
+  if (!user) return { errors: { username: ["Invalid username or password"] } };
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
-
-    if (passwordMatch) {
-      await createSession(user.id);
-
-      redirect("/dashboard");
-    }
-  } else
-    return {
-      errors: result.error.flatten().fieldErrors,
-    };
+  const passwordMatch = await bcrypt.compare(password, user.password);
+  if (passwordMatch) {
+    await createSession(user.id);
+    redirect("/dashboard");
+  } else return { errors: { username: ["Invalid username or password"] } };
 }
 
 export async function logout() {
