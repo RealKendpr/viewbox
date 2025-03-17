@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
   const result = pageSchema.safeParse(data);
 
   if (!result.success) {
-    return NextResponse.json(result.error);
+    return NextResponse.json({ error: result.error }, { status: 422 });
   }
 
   const { pageIcon, pageName, pageDescription, websites } = result.data;
