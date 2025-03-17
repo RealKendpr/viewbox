@@ -11,10 +11,7 @@ export default async function middleware(request: NextRequest) {
     pathname.startsWith(route),
   );
   const isPublic = publicRoutes.includes(pathname);
-  const session = await hasSession(pathname);
-
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-pathname", request.nextUrl.pathname);
+  const session = await hasSession();
 
   if (isProtected && !session) {
     return NextResponse.redirect(new URL("/login", request.nextUrl));
@@ -23,11 +20,7 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
   }
 
-  return NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
-  });
+  return NextResponse.next();
 }
 
 export const config = {

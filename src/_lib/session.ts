@@ -36,7 +36,7 @@ export async function encrypt(payload: SessionPayload) {
 
 export async function decrypt(session: string | undefined) {
   try {
-    if (!session) throw new Error("no session found");
+    if (!session) return null;
 
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ["HS256"],
@@ -44,8 +44,6 @@ export async function decrypt(session: string | undefined) {
 
     return payload;
   } catch (error) {
-    // log expected error only when trying visiting /dashboard without a session
-    if (!session) console.log((error as Error).message);
     return null;
   }
 }
