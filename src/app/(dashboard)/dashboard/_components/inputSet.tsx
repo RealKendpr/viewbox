@@ -8,12 +8,11 @@ export function InputSet() {
   return (
     <>
       <div className="grid gap-y-4">
-        <Input
-          label="External icon URL"
-          name="pageIcon"
-          placeholder="https://icons.com/icon"
-          type="url"
-        />
+        <fieldset className="fieldset">
+          <legend className="fieldset-legend">Pick an Avatar</legend>
+          <input type="file" className="file-input w-full" />
+          <label className="fieldset-label">Max size 2MB</label>
+        </fieldset>
         <Input
           label="Page Title"
           name="pageName"
