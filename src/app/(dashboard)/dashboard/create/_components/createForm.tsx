@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SubmitBtn } from "../../_components/submitBtns";
 import dynamic from "next/dynamic";
-const DuplicateAlert = dynamic(() => import("./duplicateAlert"));
+const Modal = dynamic(() => import("@/_components/modal"));
 
 export function CreateForm() {
   const router = useRouter();
@@ -19,8 +19,6 @@ export function CreateForm() {
       websites: [{}],
     },
   });
-
-  const handleModal = () => setIsDuplicate((isDuplicate) => !isDuplicate);
 
   const onSubmit: SubmitHandler<PageType> = async (formData) => {
     setLoading(true);
@@ -34,7 +32,7 @@ export function CreateForm() {
     if (!response.ok) {
       if (response.status === 400) {
         setLoading(false);
-        handleModal();
+        setIsDuplicate((isDuplicate) => !isDuplicate);
       }
       return;
     }
@@ -45,10 +43,12 @@ export function CreateForm() {
   return (
     <>
       {isDuplicate && (
-        <DuplicateAlert
-          isDuplicate={isDuplicate}
-          handleModal={handleModal}
-          setIsDuplicate={setIsDuplicate}
+        <Modal
+          title="⚠️ Page already exist"
+          message=" The name of the page your trying to craete already exist, you may
+    choose a different name."
+          isOpen={isDuplicate}
+          setIsOpen={setIsDuplicate}
         />
       )}
       <FormProvider {...methods}>
