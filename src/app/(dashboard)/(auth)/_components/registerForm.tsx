@@ -38,16 +38,25 @@ export function RegisterForm() {
             pattern={/[A-Za-z][A-Za-z0-9\-]*/}
             minL={6}
             maxL={24}
-          ></Inputs>
+          />
           <Inputs
             name="password"
             label="Password"
             placeholder="Password"
-            // pattern={/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/}
+            pattern={/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/}
             type="password"
-            minL={6}
-          ></Inputs>
-          <FormOperations submitBtn="Register" type="register" />
+            minL={8}
+          />
+          <p className="validator-hint">
+            Must be more than 8 characters, including
+            <br />
+            At least one number
+            <br />
+            At least one lowercase letter
+            <br />
+            At least one uppercase letter
+          </p>
+          <FormOperations submitBtn="Create" type="register" />
         </form>
       </FormProvider>
     </>

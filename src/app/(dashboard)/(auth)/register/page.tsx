@@ -7,7 +7,10 @@ export default function Register() {
     <div className="w-full max-w-md">
       <Suspense fallback={<LoadingSpinner />}>
         <div>
-          <h1 className="mb-4 text-3xl font-bold">Create an Account</h1>
+          <div className="mb-4">
+            <p className="text-3xl font-bold">Welcome!</p>
+            <h1 className="text-2xl">Create an account</h1>
+          </div>
           <RegisterForm />
         </div>
       </Suspense>
