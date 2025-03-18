@@ -2,7 +2,7 @@ import { PageType, WebsiteType } from "@/types/PageTypes";
 import { UseFormReturn } from "react-hook-form";
 import { Input } from "../create/_components/input";
 import { favicon } from "@/app/_utils/getFavicon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "@/_components/modal";
 
 export default function AddWebsite({
@@ -40,6 +40,24 @@ export default function AddWebsite({
       setOPenField(false);
     }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // enter should be allowed when user is focused on the Add button
+      if (
+        event.key === "Enter" &&
+        document.activeElement?.tagName !== "BUTTON"
+      ) {
+        event.preventDefault();
+      }
+    };
+    if (openField) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [openField]);
 
   return (
     <div>
