@@ -39,6 +39,7 @@ export function CreateForm() {
     if (!response.ok) {
       if (response.status === 409) {
         setIsDuplicate((isDuplicate) => !isDuplicate);
+        return;
       }
       return;
     }

@@ -32,6 +32,7 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
 
   const router = useRouter();
   const [isSame, setIsSame] = useState<boolean>(false);
+  const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
 
   const methods = useForm<PageType>({
     defaultValues: formDefaultValues,
@@ -67,6 +68,10 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
     });
 
     if (!response.ok) {
+      if (response.status === 409) {
+        setIsDuplicate(true);
+        return;
+      }
       return;
     }
   };
@@ -95,6 +100,13 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
         </p>
         <p className="py-4 text-sm">
           You don't need to update, because you didn't change anything.
+        </p>
+      </Modal>
+      <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
+        <p className="font-semibold">⚠️ Page already exist</p>
+        <p className="py-4 text-sm">
+          The name of the page your trying to create already exist, you may
+          choose a different name
         </p>
       </Modal>
       <FormProvider {...methods}>
