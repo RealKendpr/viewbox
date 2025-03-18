@@ -7,14 +7,12 @@ export function Input({
   placeholder,
   type,
   required,
-  index,
 }: {
   label: string;
   name: string;
   placeholder?: string;
   type?: "url" | "text";
   required?: boolean;
-  index?: number;
 }) {
   const {
     register,
@@ -42,13 +40,11 @@ export function Input({
         />
         <FieldErrorAlert
           name={name}
-          index={index}
           errors={errors}
           errorMsg={`Please enter a valid ${
             type === "url" ? "URL" : label.toLowerCase()
           }`}
         />
-        {!required && <p className="fieldset-label">Optional</p>}
       </fieldset>
     </div>
   );
