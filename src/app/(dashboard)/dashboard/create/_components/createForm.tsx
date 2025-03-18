@@ -34,7 +34,7 @@ export function CreateForm() {
       body: JSON.stringify(newFormData),
     });
     if (!response.ok) {
-      if (response.status === 400) {
+      if (response.status === 409) {
         setLoading(false);
         setIsDuplicate((isDuplicate) => !isDuplicate);
       }
@@ -46,15 +46,13 @@ export function CreateForm() {
 
   return (
     <>
-      {isDuplicate && (
-        <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
-          <h3 className="text-lg font-bold">⚠️ Page already exist</h3>
-          <p className="py-4">
-            The name of the page your trying to craete already exist, you may //
-            choose a different name
-          </p>
-        </Modal>
-      )}
+      <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
+        <h3 className="text-lg font-bold">⚠️ Page already exist</h3>
+        <p className="py-4">
+          The name of the page your trying to craete already exist, you may //
+          choose a different name
+        </p>
+      </Modal>
       <FormProvider {...methods}>
         <form className="max-w-md" onSubmit={methods.handleSubmit(onSubmit)}>
           <InputSet />
