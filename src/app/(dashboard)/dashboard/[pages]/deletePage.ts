@@ -7,10 +7,7 @@ export async function deletePage(pageId: string, router: any) {
     body: pageId,
   });
 
-  const result = await response.json();
-
   if (!response.ok) {
-    console.log(result);
     return;
   }
   router.push("/dashboard");

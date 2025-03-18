@@ -106,6 +106,7 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
           />
           <button className="btn btn-primary w-full">Update</button>
           <button
+            type="button"
             className="btn btn-warning mt-[8.25px] w-full"
             onClick={() => deletePage(extendedKeys._id, router)}
           >
