@@ -15,31 +15,47 @@ export default function AddWebsite({
   setWebsite: React.Dispatch<React.SetStateAction<WebsiteType[]>>;
 }) {
   const [openField, setOPenField] = useState<boolean>(false);
+  const {
+    watch,
+    setError,
+    clearErrors,
+    formState: { errors },
+  } = methods;
+
+  const urlPattern =
+    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+  const newWebsite = watch("websites.0");
 
   const addWebsite = () => {
-    const urlPattern =
-      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
-    const newWebsite = methods.watch("websites.0");
     const webUrl = urlPattern.test(newWebsite.webUrl);
-
     if (newWebsite.webName === "") {
-      methods.setError("websites.0.webName", {
+      setError("websites.0.webName", {
         type: "required",
       });
-    } else methods.clearErrors("websites.0.webName");
-
+    }
     if (!webUrl) {
-      methods.setError("websites.0.webUrl", {
+      setError("websites.0.webUrl", {
         type: "pattern",
       });
-    } else methods.clearErrors("websites.0.webUrl");
-
+    }
     if (newWebsite.webName && webUrl) {
       setWebsite((prev) => [...prev, newWebsite]);
       methods.setValue("websites.0", { webName: "", webUrl: "" });
       setOPenField(false);
     }
   };
+
+  useEffect(() => {
+    if (errors.websites && newWebsite.webName !== "") {
+      clearErrors("websites.0.webName");
+    }
+  }, [newWebsite && newWebsite.webName]);
+
+  useEffect(() => {
+    if (errors.websites && urlPattern.test(newWebsite.webUrl)) {
+      clearErrors("websites.0.webUrl");
+    }
+  }, [newWebsite && newWebsite.webUrl]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
