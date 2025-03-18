@@ -56,8 +56,8 @@ export function CreateForm() {
         <p>⚠️ At least one link is required</p>
       </Modal>
       <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
-        <h3 className="text-lg font-bold">⚠️ Page already exist</h3>
-        <p className="py-4">
+        <p className="font-semibold">⚠️ Page already exist</p>
+        <p className="py-4 text-sm">
           The name of the page your trying to create already exist, you may
           choose a different name
         </p>
