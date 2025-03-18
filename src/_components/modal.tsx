@@ -1,13 +1,11 @@
 import { useEffect, useRef } from "react";
 
 export default function Modal({
-  title,
-  message,
+  children,
   isOpen,
   setIsOpen,
 }: {
-  title: string;
-  message: string;
+  children: React.ReactNode;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -42,10 +40,7 @@ export default function Modal({
 
   return (
     <dialog ref={modalRef} className="modal">
-      <div className="modal-box">
-        <h3 className="text-lg font-bold">{title}</h3>
-        <p className="py-4">{message}</p>
-      </div>
+      <div className="modal-box">{children}</div>
       <div className="modal-backdrop" onClick={() => handleModal()} />
     </dialog>
   );

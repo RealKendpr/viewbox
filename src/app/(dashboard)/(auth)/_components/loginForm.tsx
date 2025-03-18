@@ -30,12 +30,10 @@ export function LoginForm() {
   return (
     <>
       {isError && state?.errors.username && (
-        <Modal
-          title="Log-in failed"
-          message={state?.errors.username[0]}
-          isOpen={isError}
-          setIsOpen={setIsError}
-        />
+        <Modal isOpen={isError} setIsOpen={setIsError}>
+          <h3 className="text-lg font-bold">Log-in failed</h3>
+          <p className="py-4">{state?.errors.username}</p>
+        </Modal>
       )}
       <FormProvider {...methods}>
         <form className="" onSubmit={methods.handleSubmit(onSubmit)}>
