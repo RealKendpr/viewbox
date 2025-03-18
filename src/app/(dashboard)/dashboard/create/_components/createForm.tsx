@@ -43,6 +43,7 @@ export function CreateForm() {
         setLoading(false);
         setIsDuplicate((isDuplicate) => !isDuplicate);
       }
+      setLoading(false);
       return;
     }
     setLoading(false);
