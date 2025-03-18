@@ -15,17 +15,22 @@ export function CreateForm() {
   const [loading, setLoading] = useState<boolean>(false);
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
   const [website, setWebsite] = useState<WebsiteType[]>([]);
+  const [websiteRequired, setWebsiteRequired] = useState<boolean>(false);
 
   const methods = useForm<PageType>();
 
   const onSubmit: SubmitHandler<PageType> = async (formData) => {
-    setLoading(true);
-
     const newFormData: PageType = {
       ...formData,
       websites: website,
     };
 
+    if (website.length === 0) {
+      setWebsiteRequired(true);
+      return;
+    }
+
+    setLoading(true);
     const response = await fetch("/api/create", {
       method: "POST",
       headers: {
@@ -46,6 +51,9 @@ export function CreateForm() {
 
   return (
     <>
+      <Modal isOpen={websiteRequired} setIsOpen={setWebsiteRequired}>
+        <p>⚠️ At least one link is required</p>
+      </Modal>
       <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
         <h3 className="text-lg font-bold">⚠️ Page already exist</h3>
         <p className="py-4">

@@ -45,7 +45,6 @@ export default function AddWebsite({
       setOPenField(false);
     }
   };
-
   const removeWebsite = (index: number) => {
     const newItems = website.filter((_, i) => i !== index);
     setWebsite(newItems);
@@ -56,13 +55,11 @@ export default function AddWebsite({
       clearErrors("websites.0.webName");
     }
   }, [newWebsite && newWebsite.webName]);
-
   useEffect(() => {
     if (errors.websites && urlPattern.test(newWebsite.webUrl)) {
       clearErrors("websites.0.webUrl");
     }
   }, [newWebsite && newWebsite.webUrl]);
-
   useEffect(() => {
     const websiteValue = getValues("websites.0");
     const handleKeyDown = (event: KeyboardEvent) => {
