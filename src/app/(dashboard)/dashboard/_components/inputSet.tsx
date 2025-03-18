@@ -5,30 +5,28 @@ export function InputSet() {
   const { register } = useFormContext();
 
   return (
-    <>
-      <div className="grid gap-y-4">
-        <fieldset className="fieldset">
-          <legend className="fieldset-legend">Pick an Avatar</legend>
-          <input type="file" className="file-input w-full" />
-          <label className="fieldset-label">Max size 2MB</label>
-        </fieldset>
-        <Input
-          label="Page Title"
-          name="pageName"
-          placeholder="Awesome Delight"
-          required={true}
-        />
-        <fieldset className="fieldset">
-          <legend className="fieldset-legend">Your bio</legend>
-          <textarea
-            className="textarea h-24 w-full"
-            placeholder="Bio"
-            id="pageDescription"
-            {...register("pageDescription", { max: 100 })}
-          ></textarea>
-          <div className="fieldset-label">Optional</div>
-        </fieldset>
-      </div>
-    </>
+    <div className="grid gap-y-4">
+      <fieldset className="fieldset">
+        <legend className="fieldset-legend">Pick an Avatar</legend>
+        <input type="file" className="file-input w-full" />
+        <label className="fieldset-label">Max size 2MB</label>
+      </fieldset>
+      <Input
+        label="Page Title"
+        name="pageName"
+        placeholder="Awesome Delight"
+        required={true}
+      />
+      <fieldset className="fieldset">
+        <legend className="fieldset-legend">Your bio</legend>
+        <textarea
+          className="textarea h-11 w-full"
+          placeholder="Bio"
+          id="pageDescription"
+          {...register("pageDescription", { max: 100 })}
+        ></textarea>
+        <div className="fieldset-label">Optional</div>
+      </fieldset>
+    </div>
   );
 }

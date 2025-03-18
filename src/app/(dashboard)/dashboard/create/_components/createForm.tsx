@@ -49,12 +49,15 @@ export function CreateForm() {
       <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
         <h3 className="text-lg font-bold">⚠️ Page already exist</h3>
         <p className="py-4">
-          The name of the page your trying to craete already exist, you may //
+          The name of the page your trying to create already exist, you may
           choose a different name
         </p>
       </Modal>
       <FormProvider {...methods}>
-        <form className="max-w-md" onSubmit={methods.handleSubmit(onSubmit)}>
+        <form
+          className="grid max-w-md gap-y-3"
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
           <InputSet />
           <AddWebsite
             website={website}
