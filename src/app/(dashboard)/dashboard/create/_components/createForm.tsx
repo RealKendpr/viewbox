@@ -12,7 +12,6 @@ const Modal = dynamic(() => import("@/_components/modal"));
 
 export function CreateForm() {
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(false);
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
   const [website, setWebsite] = useState<WebsiteType[]>([]);
   const [websiteRequired, setWebsiteRequired] = useState<boolean>(false);
@@ -30,7 +29,6 @@ export function CreateForm() {
       return;
     }
 
-    setLoading(true);
     const response = await fetch("/api/create", {
       method: "POST",
       headers: {
@@ -40,13 +38,10 @@ export function CreateForm() {
     });
     if (!response.ok) {
       if (response.status === 409) {
-        setLoading(false);
         setIsDuplicate((isDuplicate) => !isDuplicate);
       }
-      setLoading(false);
       return;
     }
-    setLoading(false);
     router.push("/dashboard");
   };
 
@@ -73,7 +68,7 @@ export function CreateForm() {
             setWebsite={setWebsite}
             methods={methods}
           />
-          <SubmitBtn loading={loading} name="Create" />
+          <SubmitBtn loading={methods.formState.isSubmitting} name="Create" />
         </form>
       </FormProvider>
     </>
