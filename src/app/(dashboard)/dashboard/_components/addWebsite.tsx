@@ -45,6 +45,11 @@ export default function AddWebsite({
     }
   };
 
+  const removeWebsite = (index: number) => {
+    const newItems = website.filter((_, i) => i !== index);
+    setWebsite(newItems);
+  };
+
   useEffect(() => {
     if (errors.websites && newWebsite.webName !== "") {
       clearErrors("websites.0.webName");
@@ -79,7 +84,7 @@ export default function AddWebsite({
     <div>
       <div className="flex min-h-52 flex-col">
         <p className="text-xl font-bold">Links</p>
-        <LinkDisplay website={website} />
+        <LinkDisplay website={website} removeWebsite={removeWebsite} />
         <button
           className="btn btn-dash btn-sm w-[calc(100%-12px)] self-center"
           type="button"
@@ -111,7 +116,13 @@ export default function AddWebsite({
   );
 }
 
-function LinkDisplay({ website }: { website: WebsiteType[] }) {
+function LinkDisplay({
+  website,
+  removeWebsite,
+}: {
+  website: WebsiteType[];
+  removeWebsite: (index: number) => void;
+}) {
   return website.length < 1 ? (
     <div className="text-base-content/50 mt-3 p-2">
       <span className="mb-3 flex justify-center">
@@ -142,11 +153,15 @@ function LinkDisplay({ website }: { website: WebsiteType[] }) {
             <img src={favicon(item.webUrl)} width={24} height={24} alt="" />
             <span>{item.webName}</span>
           </div>
-          <button className="btn btn-circle btn-ghost" type="button">
+          <button
+            className="btn btn-circle btn-ghost hover:text-warning"
+            type="button"
+            onClick={() => removeWebsite(index)}
+          >
             <svg
-              width="15"
-              height="15"
-              viewBox="0 0 15 15"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
