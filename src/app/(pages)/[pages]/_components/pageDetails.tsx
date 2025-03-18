@@ -1,12 +1,6 @@
 import { PageType } from "@/types/PageTypes";
 import Image from "next/image";
-
-const favicon = (url: string) => {
-  const domain = new URL(url).hostname;
-  const iconSrc = `https://api.faviconkit.com/${domain}/32`;
-
-  return iconSrc;
-};
+import { favicon } from "@/app/_utils/getFavicon";
 
 export function PageDetails({ page }: { page: PageType }) {
   return (
