@@ -2,6 +2,8 @@ import { PageType, WebsiteType } from "@/types/PageTypes";
 import { UseFormReturn } from "react-hook-form";
 import { Input } from "../create/_components/input";
 import { favicon } from "@/app/_utils/getFavicon";
+import { useState } from "react";
+import Modal from "@/_components/modal";
 
 export default function AddWebsite({
   methods,
@@ -12,6 +14,8 @@ export default function AddWebsite({
   website: WebsiteType[];
   setWebsite: React.Dispatch<React.SetStateAction<WebsiteType[]>>;
 }) {
+  const [openField, setOPenField] = useState<boolean>(false);
+
   const addWebsite = () => {
     const urlPattern =
       /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
@@ -33,6 +37,7 @@ export default function AddWebsite({
     if (newWebsite.webName && webUrl) {
       setWebsite((prev) => [...prev, newWebsite]);
       methods.setValue("websites.0", { webName: "", webUrl: "" });
+      setOPenField(false);
     }
   };
 
@@ -64,23 +69,32 @@ export default function AddWebsite({
           </li>
         ))}
       </ul>
-      <fieldset className="fieldset">
-        <legend className="fieldset-legend">Websites</legend>
-        <Input
-          label="Website Name"
-          name="websites.0.webName"
-          placeholder="Youtube"
-        />
-        <Input
-          label="Website URL"
-          name="websites.0.webUrl"
-          placeholder="https://youtube.com/channel"
-          type="url"
-        />
-        <button className="btn" type="button" onClick={addWebsite}>
-          Add
-        </button>
-      </fieldset>
+      <button
+        className="btn btn-dash w-full"
+        type="button"
+        onClick={() => setOPenField(true)}
+      >
+        Add
+      </button>
+      <Modal isOpen={openField} setIsOpen={setOPenField}>
+        <fieldset className="fieldset">
+          <legend className="fieldset-legend">Websites</legend>
+          <Input
+            label="Website Name"
+            name="websites.0.webName"
+            placeholder="Youtube"
+          />
+          <Input
+            label="Website URL"
+            name="websites.0.webUrl"
+            placeholder="https://youtube.com/channel"
+            type="url"
+          />
+          <button className="btn" type="button" onClick={addWebsite}>
+            Add
+          </button>
+        </fieldset>
+      </Modal>
     </>
   );
 }
