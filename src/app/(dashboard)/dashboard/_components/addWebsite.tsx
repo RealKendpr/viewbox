@@ -19,6 +19,7 @@ export default function AddWebsite({
     watch,
     setError,
     clearErrors,
+    getValues,
     formState: { errors },
   } = methods;
 
@@ -29,14 +30,14 @@ export default function AddWebsite({
   const addWebsite = () => {
     const webUrl = urlPattern.test(newWebsite.webUrl);
     if (newWebsite.webName === "") {
-      setError("websites.0.webName", {
-        type: "required",
-      });
+      setError(
+        "websites.0.webName",
+        { type: "required" },
+        { shouldFocus: true },
+      );
     }
     if (!webUrl) {
-      setError("websites.0.webUrl", {
-        type: "pattern",
-      });
+      setError("websites.0.webUrl", { type: "pattern" }, { shouldFocus: true });
     }
     if (newWebsite.webName && webUrl) {
       setWebsite((prev) => [...prev, newWebsite]);
@@ -63,6 +64,7 @@ export default function AddWebsite({
   }, [newWebsite && newWebsite.webUrl]);
 
   useEffect(() => {
+    const websiteValue = getValues("websites.0");
     const handleKeyDown = (event: KeyboardEvent) => {
       // enter should be allowed when user is focused on the Add button
       if (
@@ -74,6 +76,9 @@ export default function AddWebsite({
     };
     if (openField) {
       window.addEventListener("keydown", handleKeyDown);
+      if (websiteValue.webUrl === "" && websiteValue.webName === "") {
+        clearErrors("websites.0");
+      }
     }
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
