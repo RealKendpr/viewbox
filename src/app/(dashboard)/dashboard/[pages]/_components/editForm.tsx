@@ -4,10 +4,12 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { InputSet } from "../../_components/inputSet";
 import { EditPageType, PageType, WebsiteType } from "@/types/PageTypes";
 import { useState } from "react";
-import { deletePage } from "../deletePage";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { SubmitBtn } from "../../_components/submitBtns";
+const DeletePageBtn = dynamic(() =>
+  import("../deletePage").then((mod) => mod.DeletePageBtn),
+);
 const AddWebsite = dynamic(() => import("@dashboard/_components/addWebsite"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
@@ -119,13 +121,7 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
           />
 
           <SubmitBtn loading={methods.formState.isSubmitting} name="Update" />
-          <button
-            type="button"
-            className="btn btn-warning mt-[8.25px] w-full"
-            onClick={() => deletePage(extendedKeys._id, router)}
-          >
-            Delete Page
-          </button>
+          <DeletePageBtn pageId={extendedKeys._id} router={router} />
         </form>
       </FormProvider>
     </>
