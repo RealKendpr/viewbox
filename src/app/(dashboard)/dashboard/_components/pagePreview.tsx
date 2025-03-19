@@ -15,16 +15,19 @@ export async function PagePreview() {
       {pagesResult.length >= 1 ? (
         <table className="table">
           <thead>
-            <tr>
+            <tr className="grid grid-cols-[1fr_1fr_min-content] md:grid-cols-4">
               <th className="hidden md:table-cell"></th>
               <th>Name</th>
               <th>created at</th>
-              <th></th>
+              <th className="min-w-[82px]"></th>
             </tr>
           </thead>
           <tbody>
             {pagesResult.map((i, index) => (
-              <tr key={index}>
+              <tr
+                className="grid grid-cols-[1fr_1fr_min-content] md:grid-cols-4"
+                key={index}
+              >
                 <th className="hidden text-end md:table-cell">
                   <div className="inline-block h-[64px] w-[64px] overflow-hidden rounded-xl">
                     {i.pageIcon && (
@@ -38,8 +41,8 @@ export async function PagePreview() {
                     )}
                   </div>
                 </th>
-                <th className="truncate">
-                  <div>{i.pageName}</div>
+                <th>
+                  <div className="truncate">{i.pageName}</div>
                 </th>
                 <th>{createdDate(i.createdAt)}</th>
                 <th>
