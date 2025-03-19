@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { SubmitBtn } from "../../_components/submitBtns";
+import { revalidateForm } from "../_utils/revalidateForm";
 const DeletePageBtn = dynamic(() =>
   import("../deletePage").then((mod) => mod.DeletePageBtn),
 );
@@ -78,6 +79,8 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
       return;
     }
     setUpdated(true);
+    // should revalidate the pageDetails, so, that on 2nd attempt of update with no changes a promt should popup
+    revalidateForm(formDefaultValues.pageName);
   };
 
   return (
