@@ -101,11 +101,6 @@ export default function LinkDisplay({
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [editField]);
-  useEffect(() => {
-    if (selectedEditIndex !== null) {
-      setSelectedEditIndex(null);
-    }
-  }, [!editField]);
 
   return (
     <>
@@ -204,16 +199,22 @@ export default function LinkDisplay({
                 placeholder="https://youtube.com/channel"
                 type="url"
               />
-              <button className="btn" type="button">
-                Cancel
-              </button>
-              <button
-                className="btn"
-                type="button"
-                onClick={() => editWebsite(selectedEditIndex)}
-              >
-                Done
-              </button>
+              <div className="flex justify-around gap-x-2">
+                <button
+                  className="btn grow"
+                  type="button"
+                  onClick={() => setEditField(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="btn grow"
+                  type="button"
+                  onClick={() => editWebsite(selectedEditIndex)}
+                >
+                  Done
+                </button>
+              </div>
             </fieldset>
           </Modal>
         </>
