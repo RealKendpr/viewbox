@@ -2,10 +2,10 @@ import { WebsiteType } from "@/types/PageTypes";
 import { useFormContext } from "react-hook-form";
 import { Input } from "../create/_components/input";
 import { useEffect, useState } from "react";
-import Modal from "@/_components/modal";
 import testUrl from "../_utils/testUrl";
 import dynamic from "next/dynamic";
-const LinkDisplay = dynamic(import("./editWebsiteField"));
+const LinkDisplay = dynamic(() => import("./linkDisplay"));
+const Modal = dynamic(() => import("@/_components/modal"));
 
 export default function AddWebsite({
   website,
@@ -24,7 +24,7 @@ export default function AddWebsite({
     formState: { errors },
   } = methods;
 
-  const newWebsite = getValues("websites.0");
+  const newWebsite: WebsiteType = getValues("websites.0");
 
   const addWebsite = () => {
     const webUrl = testUrl(newWebsite.webUrl);
@@ -58,7 +58,6 @@ export default function AddWebsite({
     }
   }, [newWebsite && newWebsite.webUrl]);
   useEffect(() => {
-    const websiteValue = getValues("websites.0");
     const handleKeyDown = (event: KeyboardEvent) => {
       // enter should be allowed when user is focused on the Add button
       if (
@@ -70,7 +69,7 @@ export default function AddWebsite({
     };
     if (openField) {
       window.addEventListener("keydown", handleKeyDown);
-      if (websiteValue.webUrl === "" && websiteValue.webName === "") {
+      if (newWebsite.webUrl === "" && newWebsite.webName === "") {
         clearErrors("websites.0");
       }
     }
