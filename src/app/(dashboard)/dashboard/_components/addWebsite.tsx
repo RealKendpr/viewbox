@@ -17,14 +17,14 @@ export default function AddWebsite({
   const [openField, setOPenField] = useState<boolean>(false);
   const methods = useFormContext();
   const {
-    watch,
     setError,
     clearErrors,
     getValues,
+    setValue,
     formState: { errors },
   } = methods;
 
-  const newWebsite = watch("websites.0");
+  const newWebsite = getValues("websites.0");
 
   const addWebsite = () => {
     const webUrl = testUrl(newWebsite.webUrl);
@@ -38,11 +38,9 @@ export default function AddWebsite({
     if (!webUrl) {
       setError("websites.0.webUrl", { type: "pattern" }, { shouldFocus: true });
     }
-    if (newWebsite.webName && webUrl) {
-      setWebsite((prev) => [...prev, newWebsite]);
-      methods.setValue("websites.0", { webName: "", webUrl: "" });
-      setOPenField(false);
-    }
+    setWebsite((prev) => [...prev, newWebsite]);
+    setValue("websites.0", { webName: "", webUrl: "" });
+    setOPenField(false);
   };
   const removeWebsite = (index: number) => {
     const newItems = website.filter((_, i) => i !== index);
