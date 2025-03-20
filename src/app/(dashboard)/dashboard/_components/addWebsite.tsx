@@ -37,6 +37,7 @@ export default function AddWebsite({
     }
     if (!webUrl) {
       setError("websites.0.webUrl", { type: "pattern" }, { shouldFocus: true });
+      return;
     }
     setWebsite((prev) => [...prev, newWebsite]);
     setValue("websites.0", { webName: "", webUrl: "" });
