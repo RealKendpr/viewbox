@@ -140,12 +140,7 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
       <FormProvider {...methods}>
         <form className="max-w-md" onSubmit={methods.handleSubmit(onSubmit)}>
           <InputSet />
-          <AddWebsite
-            website={website}
-            setWebsite={setWebsite}
-            methods={methods}
-          />
-
+          <AddWebsite website={website} setWebsite={setWebsite} />
           <SubmitBtn loading={methods.formState.isSubmitting} name="Update" />
           <DeletePageBtn pageId={extendedKeys._id} router={router} />
         </form>

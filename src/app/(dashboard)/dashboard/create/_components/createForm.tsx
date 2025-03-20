@@ -64,11 +64,7 @@ export function CreateForm() {
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <InputSet />
-          <AddWebsite
-            website={website}
-            setWebsite={setWebsite}
-            methods={methods}
-          />
+          <AddWebsite website={website} setWebsite={setWebsite} />
           <SubmitBtn loading={methods.formState.isSubmitting} name="Create" />
         </form>
       </FormProvider>
