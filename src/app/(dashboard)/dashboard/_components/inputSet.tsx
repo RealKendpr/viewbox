@@ -6,19 +6,26 @@ export function InputSet() {
 
   return (
     <div className="grid gap-y-4">
-      <fieldset className="fieldset">
-        <legend className="fieldset-legend">Pick an Avatar</legend>
-        <input type="file" className="file-input w-full" />
-        <label className="fieldset-label">Max size 2MB</label>
-      </fieldset>
+      <div className="fieldset">
+        <label htmlFor="avatar" className="fieldset-legend place-self-start">
+          Pick an Avatar
+        </label>
+        <input type="file" id="avatar" className="file-input w-full" />
+        <p className="fieldset-label">Max size 2MB</p>
+      </div>
       <Input
         label="Page Title"
         name="pageName"
         placeholder="Awesome Delight"
         required={true}
       />
-      <fieldset className="fieldset">
-        <legend className="fieldset-legend">Your bio</legend>
+      <div className="fieldset">
+        <label
+          htmlFor="pageDescription"
+          className="fieldset-legend place-self-start"
+        >
+          Your bio
+        </label>
         <textarea
           className="textarea h-11 w-full"
           placeholder="Bio"
@@ -26,7 +33,7 @@ export function InputSet() {
           {...register("pageDescription", { max: 100 })}
         ></textarea>
         <div className="fieldset-label">Optional</div>
-      </fieldset>
+      </div>
     </div>
   );
 }

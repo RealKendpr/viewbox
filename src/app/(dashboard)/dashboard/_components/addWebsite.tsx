@@ -98,7 +98,7 @@ export default function AddWebsite({
       </div>
       <Modal isOpen={openField} setIsOpen={setOPenField}>
         <fieldset className="fieldset">
-          <legend className="fieldset-legend">Websites</legend>
+          <legend className="fieldset-legend">Add Link</legend>
           <Input
             label="Website Name"
             name="websites.0.webName"

@@ -188,7 +188,7 @@ export default function LinkDisplay({
           </ul>
           <Modal isOpen={editField} setIsOpen={setEditField}>
             <fieldset className="fieldset">
-              <legend className="fieldset-legend">Edit</legend>
+              <legend className="fieldset-legend">Edit Link</legend>
               <Input
                 label="Website Name"
                 name="websites.1.webName"

@@ -29,27 +29,27 @@ export function Input({
   };
 
   return (
-    <div>
-      <fieldset className="fieldset">
-        <legend className="fieldset-legend">{label}</legend>
-        <input
-          className="input w-full"
-          type="text"
-          id={name}
-          placeholder={placeholder}
-          {...register(name, validationRule)}
-        />
-        <ErrorMessage
-          name={name}
-          render={() => (
-            <RequiredAlert
-              errorMsg={`Please enter a valid ${
-                type === "url" ? "URL" : label.toLowerCase()
-              }`}
-            />
-          )}
-        />
-      </fieldset>
+    <div className="fieldset">
+      <label htmlFor={name} className="fieldset-legend place-self-start">
+        {label}
+      </label>
+      <input
+        className="input w-full"
+        type="text"
+        id={name}
+        placeholder={placeholder}
+        {...register(name, validationRule)}
+      />
+      <ErrorMessage
+        name={name}
+        render={() => (
+          <RequiredAlert
+            errorMsg={`Please enter a valid ${
+              type === "url" ? "URL" : label.toLowerCase()
+            }`}
+          />
+        )}
+      />
     </div>
   );
 }
