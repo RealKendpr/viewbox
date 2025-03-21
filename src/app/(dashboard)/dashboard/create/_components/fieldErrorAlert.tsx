@@ -12,13 +12,14 @@ export function FieldErrorAlert({
 }) {
   // errors for fields inside the  useFieldArray
   const arrayFieldName = name.substring(name.lastIndexOf(".") + 1);
+  const getIndex = parseInt(name.replace(/^\D+/g, ""));
 
   if (
     // each object must be checked before proceeding, this is to prevent app from crashing when websites[x] has a present error and the user tries to add another website[y]
     // reproduce: submit an empty form, then add another website fields
     Array.isArray(errors.websites) &&
-    errors.websites[0] &&
-    errors.websites[0][arrayFieldName]
+    errors.websites[getIndex] &&
+    errors.websites[getIndex][arrayFieldName]
   ) {
     return (
       // errors.websites[index] is not an array or is undefined on first page load since there is no errors yet, so, erros.websites needs to be checked as an array before checking which field has an error, else the application will crash.

@@ -46,13 +46,14 @@ export default function LinkDisplay({
     }
     if (newWebsiteValue.webName === "") {
       setError(
-        "websites.0.webName",
+        "websites.1.webName",
         { type: "required" },
         { shouldFocus: true },
       );
     }
     if (!testUrl(newWebsiteValue.webUrl)) {
-      setError("websites.0.webUrl", { type: "pattern" }, { shouldFocus: true });
+      setError("websites.1.webUrl", { type: "pattern" }, { shouldFocus: true });
+      return;
     }
 
     const updatedWebsite = (prev: WebsiteType[]) => {
@@ -70,12 +71,12 @@ export default function LinkDisplay({
 
   useEffect(() => {
     if (errors.websites && newWebsiteValue.webName !== "") {
-      clearErrors("websites.0.webName");
+      clearErrors("websites.1.webName");
     }
   }, [newWebsiteValue && newWebsiteValue.webName]);
   useEffect(() => {
     if (errors.websites && testUrl(newWebsiteValue.webUrl)) {
-      clearErrors("websites.0.webUrl");
+      clearErrors("websites.1.webUrl");
     }
   }, [newWebsiteValue && newWebsiteValue.webUrl]);
   useEffect(() => {
@@ -91,7 +92,7 @@ export default function LinkDisplay({
     if (editField) {
       window.addEventListener("keydown", handleKeyDown);
       if (newWebsiteValue.webUrl === "" && newWebsiteValue.webName === "") {
-        clearErrors("websites.0");
+        clearErrors("websites.1");
       }
     }
     if (!editField) {
