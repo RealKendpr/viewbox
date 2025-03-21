@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { getPagesInfo } from "../getPagesInfo";
 import { PagePreviewType } from "@/types/PageTypes";
-import { DropdownOptions } from "./dropdownOptions";
+import { DropdownOptions } from "../_header/dropdownOptions";
 import { NoPages } from "./noPages";
 
 export async function PagePreview() {

@@ -1,4 +1,4 @@
-import { DashHeader } from "./_components/dashHeader";
+import { DashHeader } from "./_header/dashHeader";
 
 export default function DashboardLayout({
   children,
