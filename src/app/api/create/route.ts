@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: result.error }, { status: 422 });
   }
 
-  const { pageIcon, pageName, pageDescription, websites } = result.data;
+  const { pageIcon, pageName, pageDescription, links } = result.data;
 
   try {
     await connectDB();
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
       pageDescription: pageDescription,
       slug: getSlug(pageName),
       userId: userId,
-      websites: websites,
+      links: links,
     });
 
     await page.save();

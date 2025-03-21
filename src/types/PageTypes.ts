@@ -1,8 +1,8 @@
 import mongoose, { Document } from "mongoose";
 
-export interface WebsiteType {
-  webName: string;
-  webUrl: string;
+export interface LinkType {
+  linkName: string;
+  linkUrl: string;
 }
 
 export interface PageDocumentType extends Document {
@@ -11,7 +11,7 @@ export interface PageDocumentType extends Document {
   pageDescription: string;
   slug: string;
   userId: mongoose.Types.ObjectId;
-  websites: WebsiteType[];
+  links: LinkType[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,7 +20,7 @@ export interface PageType {
   pageIcon: string;
   pageName: string;
   pageDescription: string;
-  websites: WebsiteType[];
+  links: LinkType[];
 }
 
 export interface PagePreviewType {

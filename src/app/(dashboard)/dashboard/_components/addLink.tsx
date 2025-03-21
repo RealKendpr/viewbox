@@ -1,4 +1,4 @@
-import { WebsiteType } from "@/types/PageTypes";
+import { LinkType } from "@/types/PageTypes";
 import { useFormContext } from "react-hook-form";
 import { Input } from "../create/_components/input";
 import { useEffect, useState } from "react";
@@ -7,12 +7,12 @@ import dynamic from "next/dynamic";
 const LinkDisplay = dynamic(() => import("./editLink"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
-export default function AddWebsite({
-  website,
-  setWebsite,
+export default function AddLink({
+  links,
+  setLinks,
 }: {
-  website: WebsiteType[];
-  setWebsite: React.Dispatch<React.SetStateAction<WebsiteType[]>>;
+  links: LinkType[];
+  setLinks: React.Dispatch<React.SetStateAction<LinkType[]>>;
 }) {
   const [openField, setOPenField] = useState<boolean>(false);
   const methods = useFormContext();
@@ -24,40 +24,36 @@ export default function AddWebsite({
     formState: { errors },
   } = methods;
 
-  const newWebsite: WebsiteType = getValues("websites.0");
+  const newLink: LinkType = getValues("links.0");
 
-  const addWebsite = () => {
-    const webUrl = testUrl(newWebsite.webUrl);
-    if (newWebsite.webName === "") {
-      setError(
-        "websites.0.webName",
-        { type: "required" },
-        { shouldFocus: true },
-      );
+  const addLink = () => {
+    const linkUrl = testUrl(newLink.linkUrl);
+    if (newLink.linkName === "") {
+      setError("links.0.linkName", { type: "required" }, { shouldFocus: true });
     }
-    if (!webUrl) {
-      setError("websites.0.webUrl", { type: "pattern" }, { shouldFocus: true });
+    if (!linkUrl) {
+      setError("links.0.linkUrl", { type: "pattern" }, { shouldFocus: true });
       return;
     }
-    setWebsite((prev) => [...prev, newWebsite]);
-    setValue("websites.0", { webName: "", webUrl: "" });
+    setLinks((prev) => [...prev, newLink]);
+    setValue("links.0", { linkName: "", linkUrl: "" });
     setOPenField(false);
   };
-  const removeWebsite = (index: number) => {
-    const newItems = website.filter((_, i) => i !== index);
-    setWebsite(newItems);
+  const removeLink = (index: number) => {
+    const newItems = links.filter((_, i) => i !== index);
+    setLinks(newItems);
   };
 
   useEffect(() => {
-    if (errors.websites && newWebsite.webName !== "") {
-      clearErrors("websites.0.webName");
+    if (errors.links && newLink.linkName !== "") {
+      clearErrors("links.0.linkName");
     }
-  }, [newWebsite && newWebsite.webName]);
+  }, [newLink && newLink.linkName]);
   useEffect(() => {
-    if (errors.websites && testUrl(newWebsite.webUrl)) {
-      clearErrors("websites.0.webUrl");
+    if (errors.links && testUrl(newLink.linkUrl)) {
+      clearErrors("links.0.linkUrl");
     }
-  }, [newWebsite && newWebsite.webUrl]);
+  }, [newLink && newLink.linkUrl]);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // enter should be allowed when user is focused on the Add button
@@ -70,8 +66,8 @@ export default function AddWebsite({
     };
     if (openField) {
       window.addEventListener("keydown", handleKeyDown);
-      if (newWebsite.webUrl === "" && newWebsite.webName === "") {
-        clearErrors("websites.0");
+      if (newLink.linkUrl === "" && newLink.linkName === "") {
+        clearErrors("links.0");
       }
     }
     return () => {
@@ -84,9 +80,9 @@ export default function AddWebsite({
       <div className="flex min-h-52 flex-col">
         <p className="text-xl font-bold">Links</p>
         <LinkDisplay
-          website={website}
-          setWebsite={setWebsite}
-          removeWebsite={removeWebsite}
+          links={links}
+          setLinks={setLinks}
+          removeLink={removeLink}
         />
         <button
           className="btn btn-dash btn-sm w-[calc(100%-12px)] self-center"
@@ -99,18 +95,14 @@ export default function AddWebsite({
       <Modal isOpen={openField} setIsOpen={setOPenField}>
         <fieldset className="fieldset">
           <legend className="fieldset-legend">Add Link</legend>
+          <Input label="Name" name="links.0.linkName" placeholder="Youtube" />
           <Input
-            label="Website Name"
-            name="websites.0.webName"
-            placeholder="Youtube"
-          />
-          <Input
-            label="Website URL"
-            name="websites.0.webUrl"
+            label="URL"
+            name="links.0.linkUrl"
             placeholder="https://"
             type="url"
           />
-          <button className="btn" type="button" onClick={addWebsite}>
+          <button className="btn" type="button" onClick={addLink}>
             Add
           </button>
         </fieldset>

@@ -1,5 +1,5 @@
 import { favicon } from "@/app/_utils/getFavicon";
-import { WebsiteType } from "@/types/PageTypes";
+import { LinkType } from "@/types/PageTypes";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Input } from "../create/_components/input";
@@ -8,13 +8,13 @@ import testUrl from "../_utils/testUrl";
 const Modal = dynamic(() => import("@/_components/modal"));
 
 export default function LinkDisplay({
-  website,
-  setWebsite,
-  removeWebsite,
+  links,
+  setLinks,
+  removeLink,
 }: {
-  website: WebsiteType[];
-  setWebsite: React.Dispatch<React.SetStateAction<WebsiteType[]>>;
-  removeWebsite: (index: number) => void;
+  links: LinkType[];
+  setLinks: React.Dispatch<React.SetStateAction<LinkType[]>>;
+  removeLink: (index: number) => void;
 }) {
   const [editField, setEditField] = useState<boolean>(false);
   const [selectedEditIndex, setSelectedEditIndex] = useState<number | null>(
@@ -30,55 +30,51 @@ export default function LinkDisplay({
     formState: { errors },
   } = methods;
 
-  const newWebsiteValue: WebsiteType = getValues("websites.1");
+  const newLinkValue: LinkType = getValues("links.1");
 
-  const openEdit = (website: WebsiteType, selectedIndex: number) => {
-    setValue("websites.1", {
-      webName: website.webName,
-      webUrl: website.webUrl,
+  const openEdit = (link: LinkType, selectedIndex: number) => {
+    setValue("links.1", {
+      linkName: link.linkName,
+      linkUrl: link.linkUrl,
     });
     setEditField(true);
     setSelectedEditIndex(selectedIndex);
   };
-  const editWebsite = (selectedIndex: number | null) => {
+  const editLink = (selectedIndex: number | null) => {
     if (selectedIndex === null) {
       return;
     }
-    if (newWebsiteValue.webName === "") {
-      setError(
-        "websites.1.webName",
-        { type: "required" },
-        { shouldFocus: true },
-      );
+    if (newLinkValue.linkName === "") {
+      setError("links.1.linkName", { type: "required" }, { shouldFocus: true });
     }
-    if (!testUrl(newWebsiteValue.webUrl)) {
-      setError("websites.1.webUrl", { type: "pattern" }, { shouldFocus: true });
+    if (!testUrl(newLinkValue.linkUrl)) {
+      setError("links.1.linkUrl", { type: "pattern" }, { shouldFocus: true });
       return;
     }
 
-    const updatedWebsite = (prev: WebsiteType[]) => {
+    const updatedLink = (prev: LinkType[]) => {
       return prev.map((item, index) =>
-        index === selectedIndex ? { ...item, ...newWebsiteValue } : item,
+        index === selectedIndex ? { ...item, ...newLinkValue } : item,
       );
     };
 
-    setWebsite((prev) => updatedWebsite(prev));
+    setLinks((prev) => updatedLink(prev));
 
-    setValue("websites.1", { webName: "", webUrl: "" });
+    setValue("links.1", { linkName: "", linkUrl: "" });
     setEditField(false);
     setSelectedEditIndex(null);
   };
 
   useEffect(() => {
-    if (errors.websites && newWebsiteValue.webName !== "") {
-      clearErrors("websites.1.webName");
+    if (errors.links && newLinkValue.linkName !== "") {
+      clearErrors("links.1.linkName");
     }
-  }, [newWebsiteValue && newWebsiteValue.webName]);
+  }, [newLinkValue && newLinkValue.linkName]);
   useEffect(() => {
-    if (errors.websites && testUrl(newWebsiteValue.webUrl)) {
-      clearErrors("websites.1.webUrl");
+    if (errors.links && testUrl(newLinkValue.linkUrl)) {
+      clearErrors("links.1.linkUrl");
     }
-  }, [newWebsiteValue && newWebsiteValue.webUrl]);
+  }, [newLinkValue && newLinkValue.linkUrl]);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // enter should be allowed when user is focused on the Add button
@@ -91,8 +87,8 @@ export default function LinkDisplay({
     };
     if (editField) {
       window.addEventListener("keydown", handleKeyDown);
-      if (newWebsiteValue.webUrl === "" && newWebsiteValue.webName === "") {
-        clearErrors("websites.1");
+      if (newLinkValue.linkUrl === "" && newLinkValue.linkName === "") {
+        clearErrors("links.1");
       }
     }
     if (!editField) {
@@ -105,7 +101,7 @@ export default function LinkDisplay({
 
   return (
     <>
-      {website.length < 1 ? (
+      {links.length < 1 ? (
         <div className="text-base-content/50 mt-3 p-2">
           <span className="mb-3 flex justify-center">
             <svg
@@ -130,16 +126,16 @@ export default function LinkDisplay({
       ) : (
         <>
           <ul className="mt-3 px-2 pb-2">
-            {website.map((item, index) => (
+            {links.map((item, index) => (
               <li className="flex items-center justify-between" key={index}>
                 <div className="flex gap-x-3">
                   <img
-                    src={favicon(item.webUrl)}
+                    src={favicon(item.linkUrl)}
                     width={24}
                     height={24}
                     alt=""
                   />
-                  <span>{item.webName}</span>
+                  <span>{item.linkName}</span>
                 </div>
                 <div>
                   <button
@@ -165,7 +161,7 @@ export default function LinkDisplay({
                   <button
                     className="btn btn-circle btn-ghost hover:text-warning btn-sm"
                     type="button"
-                    onClick={() => removeWebsite(index)}
+                    onClick={() => removeLink(index)}
                   >
                     <svg
                       width="16"
@@ -190,13 +186,13 @@ export default function LinkDisplay({
             <fieldset className="fieldset">
               <legend className="fieldset-legend">Edit Link</legend>
               <Input
-                label="Website Name"
-                name="websites.1.webName"
+                label="Name"
+                name="links.1.linkName"
                 placeholder="Youtube"
               />
               <Input
-                label="Website URL"
-                name="websites.1.webUrl"
+                label="URL"
+                name="links.1.linkUrl"
                 placeholder="https://"
                 type="url"
               />
@@ -211,7 +207,7 @@ export default function LinkDisplay({
                 <button
                   className="btn grow"
                   type="button"
-                  onClick={() => editWebsite(selectedEditIndex)}
+                  onClick={() => editLink(selectedEditIndex)}
                 >
                   Done
                 </button>

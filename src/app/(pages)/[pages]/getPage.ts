@@ -17,7 +17,7 @@ export async function getPage(slug: string) {
       pageIcon: page?.pageIcon,
       pageName: page?.pageName,
       pageDescription: page?.pageDescription,
-      websites: page?.websites,
+      links: page?.links,
     };
 
     return pageDTO;

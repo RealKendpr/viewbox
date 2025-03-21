@@ -23,14 +23,14 @@ export function PageDetails({ page }: { page: PageType }) {
         <p className="text-center text-sm">{page.pageDescription}</p>
       </div>
       <ul className="grid gap-y-3">
-        {page.websites.map((item, index) => (
+        {page.links.map((item, index) => (
           <li key={index}>
             <a
               className="btn btn-soft btn-block grid grid-cols-[24px_1fr]"
-              href={item.webUrl}
+              href={item.linkUrl}
             >
-              <img src={favicon(item.webUrl)} width={24} height={24} alt="" />
-              <span>{item.webName}</span>
+              <img src={favicon(item.linkUrl)} width={24} height={24} alt="" />
+              <span>{item.linkName}</span>
             </a>
           </li>
         ))}

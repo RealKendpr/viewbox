@@ -1,16 +1,16 @@
 import { PageDocumentType } from "@/types/PageTypes";
 import mongoose, { Schema, model } from "mongoose";
 
-const websitesSchema = new mongoose.Schema({
-  webName: {
+const linksSchema = new mongoose.Schema({
+  linkName: {
     type: String,
     required: true,
   },
-  webUrl: {
+  linkUrl: {
     type: String,
     required: true,
   },
-  webIcon: {
+  linkIcon: {
     type: String,
     default: "",
   },
@@ -39,7 +39,7 @@ const PageSchema = new Schema<PageDocumentType>(
       ref: "User",
       required: true,
     },
-    websites: [websitesSchema],
+    links: [linksSchema],
   },
   {
     timestamps: true,

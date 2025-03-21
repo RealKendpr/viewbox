@@ -2,7 +2,7 @@
 
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { InputSet } from "../../_components/inputSet";
-import { EditPageType, PageType, WebsiteType } from "@/types/PageTypes";
+import { EditPageType, PageType, LinkType } from "@/types/PageTypes";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -11,7 +11,7 @@ import { revalidateForm } from "../_utils/revalidateForm";
 const DeletePageBtn = dynamic(() =>
   import("../deletePage").then((mod) => mod.DeletePageBtn),
 );
-const AddWebsite = dynamic(() => import("@dashboard/_components/addWebsite"));
+const AddLink = dynamic(() => import("@dashboard/_components/addLink"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
 export function EditForm({ pageDetails }: { pageDetails: string | null }) {
@@ -26,12 +26,10 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
     pageIcon: pageDetailsResult?.pageIcon,
     pageName: pageDetailsResult?.pageName,
     pageDescription: pageDetailsResult.pageDescription,
-  }; // websites must be handled by a useState,
+  }; // links must be handled by a useState,
   // because it was not exclusively a part of the form when data
   // was created/submitted to server
-  const [website, setWebsite] = useState<WebsiteType[]>(
-    pageDetailsResult.websites,
-  );
+  const [links, setLinks] = useState<LinkType[]>(pageDetailsResult.links);
 
   const router = useRouter();
   const [isSame, setIsSame] = useState<boolean>(false);
@@ -45,7 +43,7 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
   const onSubmit: SubmitHandler<PageType> = async (formData) => {
     const newFormData: PageType = {
       ...formData,
-      websites: website,
+      links: links,
     };
 
     // check if submitted data and current value is the same,
@@ -55,7 +53,7 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
       JSON.stringify(newFormData) ===
       JSON.stringify({
         ...formDefaultValues,
-        websites: pageDetailsResult.websites,
+        links: pageDetailsResult.links,
       })
     ) {
       setIsSame(true);
@@ -140,7 +138,7 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
       <FormProvider {...methods}>
         <form className="max-w-md" onSubmit={methods.handleSubmit(onSubmit)}>
           <InputSet />
-          <AddWebsite website={website} setWebsite={setWebsite} />
+          <AddLink links={links} setLinks={setLinks} />
           <SubmitBtn loading={methods.formState.isSubmitting} name="Update" />
           <DeletePageBtn pageId={extendedKeys._id} router={router} />
         </form>

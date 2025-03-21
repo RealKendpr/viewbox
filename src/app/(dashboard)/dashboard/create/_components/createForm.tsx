@@ -2,30 +2,30 @@
 
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { InputSet } from "@dashboard/_components/inputSet";
-import { PageType, WebsiteType } from "@/types/PageTypes";
+import { PageType, LinkType } from "@/types/PageTypes";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SubmitBtn } from "@dashboard/_components/submitBtns";
 import dynamic from "next/dynamic";
-const AddWebsite = dynamic(() => import("@dashboard/_components/addWebsite"));
+const AddLink = dynamic(() => import("@dashboard/_components/addLink"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
 export function CreateForm() {
   const router = useRouter();
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
-  const [website, setWebsite] = useState<WebsiteType[]>([]);
-  const [websiteRequired, setWebsiteRequired] = useState<boolean>(false);
+  const [links, setLinks] = useState<LinkType[]>([]);
+  const [linkRequired, setLinkRequired] = useState<boolean>(false);
 
   const methods = useForm<PageType>();
 
   const onSubmit: SubmitHandler<PageType> = async (formData) => {
     const newFormData: PageType = {
       ...formData,
-      websites: website,
+      links: links,
     };
 
-    if (website.length === 0) {
-      setWebsiteRequired(true);
+    if (links.length === 0) {
+      setLinkRequired(true);
       return;
     }
 
@@ -48,7 +48,7 @@ export function CreateForm() {
 
   return (
     <>
-      <Modal isOpen={websiteRequired} setIsOpen={setWebsiteRequired}>
+      <Modal isOpen={linkRequired} setIsOpen={setLinkRequired}>
         <p>⚠️ At least one link is required</p>
       </Modal>
       <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
@@ -64,7 +64,7 @@ export function CreateForm() {
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <InputSet />
-          <AddWebsite website={website} setWebsite={setWebsite} />
+          <AddLink links={links} setLinks={setLinks} />
           <SubmitBtn loading={methods.formState.isSubmitting} name="Create" />
         </form>
       </FormProvider>

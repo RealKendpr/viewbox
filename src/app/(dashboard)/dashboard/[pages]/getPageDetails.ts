@@ -3,7 +3,7 @@
 import { getUserData } from "@/_lib/getUserData";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import PageModel from "@/_lib/mongodb/models/PageModel";
-import { PageDocumentType, WebsiteType } from "@/types/PageTypes";
+import { PageDocumentType, LinkType } from "@/types/PageTypes";
 
 export async function getPagesDetails(slug: string) {
   const userId = await getUserData("userId");
@@ -19,9 +19,9 @@ export async function getPagesDetails(slug: string) {
 
     if (!page) return null;
 
-    const websitesDTO: () => WebsiteType[] = () =>
-      page?.websites.map((i) => {
-        return { webName: i.webName, webUrl: i.webUrl };
+    const linksDTO: () => LinkType[] = () =>
+      page?.links.map((i) => {
+        return { linkName: i.linkName, linkUrl: i.linkUrl };
       });
 
     const pageDTO = {
@@ -30,7 +30,7 @@ export async function getPagesDetails(slug: string) {
       pageName: page?.pageName,
       pageDescription: page?.pageDescription,
       createdAt: page?.createdAt,
-      websites: websitesDTO(),
+      links: linksDTO(),
     };
 
     return pageDTO;
