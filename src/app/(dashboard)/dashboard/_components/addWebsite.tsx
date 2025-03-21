@@ -107,7 +107,7 @@ export default function AddWebsite({
           <Input
             label="Website URL"
             name="websites.0.webUrl"
-            placeholder="https://youtube.com/channel"
+            placeholder="https://"
             type="url"
           />
           <button className="btn" type="button" onClick={addWebsite}>

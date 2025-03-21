@@ -197,7 +197,7 @@ export default function LinkDisplay({
               <Input
                 label="Website URL"
                 name="websites.1.webUrl"
-                placeholder="https://youtube.com/channel"
+                placeholder="https://"
                 type="url"
               />
               <div className="flex justify-around gap-x-2">

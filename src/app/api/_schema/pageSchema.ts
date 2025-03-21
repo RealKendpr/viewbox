@@ -2,7 +2,11 @@ import { z } from "zod";
 
 export const websitesSchema = z.object({
   webName: z.string(),
-  webUrl: z.string().url(),
+  webUrl: z
+    .string()
+    .regex(
+      /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
+    ),
 });
 
 export const pageSchema = z.object({
