@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
-import { FieldErrorAlert } from "./fieldErrorAlert";
+import { ErrorMessage } from "@hookform/error-message";
+import RequiredAlert from "@/_components/requiredAlert";
 
 export function Input({
   label,
@@ -38,12 +39,15 @@ export function Input({
           placeholder={placeholder}
           {...register(name, validationRule)}
         />
-        <FieldErrorAlert
+        <ErrorMessage
           name={name}
-          errors={errors}
-          errorMsg={`Please enter a valid ${
-            type === "url" ? "URL" : label.toLowerCase()
-          }`}
+          render={() => (
+            <RequiredAlert
+              errorMsg={`Please enter a valid ${
+                type === "url" ? "URL" : label.toLowerCase()
+              }`}
+            />
+          )}
         />
       </fieldset>
     </div>
