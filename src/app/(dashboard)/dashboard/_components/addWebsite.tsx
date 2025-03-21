@@ -4,7 +4,7 @@ import { Input } from "../create/_components/input";
 import { useEffect, useState } from "react";
 import testUrl from "../_utils/testUrl";
 import dynamic from "next/dynamic";
-const LinkDisplay = dynamic(() => import("./linkDisplay"));
+const LinkDisplay = dynamic(() => import("./editLink"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
 export default function AddWebsite({
