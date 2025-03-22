@@ -1,5 +1,5 @@
 import { LoadingSpinner } from "@/_components/loading";
-import { RegisterForm } from "@/app/(dashboard)/(auth)/_components/registerForm";
+import { RegisterForm } from "@/app/(main)/(dashboard)/(auth)/_components/registerForm";
 import { Suspense } from "react";
 
 export default function Register() {

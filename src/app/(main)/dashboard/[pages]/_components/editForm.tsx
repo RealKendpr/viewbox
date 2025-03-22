@@ -11,7 +11,9 @@ import { revalidateForm } from "../_utils/revalidateForm";
 const DeletePageBtn = dynamic(() =>
   import("../deletePage").then((mod) => mod.DeletePageBtn),
 );
-const AddLink = dynamic(() => import("@dashboard/_components/addLink"));
+const AddLink = dynamic(
+  () => import("@/app/(main)/dashboard/_components/addLink"),
+);
 const Modal = dynamic(() => import("@/_components/modal"));
 
 export function EditForm({ pageDetails }: { pageDetails: string | null }) {

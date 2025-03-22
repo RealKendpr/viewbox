@@ -1,6 +1,6 @@
 "use client";
 
-import { logout } from "@/app/(dashboard)/(auth)/actions";
+import { logout } from "@/app/(main)/(dashboard)/(auth)/actions";
 
 export default function LogoutBtn() {
   const handleLogout = async () => {

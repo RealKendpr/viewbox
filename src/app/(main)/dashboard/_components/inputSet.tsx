@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { Input } from "@dashboard/create/_components/input";
+import { Input } from "../create/_components/input";
 
 export function InputSet() {
   const { register } = useFormContext();
