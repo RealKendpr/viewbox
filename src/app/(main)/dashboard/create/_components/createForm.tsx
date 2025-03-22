@@ -1,14 +1,14 @@
 "use client";
 
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
-import { InputSet } from "@/app/(main)/(operation)/_components/inputSet";
+import { InputSet } from "@/app/(main)/dashboard/_components/inputSet";
 import { PageType, LinkType } from "@/types/PageTypes";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { SubmitBtn } from "@/app/(main)/(operation)/_components/submitBtns";
+import { SubmitBtn } from "@/app/(main)/dashboard/_components/submitBtns";
 import dynamic from "next/dynamic";
 const AddLink = dynamic(
-  () => import("@/app/(main)/(operation)/_components/addLink"),
+  () => import("@/app/(main)/dashboard/_components/addLink"),
 );
 const Modal = dynamic(() => import("@/_components/modal"));
 
