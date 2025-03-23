@@ -23,8 +23,8 @@
       "@_lib/*": ["./src/_lib/*"],
       "@types/*": ["./src/types/*"],
       "@api/*": ["./src/app/api/*"],
-      "@(auth)/*": ["./src/app/(main)/(dashboard)/(auth)/*"],
-      "@authDashboard/*": ["./src/app/(main)/(dashboard)/dashboard/*"],
+      "@(auth)/*": ["./src/app/(home)/(auth)/*"],
+      "@dashboard/*": ["./src/app/(home)/dashboard/*"],
       "@[pages]/*": ["./src/app/(pages)/[pages]/*"]
     }
   },

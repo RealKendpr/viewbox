@@ -12,7 +12,7 @@ const DeletePageBtn = dynamic(() =>
   import("../deletePage").then((mod) => mod.DeletePageBtn),
 );
 const AddLink = dynamic(
-  () => import("@/app/(main)/dashboard/_components/addLink"),
+  () => import("@/app/(home)/dashboard/_components/addLink"),
 );
 const Modal = dynamic(() => import("@/_components/modal"));
 
