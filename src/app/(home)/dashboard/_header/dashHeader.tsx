@@ -3,6 +3,7 @@ import LogoutBtn from "./logout";
 import { SmallNav } from "./smallNav";
 import { getUserData } from "@/_lib/getUserData";
 import { UserAvatar } from "./userAvatar";
+import { Breadcrumbs } from "./breadcrumbs";
 
 export async function DashHeader() {
   const username = (await getUserData("username")) as string;
@@ -11,9 +12,7 @@ export async function DashHeader() {
     <header>
       <div className="navbar bg-base-100 px-[4%] shadow-sm">
         <div className="flex-1">
-          <Link className="text-accent text-2xl font-bold" href="/">
-            One Page
-          </Link>
+          <Breadcrumbs />
         </div>
         <div className="flex gap-2">
           <div className="dropdown dropdown-end">

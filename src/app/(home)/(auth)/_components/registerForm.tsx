@@ -1,42 +1,36 @@
 "use client";
-
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { Inputs } from "./input";
-import { startTransition, useActionState, useEffect, useState } from "react";
-import { login } from "@/app/(main)/(dashboard)/(auth)/actions";
+import { register } from "@/app/(home)/(auth)/actions";
+import { useState } from "react";
+import Link from "next/link";
 import FormOperations from "./formOperations";
 import { FormUserType } from "@/types/UserTypes";
-import dynamic from "next/dynamic";
-const Modal = dynamic(() => import("@/_components/modal"));
 
-export function LoginForm() {
+export function RegisterForm() {
   const methods = useForm<FormUserType>();
-  const [isError, setIsError] = useState<boolean>(false);
-  const [state, loginAction] = useActionState(login, undefined);
+
+  const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
 
   const onSubmit: SubmitHandler<FormUserType> = async (
     formData: FormUserType,
   ) => {
-    startTransition(() => {
-      loginAction(formData);
-    });
+    const registerAction = await register(formData);
+
+    if (registerAction?.status === "success") {
+      setShowConfirmation(true);
+      methods.reset();
+    }
   };
-
-  useEffect(() => {
-    if (state?.errors.username) setIsError(true);
-    else setIsError(false);
-  }, [state?.errors.username]);
-
   return (
     <>
-      {isError && state?.errors.username && (
-        <Modal isOpen={isError} setIsOpen={setIsError}>
-          <h3 className="text-lg font-bold">Log-in failed</h3>
-          <p className="py-4">{state?.errors.username}</p>
-        </Modal>
+      {showConfirmation && (
+        <div>
+          <Link href="/login">Go to Login</Link>
+        </div>
       )}
       <FormProvider {...methods}>
-        <form className="" onSubmit={methods.handleSubmit(onSubmit)}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
           <Inputs
             name="username"
             label="Username"
@@ -49,7 +43,7 @@ export function LoginForm() {
             name="password"
             label="Password"
             placeholder="Password"
-            // pattern={/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/}
+            pattern={/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/}
             type="password"
             minL={8}
           />
@@ -62,7 +56,7 @@ export function LoginForm() {
             <br />
             At least one uppercase letter
           </p>
-          <FormOperations submitBtn="Log In" type="login" />
+          <FormOperations submitBtn="Create" type="register" />
         </form>
       </FormProvider>
     </>
