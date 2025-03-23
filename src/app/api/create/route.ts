@@ -16,6 +16,11 @@ export async function POST(request: NextRequest) {
       { status: 400 },
     );
 
+  if (data.links.length === 0)
+    return NextResponse.json(
+      { error: "at least one link is requried" },
+      { status: 411 },
+    );
   const userId = (await getUserData("userId")) as string;
 
   if (!userId)
