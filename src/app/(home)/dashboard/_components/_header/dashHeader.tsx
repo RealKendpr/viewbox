@@ -1,4 +1,3 @@
-import Link from "next/link";
 import LogoutBtn from "./logout";
 import { SmallNav } from "./smallNav";
 import { getUserData } from "@/_lib/getUserData";
