@@ -9,27 +9,26 @@ export function Breadcrumbs() {
 
   // just taking the last part of the current path and removing the dashes (-), and is being capitalize with CSS
   // I didnt over complicate the crumbs since its not very deep
-  const editPagePath = usePathname().split("/").pop()?.replace("-", " ");
+  const editPagePath = usePathname().split("/").slice(1); // take out the first empty string
 
   return (
     <div className="breadcrumbs text-sm">
       <ul>
-        <li>
-          {isDashboard ? (
-            <span>Dashboard</span>
-          ) : (
-            <Link href={"/dashboard"}>Dashboard</Link>
-          )}
-        </li>
-        {isCreatePage && (
-          <li>
-            <p>Create</p>
-          </li>
-        )}
-        {!isCreatePage && !isDashboard && (
-          <li className="capitalize">
-            <p>{editPagePath}</p>
-          </li>
+        {editPagePath.map(
+          (i, index) =>
+            index !== 2 && (
+              <li key={index}>
+                {i == "dashboard" ? (
+                  editPagePath.length >= 2 ? (
+                    <Link href={`/${i}`}>{i}</Link>
+                  ) : (
+                    <span>{i}</span>
+                  )
+                ) : (
+                  <span>{i}</span>
+                )}
+              </li>
+            ),
         )}
       </ul>
     </div>
