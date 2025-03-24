@@ -17,7 +17,7 @@ export default async function EditPage({
   const pageDetailsResult = JSON.stringify(pageDetails);
 
   return (
-    <div className="mx-[4%]">
+    <div>
       <EditForm pageDetails={pageDetailsResult} />
     </div>
   );
