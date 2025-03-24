@@ -15,9 +15,24 @@ Display all your social links in one page, with your own customization. My initi
 
 ## Usage
 
-This is a Next.js project, and using `npm`.
+This is a Next.js project, and using `npm`. <br/>
+A `.env` file needs to be defined at the root of project folder.
+
+Generate a secret in terminal:
 
 ```bash
+# macOS
+openssl rand -base64 32
+# Windows can use https://generate-secret.vercel.app/32
+```
+
+```env
+// .env
+SESSION_SECRET=your-secret-key
+MONGODB_URI=mongodb-uri
+```
+
+```npm
 npm install
 ```
 
