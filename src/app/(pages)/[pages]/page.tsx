@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import { getPage } from "./getPage";
 import { PageDetails } from "./_components/pageDetails";
 import { Metadata } from "next";
+import { getPage } from "@/_lib/getPageData";
 
 export async function generateMetadata({
   params,
