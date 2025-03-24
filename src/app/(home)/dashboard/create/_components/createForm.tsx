@@ -45,7 +45,8 @@ export function CreateForm() {
       }
       return;
     }
-    router.push("/dashboard");
+
+    router.push(`/dashboard/${formData.pageName}/layouts/`);
   };
 
   return (

@@ -1,18 +1,19 @@
 import Image from "next/image";
-import { getPagesInfo } from "../getPagesInfo";
 import { PagePreviewType } from "@/types/PageTypes";
-import { DropdownOptions } from "../_header/dropdownOptions";
+import { DropdownOptions } from "./_header/dropdownOptions";
 import { NoPages } from "./noPages";
+import { getPagesPreview } from "@/_lib/getPageData";
 
 export async function PagePreview() {
-  const pages: any = await getPagesInfo();
-  const pagesResult: PagePreviewType[] = await pages;
+  const pages: PagePreviewType[] | null = await getPagesPreview();
 
   const createdDate = (date: Date) => new Date(date).toLocaleDateString();
 
   return (
     <div className="shadow-md">
-      {pagesResult.length >= 1 ? (
+      {!pages ? (
+        <NoPages />
+      ) : (
         <table className="table">
           <thead>
             <tr className="grid grid-cols-[1fr_1fr_min-content] md:grid-cols-4">
@@ -23,7 +24,7 @@ export async function PagePreview() {
             </tr>
           </thead>
           <tbody>
-            {pagesResult.map((i, index) => (
+            {pages.map((i, index) => (
               <tr
                 className="grid grid-cols-[1fr_1fr_min-content] md:grid-cols-4"
                 key={index}
@@ -52,8 +53,6 @@ export async function PagePreview() {
             ))}
           </tbody>
         </table>
-      ) : (
-        <NoPages />
       )}
     </div>
   );
