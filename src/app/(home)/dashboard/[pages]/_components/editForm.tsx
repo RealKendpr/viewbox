@@ -37,6 +37,7 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
   const [isSame, setIsSame] = useState<boolean>(false);
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
   const [updated, setUpdated] = useState<boolean>(false);
+  const [linkRequired, setLinkRequired] = useState<boolean>(false);
 
   const methods = useForm<PageType>({
     defaultValues: formDefaultValues,
@@ -63,6 +64,11 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
     }
     setIsSame(false);
 
+    if (links.length === 0) {
+      setLinkRequired(true);
+      return;
+    }
+
     const response = await fetch("/api/update", {
       method: "PUT",
       headers: {
@@ -85,6 +91,9 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
 
   return (
     <>
+      <Modal isOpen={linkRequired} setIsOpen={setLinkRequired}>
+        <p>⚠️ At least one link is required</p>
+      </Modal>
       <Modal isOpen={isSame} setIsOpen={setIsSame}>
         <p className="text-info flex items-center gap-x-2 font-semibold">
           <span>
