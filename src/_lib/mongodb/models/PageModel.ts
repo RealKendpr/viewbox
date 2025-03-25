@@ -1,7 +1,7 @@
-import { PageDocumentType } from "@/types/PageTypes";
+import { LinkType, PageDocumentType } from "@/types/PageTypes";
 import mongoose, { Schema, model } from "mongoose";
 
-const linksSchema = new mongoose.Schema({
+const linksSchema = new Schema<LinkType>({
   linkName: {
     type: String,
     required: true,
