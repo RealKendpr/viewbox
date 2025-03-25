@@ -32,7 +32,7 @@ export default async function Pages({
   return (
     <>
       <div className="grid min-h-svh place-items-center">
-        <PageDetails page={pageResult} />
+        <PageDetails page={pageResult} slug={pages} />
       </div>
     </>
   );
