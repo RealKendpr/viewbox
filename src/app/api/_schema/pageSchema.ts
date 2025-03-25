@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+export const optionsSchema = z.object({
+  pageName: z.string(),
+  newTab: z.boolean().optional(),
+});
+
 export const linksSchema = z.object({
   linkName: z.string(),
   linkUrl: z
