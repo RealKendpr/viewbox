@@ -1,12 +1,12 @@
 import { getUserData } from "@/_lib/getUserData";
-import { OptionsType } from "@/types/PageTypes";
+import { OptionsExtendedType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
 import { optionsSchema } from "../../_schema/pageSchema";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import OptionsModel from "@/_lib/mongodb/models/ConfigModels";
 
 export async function PUT(request: NextRequest) {
-  const data: OptionsType = await request.json();
+  const data = await request.json();
   if (!data) return NextResponse.json({ error: "no content" }, { status: 204 });
 
   const userId = await getUserData("userId");
@@ -20,15 +20,16 @@ export async function PUT(request: NextRequest) {
   if (!result.success)
     return NextResponse.json({ error: result.error }, { status: 400 });
 
-  const { pageName, newTab } = result.data;
+  const { slug, newTab } = result.data;
   try {
     await connectDB();
 
-    const findOptions: OptionsType | null = await OptionsModel.findOneAndUpdate(
-      { pageName: pageName, userId: userId },
-      { newTab: newTab },
-      { upsert: true },
-    );
+    const findOptions: OptionsExtendedType | null =
+      await OptionsModel.findOneAndUpdate(
+        { slug: slug, userId: userId },
+        { newTab: newTab },
+        { upsert: true },
+      );
 
     await findOptions?.save();
     return NextResponse.json(

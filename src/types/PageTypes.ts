@@ -1,8 +1,11 @@
 import mongoose, { Document } from "mongoose";
 
-export interface OptionsType extends Document {
+export interface OptionsType {
+  newTab?: boolean;
+}
+export interface OptionsExtendedType extends Document {
   userId: mongoose.Types.ObjectId;
-  pageName: string;
+  slug: string;
   newTab?: boolean;
 }
 

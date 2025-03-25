@@ -1,13 +1,13 @@
-import { OptionsType } from "@/types/PageTypes";
+import { OptionsExtendedType } from "@/types/PageTypes";
 import mongoose, { Schema, model } from "mongoose";
 
-const OptionsSchema = new Schema<OptionsType>({
+const OptionsSchema = new Schema<OptionsExtendedType>({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-  pageName: {
+  slug: {
     type: String,
     required: true,
   },
@@ -18,5 +18,6 @@ const OptionsSchema = new Schema<OptionsType>({
 });
 
 const OptionsModel =
-  mongoose.models.Options || model<OptionsType>("Options", OptionsSchema);
+  mongoose.models.Options ||
+  model<OptionsExtendedType>("Options", OptionsSchema);
 export default OptionsModel;

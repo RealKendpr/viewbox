@@ -1,11 +1,9 @@
 "use client";
 
-import { OptionsType } from "@/types/PageTypes";
-
 export default function OptionsForm({ pageName }: { pageName: string }) {
   const handleSubmit = async (formData: FormData) => {
     const formValues = {
-      pageName: pageName,
+      slug: pageName,
       newTab: formData.get("newTab") == "on" ? true : false,
     };
 
