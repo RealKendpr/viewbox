@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const optionsSchema = z.object({
-  pageName: z.string(),
+  slug: z.string(),
   newTab: z.boolean().optional(),
 });
 

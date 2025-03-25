@@ -1,11 +1,18 @@
 "use client";
 
+import { revalidateForm } from "../_utils/revalidateForm";
 import { OptionsType } from "@/types/PageTypes";
 
-export default function OptionsForm({ pageName }: { pageName: string }) {
+export default function OptionsForm({
+  slug,
+  defaultValues,
+}: {
+  slug: string;
+  defaultValues: OptionsType | null;
+}) {
   const handleSubmit = async (formData: FormData) => {
     const formValues = {
-      pageName: pageName,
+      slug: slug,
       newTab: formData.get("newTab") == "on" ? true : false,
     };
 
@@ -18,14 +25,23 @@ export default function OptionsForm({ pageName }: { pageName: string }) {
     if (!response.ok) {
       return;
     }
+
+    await revalidateForm(`${slug}/options`);
   };
+
   return (
     <form className="mt-10" action={handleSubmit}>
       <div className="flex justify-between">
         <label className="label" htmlFor="newTab">
           Open links in new tab?
         </label>
-        <input id="newTab" name="newTab" type="checkbox" className="checkbox" />
+        <input
+          id="newTab"
+          name="newTab"
+          type="checkbox"
+          defaultChecked={defaultValues?.newTab}
+          className="checkbox"
+        />
       </div>
       <button
         className="btn btn-primary fixed right-[4%] bottom-[4%]"

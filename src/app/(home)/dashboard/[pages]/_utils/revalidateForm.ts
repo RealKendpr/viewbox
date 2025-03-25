@@ -2,6 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 
-export async function revalidateForm(name: string) {
-  revalidatePath(`/dashboard/${name}`);
+export async function revalidateForm(path: string) {
+  revalidatePath(`/dashboard/${path}`);
 }

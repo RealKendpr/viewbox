@@ -1,3 +1,4 @@
+import { getOptions } from "@/_lib/getPageConfig";
 import OptionsForm from "./optionsForm";
 
 export default async function OptionsPage({
@@ -7,10 +8,12 @@ export default async function OptionsPage({
 }) {
   const pageName = (await params).pages;
 
+  const defaultValues = await getOptions(pageName);
+
   return (
     <div>
-      <h1 className="text-lg font-medium">{pageName} Options</h1>
-      <OptionsForm pageName={pageName} />
+      <h1 className="text-lg font-medium capitalize">{pageName} Options</h1>
+      <OptionsForm slug={pageName} defaultValues={defaultValues} />
     </div>
   );
 }
