@@ -1,9 +1,10 @@
 import { getUserData } from "@/_lib/getUserData";
-import { OptionsExtendedType } from "@/types/PageTypes";
+import { OptionsExtendedType, PageDocumentType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
 import { optionsSchema } from "../../_schema/pageSchema";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import OptionsModel from "@/_lib/mongodb/models/ConfigModels";
+import PageModel from "@/_lib/mongodb/models/PageModel";
 
 export async function PUT(request: NextRequest) {
   const data = await request.json();
@@ -20,22 +21,20 @@ export async function PUT(request: NextRequest) {
   if (!result.success)
     return NextResponse.json({ error: result.error }, { status: 400 });
 
-  const { slug, newTab } = result.data;
+  const { slug, ...rest } = result.data;
+
   try {
     await connectDB();
 
     const findOptions: OptionsExtendedType | null =
       await OptionsModel.findOneAndUpdate(
         { slug: slug, userId: userId },
-        { newTab: newTab },
+        { ...rest },
         { upsert: true },
       );
 
     await findOptions?.save();
-    return NextResponse.json(
-      { message: "Selected layout updated" },
-      { status: 200 },
-    );
+    return NextResponse.json({ message: "Options updated" }, { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(

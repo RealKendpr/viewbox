@@ -16,7 +16,7 @@ export default function OptionsForm({
       newTab: formData.get("newTab") == "on" ? true : false,
     };
 
-    const response = await fetch("/api/update/layout", {
+    const response = await fetch("/api/update/options", {
       method: "PUT",
       headers: { "Content-Type": "applications/json" },
       body: JSON.stringify(formValues),

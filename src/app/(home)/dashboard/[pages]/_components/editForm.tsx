@@ -16,22 +16,19 @@ const AddLink = dynamic(
 );
 const Modal = dynamic(() => import("@/_components/modal"));
 
-export function EditForm({ pageDetails }: { pageDetails: string | null }) {
-  const pageDetailsResult: EditPageType =
-    pageDetails && JSON.parse(pageDetails);
-
+export function EditForm({ pageDetails }: { pageDetails: EditPageType }) {
   const extendedKeys = {
-    _id: pageDetailsResult._id,
-    createdAt: pageDetailsResult.createdAt,
+    _id: pageDetails._id,
+    createdAt: pageDetails.createdAt,
   };
   const formDefaultValues = {
-    pageIcon: pageDetailsResult?.pageIcon,
-    pageName: pageDetailsResult?.pageName,
-    pageDescription: pageDetailsResult.pageDescription,
+    pageIcon: pageDetails?.pageIcon,
+    pageName: pageDetails?.pageName,
+    pageDescription: pageDetails.pageDescription,
   }; // links must be handled by a useState,
   // because it was not exclusively a part of the form when data
   // was created/submitted to server
-  const [links, setLinks] = useState<LinkType[]>(pageDetailsResult.links);
+  const [links, setLinks] = useState<LinkType[]>(pageDetails.links);
 
   const router = useRouter();
   const [isSame, setIsSame] = useState<boolean>(false);
@@ -56,7 +53,7 @@ export function EditForm({ pageDetails }: { pageDetails: string | null }) {
       JSON.stringify(newFormData) ===
       JSON.stringify({
         ...formDefaultValues,
-        links: pageDetailsResult.links,
+        links: pageDetails.links,
       })
     ) {
       setIsSame(true);

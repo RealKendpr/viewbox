@@ -16,7 +16,7 @@ const pageData = (page: PageDocumentType) => {
 
 const formData = (page: PageDocumentType) => {
   return {
-    _id: page?._id as string,
+    _id: (page?._id as any).toString(),
     pageIcon: page?.pageIcon,
     pageName: page?.pageName,
     pageDescription: page?.pageDescription,
