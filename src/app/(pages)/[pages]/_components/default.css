@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.dimension {
+  @apply mx-auto min-h-[60%] w-[calc(80%+12px)];
+}
