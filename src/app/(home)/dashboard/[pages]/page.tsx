@@ -14,8 +14,8 @@ export default async function EditPage({
   if (!pageDetails) notFound();
 
   return (
-    <div className="mx-[4%]">
-      <EditForm pageDetails={pageDetails} />
+    <div>
+      <EditForm pageDetails={pageDetailsResult} />
     </div>
   );
 }

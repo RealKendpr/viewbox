@@ -1,16 +1,16 @@
 import Tabs from "./_components/tabs";
 
-export default function EditPageLayout({
+export default async function EditPageLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { pages: string };
+  params: Promise<{ pages: string }>;
 }) {
   return (
-    <>
-      <Tabs pageName={params.pages} />
+    <div className="mx-[4%]">
+      <Tabs pageName={(await params).pages} />
       {children}
-    </>
+    </div>
   );
 }

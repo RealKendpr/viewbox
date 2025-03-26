@@ -17,7 +17,7 @@ export function Breadcrumbs() {
         {editPagePath.map(
           (i, index) =>
             index !== 2 && (
-              <li key={index}>
+              <li className="*:capitalize" key={index}>
                 {i == "dashboard" ? (
                   editPagePath.length >= 2 ? (
                     <Link href={`/${i}`}>{i}</Link>

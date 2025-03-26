@@ -1,5 +1,19 @@
-export default function OptionsPage({ params }: { params: { pages: string } }) {
-  const pageName = params.pages;
+import { getOptions } from "@/_lib/getPageConfig";
+import OptionsForm from "./optionsForm";
 
-  return <div>{pageName} Options selection page</div>;
+export default async function OptionsPage({
+  params,
+}: {
+  params: Promise<{ pages: string }>;
+}) {
+  const pageName = (await params).pages;
+
+  const defaultValues = await getOptions(pageName);
+
+  return (
+    <div>
+      <h1 className="text-lg font-medium capitalize">{pageName} Options</h1>
+      <OptionsForm slug={pageName} defaultValues={defaultValues} />
+    </div>
+  );
 }

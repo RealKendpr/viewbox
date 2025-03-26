@@ -1,8 +1,9 @@
 import LogoutBtn from "./logout";
 import { SmallNav } from "./smallNav";
 import { getUserData } from "@/_lib/getUserData";
-import { UserAvatar } from "./userAvatar";
+import { UserAvatar } from "@/_components/userAvatar";
 import { Breadcrumbs } from "./breadcrumbs";
+import { initials } from "@dicebear/collection";
 
 export async function DashHeader() {
   const username = (await getUserData("username")) as string;
@@ -20,8 +21,13 @@ export async function DashHeader() {
               role="button"
               className="btn btn-ghost btn-circle avatar"
             >
-              <div className="w-10 rounded-full">
-                <UserAvatar username={username} />
+              <div className="size-9 grow rounded-full">
+                <UserAvatar
+                  className="size-8 rounded-full object-cover"
+                  username={username}
+                  size={32}
+                  style={initials}
+                />
               </div>
             </div>
             <ul

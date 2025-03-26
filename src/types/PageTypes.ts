@@ -1,8 +1,22 @@
 import mongoose, { Document } from "mongoose";
 
+export interface OptionsType {
+  newTab?: boolean;
+}
+export interface OptionsExtendedType extends Document {
+  userId: mongoose.Types.ObjectId;
+  slug: string;
+  newTab?: boolean;
+}
+
+export interface ConfigType {
+  options?: OptionsType;
+}
+
 export interface LinkType {
   linkName: string;
   linkUrl: string;
+  linkIcon?: string;
 }
 
 export interface PageDocumentType extends Document {
