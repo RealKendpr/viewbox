@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+.default-layout {
+  & .card {
+    @apply mx-auto min-h-[60%] w-[calc(80%+12px)];
+  }
+}
+
+/* bento layout */
+
+.bento-layout {
+  & .card {
+    @apply mx-auto min-h-[60%] w-[calc(80%+12px)] px-4 py-10;
+
+    & .card-header {
+      @apply mb-12 flex gap-x-3;
+
+      & > * {
+        @apply grow;
+      }
+    }
+
+    & .profile-image img {
+      @apply size-full min-w-21 rounded-lg;
+    }
+
+    & .card-copy {
+      @apply grid place-content-center gap-y-2 truncate;
+    }
+
+    & .link-list {
+      @apply grid auto-rows-[100px] grid-cols-[repeat(2,minmax(100px,1fr))] gap-3;
+
+      & a {
+        @apply h-full;
+
+        & span {
+          @apply hidden;
+        }
+      }
+
+      & > :last-child {
+        @apply col-span-2;
+      }
+    }
+  }
+}
