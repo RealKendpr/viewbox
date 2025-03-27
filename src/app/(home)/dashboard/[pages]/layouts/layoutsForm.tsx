@@ -1,6 +1,7 @@
 "use client";
 
 import layouts from "@/layouts/layouts.json";
+import { revalidateForm } from "../_utils/revalidateForm";
 
 export function LayoutsForm({
   slug,
@@ -26,6 +27,8 @@ export function LayoutsForm({
     if (!response.ok) {
       return;
     }
+
+    revalidateForm(`/dashboard${slug}/layouts`);
   };
 
   return (

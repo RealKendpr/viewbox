@@ -4,8 +4,6 @@ import { favicon } from "@/app/_utils/getFavicon";
 import { UserAvatar } from "@/_components/userAvatar";
 import { funEmoji } from "@dicebear/collection";
 import { getOptions } from "@/_lib/getPageConfig";
-// import "@[pages]/_components/default.css";
-import "@[pages]/_components/bentoLayout.css";
 
 export async function PageDetails({
   page,
@@ -17,9 +15,9 @@ export async function PageDetails({
   const options = await getOptions(slug);
 
   return (
-    <div className={`bg-base-100 dimension layout rounded-lg px-4 py-10`}>
-      <div className="mb-4">
-        <div className="image mx-auto size-21">
+    <div className="card bg-base-100 rounded-lg">
+      <div className="card-header">
+        <div className="profile-image">
           {page.pageIcon ? (
             <Image
               className="size-20 object-cover"
@@ -37,22 +35,20 @@ export async function PageDetails({
             />
           )}
         </div>
-        <div>
-          <h1 className="mt-4 mb-5 text-center text-xl font-semibold">
-            {page.pageName}
-          </h1>
+        <div className="card-copy">
+          <h1 className="text-center text-xl font-semibold">{page.pageName}</h1>
           <p className="text-center text-sm">{page.pageDescription}</p>
         </div>
       </div>
-      <ul className="">
+      <ul className="link-list">
         {page.links.map((item, index) => (
           <li key={index}>
             <a
-              className="btn btn-soft btn-block grid grid-cols-[24px_1fr]"
+              className="btn btn-soft btn-block"
               href={item.linkUrl}
               target={options?.newTab ? "_blank" : "_self"}
             >
-              <img src={favicon(item.linkUrl)} width={24} height={24} alt="" />
+              {/* <img src={favicon(item.linkUrl)} width={24} height={24} alt="" /> */}
               <span>{item.linkName}</span>
             </a>
           </li>
