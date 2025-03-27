@@ -1,5 +1,11 @@
 import mongoose, { Document } from "mongoose";
 
+export interface LayoutsType {
+  userId: mongoose.Types.ObjectId | string;
+  slug: string;
+  activeLayout: string;
+}
+
 export interface OptionsType {
   newTab?: boolean;
 }

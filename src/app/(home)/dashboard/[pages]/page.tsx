@@ -15,7 +15,7 @@ export default async function EditPage({
 
   return (
     <div>
-      <EditForm pageDetails={pageDetailsResult} />
+      <EditForm pageDetails={pageDetails} />
     </div>
   );
 }

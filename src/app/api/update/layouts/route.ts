@@ -1,9 +1,8 @@
 import { getUserData } from "@/_lib/getUserData";
-import { OptionsExtendedType, PageDocumentType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
-import { optionsSchema } from "../../_schema/pageSchema";
+import { layoutSchema } from "@api/_schema/pageSchema";
 import { connectDB } from "@/_lib/mongodb/mongodb";
-import { OptionsModel } from "@/_lib/mongodb/models/ConfigModels";
+import { ActiveLayoutModel } from "@/_lib/mongodb/models/ConfigModels";
 
 export async function PUT(request: NextRequest) {
   const data = await request.json();
@@ -16,22 +15,21 @@ export async function PUT(request: NextRequest) {
       { status: 401 },
     );
 
-  const result = optionsSchema.safeParse(data);
+  const result = layoutSchema.safeParse(data);
   if (!result.success)
     return NextResponse.json({ error: result.error }, { status: 400 });
 
-  const { slug, ...rest } = result.data;
+  const { slug, active } = result.data;
   try {
     await connectDB();
 
-    const findOptions: OptionsExtendedType | null =
-      await OptionsModel.findOneAndUpdate(
-        { slug: slug, userId: userId },
-        { ...rest },
-        { upsert: true },
-      );
+    const findLayouts: any | null = await ActiveLayoutModel.findOneAndUpdate(
+      { slug: slug, userId: userId },
+      { activeLayout: active },
+      { upsert: true },
+    );
 
-    await findOptions?.save();
+    await findLayouts?.save();
     return NextResponse.json({ message: "Options updated" }, { status: 200 });
   } catch (error) {
     console.log(error);
