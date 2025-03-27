@@ -30,10 +30,8 @@ export default async function Pages({
   if (!pageResult) return notFound();
 
   return (
-    <>
-      <div className="grid min-h-svh place-items-center">
-        <PageDetails page={pageResult} slug={pages} />
-      </div>
-    </>
+    <main className="grid min-h-svh place-items-center">
+      <PageDetails page={pageResult} slug={pages} />
+    </main>
   );
 }
