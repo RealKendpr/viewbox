@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+.dimension {
+  @apply mx-auto min-h-[60%] w-[calc(80%+12px)];
+}
+.layout {
+  & > div {
+    @apply flex;
+
+    & > * {
+      @apply grow;
+    }
+  }
+
+  & .image img {
+    @apply rounded-lg;
+  }
+
+  & > ul {
+    @apply grid grid-cols-2 gap-3;
+
+    & a {
+      @apply h-[100px];
+
+      & span {
+        @apply hidden;
+      }
+    }
+  }
+}

@@ -1,8 +1,16 @@
 import { z } from "zod";
+import layouts from "@/layouts/layouts.json";
+
+const layoutsEnum = layouts.layouts as [string, ...string[]];
 
 export const optionsSchema = z.object({
   slug: z.string(),
   newTab: z.boolean().optional(),
+});
+
+export const layoutSchema = z.object({
+  slug: z.string(),
+  active: z.enum(layoutsEnum),
 });
 
 export const linksSchema = z.object({
