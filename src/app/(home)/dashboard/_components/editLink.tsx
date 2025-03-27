@@ -127,7 +127,10 @@ export default function LinkDisplay({
         <>
           <ul className="mt-3 px-2 pb-2">
             {links.map((item, index) => (
-              <li className="flex items-center justify-between" key={index}>
+              <li
+                className="group flex items-center justify-between"
+                key={index}
+              >
                 <div className="flex gap-x-3">
                   <img
                     src={favicon(item.linkUrl)}
@@ -137,7 +140,7 @@ export default function LinkDisplay({
                   />
                   <span>{item.linkName}</span>
                 </div>
-                <div>
+                <div className="opacity-0 transition-opacity group-hover:opacity-100">
                   <button
                     className="btn btn-circle btn-ghost btn-sm"
                     type="button"
