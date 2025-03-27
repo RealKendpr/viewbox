@@ -85,7 +85,7 @@ export default function AddLink({
           removeLink={removeLink}
         />
         <button
-          className="btn btn-dash btn-sm w-[calc(100%-12px)] self-center"
+          className="btn btn-dash btn-sm mb-5 w-[calc(100%-12px)] self-center"
           type="button"
           onClick={() => setOPenField(true)}
         >
