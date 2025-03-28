@@ -1,16 +1,16 @@
 export function SubmitBtn({
   loading,
-  name,
+  children,
 }: {
   loading: boolean;
-  name: string;
+  children: React.ReactNode;
 }) {
   return (
-    <button className="btn btn-primary w-full">
+    <button className="btn btn-primary">
       {loading ? (
         <span className="loading loading-spinner loading-xs"></span>
       ) : (
-        name
+        children
       )}
     </button>
   );
