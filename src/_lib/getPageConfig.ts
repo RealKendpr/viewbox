@@ -28,11 +28,11 @@ export async function getActiveLayout(slug: string) {
     });
 
     if (!findLayout) {
-      return null;
+      return "default";
     }
     return findLayout.activeLayout;
   } catch (error) {
     console.log(error);
-    return null;
+    return "default";
   }
 }
