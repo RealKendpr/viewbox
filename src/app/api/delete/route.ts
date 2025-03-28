@@ -5,9 +5,9 @@ import { connectDB } from "@/_lib/mongodb/mongodb";
 import PageModel from "@/_lib/mongodb/models/PageModel";
 
 const checks = async (request: NextRequest) => {
-  const pageId = await request.text();
+  const pageSlug = await request.text();
 
-  if (!pageId)
+  if (!pageSlug)
     return NextResponse.json(
       { error: "empty request not accepted" },
       { status: 400 },
@@ -22,7 +22,7 @@ const checks = async (request: NextRequest) => {
     );
 
   const requestObj = {
-    _id: pageId,
+    pageSlug: pageSlug,
     userId: userId,
   };
 
@@ -41,7 +41,7 @@ export async function DELETE(request: NextRequest) {
     await connectDB();
 
     const findPage: PageDocumentType | null = await PageModel.findOneAndDelete({
-      _id: passedChecks._id,
+      slug: passedChecks.pageSlug,
       userId: passedChecks.userId,
     });
 

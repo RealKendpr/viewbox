@@ -1,22 +1,18 @@
 import Modal from "@/_components/modal";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export function DeletePageBtn({
-  pageId,
-  router,
-}: {
-  pageId: string;
-  router: any;
-}) {
+export function DeletePageBtn({ pageSlug }: { pageSlug: string }) {
+  const router = useRouter();
   const [openPromt, setOpenPromt] = useState<boolean>(false);
 
-  const handleDelete = async (id: string, router: any) => {
+  const handleDelete = async (slug: string, router: any) => {
     const response = await fetch("/api/delete", {
       method: "DELETE",
       headers: {
         "Content-Type": "text/plain",
       },
-      body: id,
+      body: slug,
     });
 
     if (!response.ok) {
@@ -27,6 +23,13 @@ export function DeletePageBtn({
 
   return (
     <>
+      <button
+        className="btn btn-warning mt-[8.25px] w-full"
+        type="button"
+        onClick={() => setOpenPromt(true)}
+      >
+        Delete Page
+      </button>
       <Modal isOpen={openPromt} setIsOpen={setOpenPromt}>
         <div>
           <p className="text-warning flex items-center gap-x-2 font-semibold">
@@ -56,7 +59,7 @@ export function DeletePageBtn({
             <button
               className="btn btn-warning grow"
               type="button"
-              onClick={() => handleDelete(pageId, router)}
+              onClick={() => handleDelete(pageSlug, router)}
             >
               Yes
             </button>
@@ -70,13 +73,6 @@ export function DeletePageBtn({
           </div>
         </div>
       </Modal>
-      <button
-        className="btn btn-warning mt-[8.25px] w-full"
-        type="button"
-        onClick={() => setOpenPromt(true)}
-      >
-        Delete Page
-      </button>
     </>
   );
 }
