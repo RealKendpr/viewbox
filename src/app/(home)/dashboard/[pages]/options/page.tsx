@@ -11,9 +11,9 @@ export default async function OptionsPage({
   const defaultValues = await getOptions(pageName);
 
   return (
-    <div>
+    <>
       <h1 className="text-lg font-medium capitalize">{pageName} Options</h1>
       <OptionsForm slug={pageName} defaultValues={defaultValues} />
-    </div>
+    </>
   );
 }

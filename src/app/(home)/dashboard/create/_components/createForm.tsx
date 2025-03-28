@@ -58,7 +58,7 @@ export function CreateForm() {
         >
           <InputSet />
           <AddLink links={links} setLinks={setLinks} />
-          <SubmitBtn loading={methods.formState.isSubmitting} name="Create" />
+          <SubmitBtn loading={methods.formState.isSubmitting}>Create</SubmitBtn>
         </form>
       </FormProvider>
       <Modal isOpen={linkRequired} setIsOpen={setLinkRequired}>

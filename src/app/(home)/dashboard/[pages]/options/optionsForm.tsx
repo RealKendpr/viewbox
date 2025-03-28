@@ -4,6 +4,10 @@ import { useState } from "react";
 import { revalidateForm } from "../_utils/revalidateForm";
 import { OptionsType } from "@/types/PageTypes";
 import Modal from "@/_components/modal";
+import dynamic from "next/dynamic";
+const DeletePageBtn = dynamic(() =>
+  import("../deletePage").then((mod) => mod.DeletePageBtn),
+);
 
 export default function OptionsForm({
   slug,
@@ -60,6 +64,10 @@ export default function OptionsForm({
           Save changes
         </button>
       </form>
+      <div className="mt-6">
+        <h2 className="mb-3 text-lg font-medium">Advanced</h2>
+        <DeletePageBtn pageSlug={slug} />
+      </div>
       <Modal isOpen={updated} setIsOpen={setUpdated}>
         <p className="text-success flex items-center gap-x-2 font-semibold">
           <span>
