@@ -2,7 +2,27 @@
 
 .default-layout {
   & .card {
-    @apply mx-auto min-h-[60%] w-[calc(80%+12px)];
+    @apply mx-auto min-h-[60%] w-[calc(80%+12px)] max-w-md min-w-xs px-4 py-10;
+  }
+
+  & .profile-image {
+    @apply mx-auto w-1/3;
+
+    & img {
+      @apply size-full min-w-21 rounded-full;
+    }
+  }
+
+  & .card-copy {
+    @apply mt-4 mb-6 grid place-content-center gap-y-2 truncate text-center;
+  }
+
+  & .link-list {
+    @apply grid gap-y-2.5;
+
+    & a {
+      @apply font-medium;
+    }
   }
 }
 
@@ -10,22 +30,22 @@
 
 .bento-layout {
   & .card {
-    @apply mx-auto min-h-[60%] w-[calc(80%+12px)] px-4 py-10;
+    @apply mx-auto min-h-[60%] w-[calc(80%+12px)] max-w-md min-w-xs px-4 py-10;
 
     & .card-header {
       @apply mb-12 flex gap-x-3;
+    }
 
-      & > * {
-        @apply grow;
+    & .profile-image {
+      @apply w-1/3 grow-0;
+
+      & img {
+        @apply size-full min-w-21 rounded-lg;
       }
     }
 
-    & .profile-image img {
-      @apply size-full min-w-21 rounded-lg;
-    }
-
     & .card-copy {
-      @apply grid place-content-center gap-y-2 truncate;
+      @apply grid grow content-center gap-y-2 truncate;
     }
 
     & .link-list {

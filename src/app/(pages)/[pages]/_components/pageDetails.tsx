@@ -27,17 +27,12 @@ export async function PageDetails({
               alt=""
             />
           ) : (
-            <UserAvatar
-              className="size-20 object-cover"
-              username={page.pageName}
-              size={80}
-              style={funEmoji}
-            />
+            <UserAvatar username={page.pageName} size={150} style={funEmoji} />
           )}
         </div>
         <div className="card-copy">
-          <h1 className="text-center text-xl font-semibold">{page.pageName}</h1>
-          <p className="text-center text-sm">{page.pageDescription}</p>
+          <h1 className="text-xl font-semibold">{page.pageName}</h1>
+          <p className="text-sm">{page.pageDescription}</p>
         </div>
       </div>
       <ul className="link-list">
