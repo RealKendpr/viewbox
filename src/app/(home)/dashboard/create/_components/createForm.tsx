@@ -51,16 +51,6 @@ export function CreateForm() {
 
   return (
     <>
-      <Modal isOpen={linkRequired} setIsOpen={setLinkRequired}>
-        <p>⚠️ At least one link is required</p>
-      </Modal>
-      <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
-        <p className="font-semibold">⚠️ Page already exist</p>
-        <p className="py-4 text-sm">
-          The name of the page your trying to create already exist, you may
-          choose a different name
-        </p>
-      </Modal>
       <FormProvider {...methods}>
         <form
           className="grid max-w-md gap-y-3"
@@ -71,6 +61,16 @@ export function CreateForm() {
           <SubmitBtn loading={methods.formState.isSubmitting} name="Create" />
         </form>
       </FormProvider>
+      <Modal isOpen={linkRequired} setIsOpen={setLinkRequired}>
+        <p>⚠️ At least one link is required</p>
+      </Modal>
+      <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
+        <p className="font-semibold">⚠️ Page already exist</p>
+        <p className="py-4 text-sm">
+          The name of the page your trying to create already exist, you may
+          choose a different name
+        </p>
+      </Modal>
     </>
   );
 }
