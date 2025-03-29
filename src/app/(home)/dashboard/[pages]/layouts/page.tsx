@@ -9,12 +9,5 @@ export default async function LayoutPage({
   const slug = (await params).pages;
   const activeLayout = await getActiveLayout(slug);
 
-  return (
-    <div>
-      <h1 className="text-lg font-medium capitalize">
-        {slug} Layout selection page
-      </h1>
-      <LayoutsForm slug={slug} activeLayout={activeLayout} />
-    </div>
-  );
+  return <LayoutsForm slug={slug} activeLayout={activeLayout} />;
 }
