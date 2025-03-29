@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { SubmitBtn } from "../../_components/saveButton";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 const DeletePageBtn = dynamic(() =>
-  import("../deletePage").then((mod) => mod.DeletePageBtn),
+  import("./delete").then((mod) => mod.DeleteBtn),
 );
 
 export default function OptionsForm({

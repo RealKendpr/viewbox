@@ -2,7 +2,7 @@ import Modal from "@/_components/modal";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export function DeletePageBtn({ pageSlug }: { pageSlug: string }) {
+export function DeleteBtn({ pageSlug }: { pageSlug: string }) {
   const router = useRouter();
   const [openPromt, setOpenPromt] = useState<boolean>(false);
 
