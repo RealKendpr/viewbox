@@ -25,7 +25,7 @@ export default function Tabs({ pageName }: { pageName: string }) {
   };
 
   return (
-    <div className="tabs tabs-border mb-10 *:capitalize" role="tablist">
+    <div className="tabs tabs-border mt-2 mb-10 *:capitalize" role="tablist">
       {tabs.map((i) =>
         isActive(i) ? (
           <p className="tab-active tab" role="tab" key={i}>

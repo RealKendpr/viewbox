@@ -13,9 +13,5 @@ export default async function EditPage({
   // redirect users if they try to visit a slug/page that dont exist on the database
   if (!pageDetails) notFound();
 
-  return (
-    <div>
-      <EditForm pageDetails={pageDetails} />
-    </div>
-  );
+  return <EditForm pageDetails={pageDetails} />;
 }

@@ -5,7 +5,7 @@ export function InputSet() {
   const { register } = useFormContext();
 
   return (
-    <div className="grid gap-y-4">
+    <div className="mt-8 grid gap-y-4">
       <div className="fieldset">
         <label htmlFor="avatar" className="fieldset-legend place-self-start">
           Pick an Avatar

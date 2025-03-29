@@ -76,8 +76,8 @@ export default function AddLink({
   }, [openField]);
 
   return (
-    <div>
-      <div className="flex min-h-52 flex-col">
+    <>
+      <div className="mt-3 flex min-h-52 flex-col">
         <p className="text-xl font-bold">Links</p>
         <LinkDisplay
           links={links}
@@ -107,6 +107,6 @@ export default function AddLink({
           </button>
         </fieldset>
       </Modal>
-    </div>
+    </>
   );
 }

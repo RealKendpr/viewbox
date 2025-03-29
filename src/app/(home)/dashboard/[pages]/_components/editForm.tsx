@@ -80,8 +80,12 @@ export function EditForm({ pageDetails }: { pageDetails: EditPageType }) {
   return (
     <>
       <FormProvider {...methods}>
-        <form className="max-w-md" onSubmit={methods.handleSubmit(onSubmit)}>
-          <div className="flex justify-end">
+        <form
+          className="grid max-w-md"
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
+          <div className="flex items-center justify-between">
+            <h1 className="text-lg font-medium">Edit</h1>
             <SubmitBtn />
           </div>
           <InputSet />
