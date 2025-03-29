@@ -1,6 +1,10 @@
 import mongoose, { Document } from "mongoose";
 
 export interface LayoutsType {
+  activeLayout: string;
+}
+
+export interface LayoutsExtendedType extends Document {
   userId: mongoose.Types.ObjectId | string;
   slug: string;
   activeLayout: string;

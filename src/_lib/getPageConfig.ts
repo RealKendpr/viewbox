@@ -1,4 +1,4 @@
-import { LayoutsType, OptionsExtendedType } from "@/types/PageTypes";
+import { LayoutsExtendedType, OptionsExtendedType } from "@/types/PageTypes";
 import { connectDB } from "./mongodb/mongodb";
 import { ActiveLayoutModel, OptionsModel } from "./mongodb/models/ConfigModels";
 
@@ -23,9 +23,10 @@ export async function getOptions(slug: string) {
 export async function getActiveLayout(slug: string) {
   try {
     await connectDB();
-    const findLayout: LayoutsType | null = await ActiveLayoutModel.findOne({
-      slug: slug,
-    });
+    const findLayout: LayoutsExtendedType | null =
+      await ActiveLayoutModel.findOne({
+        slug: slug,
+      });
 
     if (!findLayout) {
       return "default";
