@@ -5,7 +5,7 @@ import { InputSet } from "@/app/(home)/dashboard/_components/inputSet";
 import { PageType, LinkType } from "@/types/PageTypes";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { SubmitBtn } from "@/app/(home)/dashboard/_components/submitBtns";
+import { SubmitBtn } from "@/app/(home)/dashboard/_components/saveButton";
 import dynamic from "next/dynamic";
 const AddLink = dynamic(
   () => import("@/app/(home)/dashboard/_components/addLink"),
@@ -58,7 +58,10 @@ export function CreateForm() {
         >
           <InputSet />
           <AddLink links={links} setLinks={setLinks} />
-          <SubmitBtn loading={methods.formState.isSubmitting}>Create</SubmitBtn>
+
+          <button className="btn btn-primary" type="submit">
+            Create
+          </button>
         </form>
       </FormProvider>
       <Modal isOpen={linkRequired} setIsOpen={setLinkRequired}>
