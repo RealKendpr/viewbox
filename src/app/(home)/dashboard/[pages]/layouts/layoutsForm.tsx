@@ -46,23 +46,27 @@ export function LayoutsForm({
             <h1 className="text-lg font-medium capitalize">Layouts</h1>
             <SubmitBtn />
           </div>
-          <div className="mt-8 flex justify-between">
+          <div className="mt-8">
             {layouts.layouts?.map((i) => (
-              <div key={i}>
-                <label className="label" htmlFor={i}>
-                  {i}
-                </label>
-                <input
-                  className="radio"
-                  {...register("activeLayout")}
-                  type="radio"
-                  id={i}
-                  value={i}
-                  defaultChecked={
-                    activeLayout ? i === activeLayout : i === "default"
-                  }
-                />
-              </div>
+              <label
+                htmlFor={i}
+                className="bg-base-200 card card-sm mb-4 cursor-pointer shadow-sm"
+                key={i}
+              >
+                <div className="card-body flex-row items-center justify-between">
+                  <span className="card-title capitalize">{i}</span>
+                  <input
+                    className="radio radio-sm"
+                    {...register("activeLayout")}
+                    type="radio"
+                    id={i}
+                    value={i}
+                    defaultChecked={
+                      activeLayout ? i === activeLayout : i === "default"
+                    }
+                  />
+                </div>
+              </label>
             ))}
           </div>
         </form>
