@@ -1,5 +1,20 @@
-export default function StylesPage({ params }: { params: { pages: string } }) {
-  const pageName = params.pages;
+import { BackgroundSelector } from "./background";
 
-  return <div>{pageName} Styles selection page</div>;
+export default async function StylesPage({
+  params,
+}: {
+  params: Promise<{ pages: string }>;
+}) {
+  const pageName = (await params).pages;
+
+  return (
+    <div>
+      <div>
+        <h1>Styles</h1>
+      </div>
+      <div>
+        <BackgroundSelector slug={pageName} />
+      </div>
+    </div>
+  );
 }
