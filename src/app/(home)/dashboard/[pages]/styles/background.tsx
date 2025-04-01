@@ -4,12 +4,22 @@ import colors from "@/styles/colors.json";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-export function BackgroundSelector() {
+export function BackgroundSelector({ background }: { background: string }) {
+  const currentTab = () => {
+    if (colors.solid.includes(background) || background == "") {
+      return "solid";
+    }
+    if (colors.gradient.includes(background)) {
+      return "gradient";
+    }
+    return "image";
+  };
+
   const tabs = ["solid", "gradient", "image"];
-  const [openTab, setOpenTab] = useState<string>("solid");
+  const [openTab, setOpenTab] = useState<string>(currentTab());
 
   const { setValue } = useFormContext();
-  const [color, setColor] = useState<string>("");
+  const [color, setColor] = useState<string>(background);
 
   const handleSelection = (i: string) => {
     setValue("background", i);

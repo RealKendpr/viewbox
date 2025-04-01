@@ -58,7 +58,8 @@ export async function getStyles(slug: string): Promise<StylesType | null> {
       return null;
     }
 
-    return findStyles.styles;
+    // need to convert to plain object first
+    return JSON.parse(JSON.stringify(findStyles.styles));
   } catch (error) {
     console.log(error);
     return null;

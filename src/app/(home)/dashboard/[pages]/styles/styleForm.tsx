@@ -1,11 +1,20 @@
 "use client";
 
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { BackgroundSelector } from "./background";
 import { SubmitBtn } from "../../_components/saveButton";
 import { StylesType } from "@/types/PageTypes";
+import dynamic from "next/dynamic";
+const BackgroundSelector = dynamic(() =>
+  import("./background").then((mod) => mod.BackgroundSelector),
+);
 
-export function StylesForm({ slug }: { slug: string }) {
+export function StylesForm({
+  slug,
+  styles,
+}: {
+  slug: string;
+  styles: StylesType | null;
+}) {
   const methods = useForm<StylesType>();
 
   const onSubmit: SubmitHandler<StylesType> = async (formData) => {
@@ -34,7 +43,7 @@ export function StylesForm({ slug }: { slug: string }) {
           <h1 className="text-lg font-medium capitalize">Styles</h1>
           <SubmitBtn />
         </div>
-        <BackgroundSelector />
+        <BackgroundSelector background={styles?.background || ""} />
       </form>
     </FormProvider>
   );
