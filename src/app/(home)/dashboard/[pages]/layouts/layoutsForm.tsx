@@ -42,11 +42,11 @@ export function LayoutsForm({
     <>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <div className="flex items-center justify-between">
+          <div className="mb-8 flex items-center justify-between">
             <h1 className="text-lg font-medium capitalize">Layouts</h1>
             <SubmitBtn />
           </div>
-          <div className="mt-8">
+          <div>
             {layouts.layouts?.map((i) => (
               <label
                 htmlFor={i}

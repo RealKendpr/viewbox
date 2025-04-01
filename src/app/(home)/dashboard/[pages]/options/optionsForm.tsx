@@ -45,11 +45,11 @@ export default function OptionsForm({
     <>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <div className="flex items-center justify-between">
+          <div className="mb-8 flex items-center justify-between">
             <h1 className="text-lg font-medium capitalize">Options</h1>
             <SubmitBtn />
           </div>
-          <div className="mt-8 flex justify-between">
+          <div className="flex justify-between">
             <label className="label" htmlFor="newTab">
               Open links in new tab?
             </label>

@@ -2,7 +2,7 @@
 
 import colors from "@/styles/colors.json";
 import { useState } from "react";
-import { SubmitBtn } from "../../_components/submitBtns";
+import { SubmitBtn } from "../../_components/saveButton";
 
 export function BackgroundSelector({ slug }: { slug: string }) {
   const tabs = ["solid", "gradient", "image"];
@@ -12,8 +12,9 @@ export function BackgroundSelector({ slug }: { slug: string }) {
 
   return (
     <form>
-      <div>
-        <h1>Styles</h1>
+      <div className="mb-8 flex items-center justify-between">
+        <h1 className="text-lg font-medium capitalize">Styles</h1>
+        {/* <SubmitBtn /> */}
       </div>
       <div className="bg-base-200/50 collapse">
         <label className="collapse-title" htmlFor="backgrounds">
