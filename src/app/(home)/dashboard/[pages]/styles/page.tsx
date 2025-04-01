@@ -1,4 +1,4 @@
-import { BackgroundSelector } from "./background";
+import { StylesForm } from "./styleForm";
 
 export default async function StylesPage({
   params,
@@ -7,5 +7,5 @@ export default async function StylesPage({
 }) {
   const pageName = (await params).pages;
 
-  return <BackgroundSelector slug={pageName} />;
+  return <StylesForm slug={pageName} />;
 }
