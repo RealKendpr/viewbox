@@ -1,21 +1,24 @@
 "use client";
 
 import colors from "@/styles/colors.json";
-import { StylesType } from "@/types/PageTypes";
 import { useState } from "react";
-import { UseFormSetValue } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
-export function BackgroundSelector({
-  setValue,
-}: {
-  setValue: UseFormSetValue<StylesType>;
-}) {
+export function BackgroundSelector() {
   const tabs = ["solid", "gradient", "image"];
   const [openTab, setOpenTab] = useState<string>("solid");
 
+  const { setValue } = useFormContext();
+  const [color, setColor] = useState<string>("");
+
+  const handleSelection = (i: string) => {
+    setValue("background", i);
+    setColor(i);
+  };
+
   return (
     <div className="bg-base-200/50 collapse">
-      <label className="collapse-title" htmlFor="backgrounds">
+      <label className="collapse-title font-medium" htmlFor="backgrounds">
         Backgrounds
       </label>
       <input
@@ -38,28 +41,28 @@ export function BackgroundSelector({
           ))}
         </div>
         {openTab == "solid" && (
-          <ul className="flex flex-wrap gap-1.5">
+          <ul className="flex flex-wrap gap-2">
             {colors.solid.map((i) => (
               <li key={i}>
                 <button
-                  className={`size-12 rounded-full hover:cursor-pointer`}
+                  className={`size-12 rounded-full hover:cursor-pointer ${i == color ? "border-2" : null}`}
                   style={{ backgroundColor: i }}
                   type="button"
-                  onClick={() => setValue("background", i)}
+                  onClick={() => handleSelection(i)}
                 />
               </li>
             ))}
           </ul>
         )}
         {openTab == "gradient" && (
-          <ul className="flex flex-wrap gap-1.5">
+          <ul className="flex flex-wrap gap-2">
             {colors.gradient.map((i) => (
               <li key={i}>
                 <button
-                  className={`size-12 rounded-full hover:cursor-pointer`}
+                  className={`size-12 rounded-full hover:cursor-pointer ${i == color && "border-3"}`}
                   style={{ background: i }}
                   type="button"
-                  onClick={() => setValue("background", i)}
+                  onClick={() => handleSelection(i)}
                 />
               </li>
             ))}

@@ -34,7 +34,7 @@ export function StylesForm({ slug }: { slug: string }) {
           <h1 className="text-lg font-medium capitalize">Styles</h1>
           <SubmitBtn />
         </div>
-        <BackgroundSelector setValue={methods.setValue} />
+        <BackgroundSelector />
       </form>
     </FormProvider>
   );
