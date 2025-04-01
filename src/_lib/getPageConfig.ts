@@ -1,6 +1,15 @@
-import { LayoutsExtendedType, OptionsExtendedType } from "@/types/PageTypes";
+import {
+  LayoutsExtendedType,
+  OptionsExtendedType,
+  StylesExtendedType,
+  StylesType,
+} from "@/types/PageTypes";
 import { connectDB } from "./mongodb/mongodb";
-import { ActiveLayoutModel, OptionsModel } from "./mongodb/models/ConfigModels";
+import {
+  ActiveLayoutModel,
+  OptionsModel,
+  StylesModel,
+} from "./mongodb/models/ConfigModels";
 
 export async function getOptions(slug: string) {
   try {
@@ -35,5 +44,23 @@ export async function getActiveLayout(slug: string) {
   } catch (error) {
     console.log(error);
     return "default";
+  }
+}
+
+export async function getStyles(slug: string): Promise<StylesType | null> {
+  try {
+    await connectDB();
+    const findStyles: StylesExtendedType | null = await StylesModel.findOne({
+      slug: slug,
+    });
+
+    if (!findStyles) {
+      return null;
+    }
+
+    return findStyles.styles;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 }
