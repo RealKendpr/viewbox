@@ -1,5 +1,17 @@
 import mongoose, { Document } from "mongoose";
 
+export interface StylesType {
+  styles: {
+    background: string;
+  };
+}
+
+export interface StylesExtendedType extends Document {
+  userId: mongoose.Types.ObjectId | string;
+  slug: string;
+  styles: StylesType;
+}
+
 export interface LayoutsType {
   activeLayout: string;
 }

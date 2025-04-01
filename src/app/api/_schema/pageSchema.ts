@@ -3,6 +3,13 @@ import layouts from "@/layouts/layouts.json";
 
 const layoutsEnum = layouts.layouts as [string, ...string[]];
 
+export const StylesSchema = z.object({
+  slug: z.string(),
+  styles: z.object({
+    background: z.string(),
+  }),
+});
+
 export const optionsSchema = z.object({
   slug: z.string(),
   newTab: z.boolean().optional(),
