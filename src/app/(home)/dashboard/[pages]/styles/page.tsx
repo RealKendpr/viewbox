@@ -7,14 +7,5 @@ export default async function StylesPage({
 }) {
   const pageName = (await params).pages;
 
-  return (
-    <div>
-      <div>
-        <h1>Styles</h1>
-      </div>
-      <div>
-        <BackgroundSelector slug={pageName} />
-      </div>
-    </div>
-  );
+  return <BackgroundSelector slug={pageName} />;
 }
