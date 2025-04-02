@@ -3,7 +3,7 @@ import Image from "next/image";
 import { favicon } from "@/app/_utils/getFavicon";
 import { UserAvatar } from "@/_components/userAvatar";
 import { funEmoji } from "@dicebear/collection";
-import { getOptions } from "@/_lib/getPageConfig";
+import { getOptions, getStyles } from "@/_lib/getPageConfig";
 
 export async function PageDetails({
   page,
@@ -13,9 +13,13 @@ export async function PageDetails({
   slug: string;
 }) {
   const options = await getOptions(slug);
+  const styles = await getStyles(slug);
 
   return (
-    <div className="card bg-base-100 rounded-lg">
+    <div
+      className="card bg-base-100 rounded-lg"
+      style={{ background: styles?.cardColor }}
+    >
       <div className="card-header">
         <div className="profile-image">
           {page.pageIcon ? (

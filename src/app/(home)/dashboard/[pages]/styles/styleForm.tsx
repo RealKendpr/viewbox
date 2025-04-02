@@ -4,6 +4,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { SubmitBtn } from "../../_components/saveButton";
 import { StylesType } from "@/types/PageTypes";
 import dynamic from "next/dynamic";
+import { revalidateForm } from "../_utils/revalidateForm";
 const BackgroundSelector = dynamic(() =>
   import("./colorSelector").then((mod) => mod.ColorSelector),
 );
@@ -35,6 +36,8 @@ export function StylesForm({
     if (!response.ok) {
       return;
     }
+
+    revalidateForm(`${slug}/styles`);
   };
 
   return (
