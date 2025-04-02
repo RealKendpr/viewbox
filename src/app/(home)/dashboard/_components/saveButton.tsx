@@ -39,7 +39,7 @@ export function SubmitBtn() {
         <span>Save</span>
       </button>
       <div
-        className={`[&.submitted]:toast fixed -right-full bottom-0 ${formState.isSubmitted && "submitted"} `}
+        className={`[&.submitted]:toast fixed -right-full bottom-0 z-50 ${formState.isSubmitted && "submitted"} `}
       >
         <div className="alert alert-success">
           <span>Updated successfully.</span>

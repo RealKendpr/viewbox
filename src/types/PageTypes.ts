@@ -2,6 +2,7 @@ import mongoose, { Document } from "mongoose";
 
 export interface StylesType {
   background: string;
+  cardColor: string;
 }
 
 export interface StylesExtendedType extends Document {

@@ -62,6 +62,9 @@ const StylesSchema = new Schema<StylesExtendedType>({
     background: {
       type: String,
     },
+    cardColor: {
+      type: String,
+    },
   },
 });
 const StylesModel =

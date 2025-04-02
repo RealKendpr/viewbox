@@ -7,6 +7,7 @@ export const StylesSchema = z.object({
   slug: z.string(),
   styles: z.object({
     background: z.string(),
+    cardColor: z.string(),
   }),
 });
 

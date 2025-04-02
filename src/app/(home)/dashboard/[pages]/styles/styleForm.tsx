@@ -5,7 +5,7 @@ import { SubmitBtn } from "../../_components/saveButton";
 import { StylesType } from "@/types/PageTypes";
 import dynamic from "next/dynamic";
 const BackgroundSelector = dynamic(() =>
-  import("./background").then((mod) => mod.BackgroundSelector),
+  import("./colorSelector").then((mod) => mod.ColorSelector),
 );
 
 export function StylesForm({
@@ -21,7 +21,8 @@ export function StylesForm({
     const formValues = {
       slug: slug,
       styles: {
-        background: formData.background,
+        background: formData.background || styles?.background,
+        cardColor: formData.cardColor || styles?.cardColor,
       },
     };
 
@@ -43,7 +44,19 @@ export function StylesForm({
           <h1 className="text-lg font-medium capitalize">Styles</h1>
           <SubmitBtn />
         </div>
-        <BackgroundSelector background={styles?.background || ""} />
+        <div className="grid gap-y-3">
+          <BackgroundSelector
+            currentStyle={styles?.background || ""}
+            fieldName="background"
+            label="Background"
+            isOpen={true}
+          />
+          <BackgroundSelector
+            currentStyle={styles?.cardColor || ""}
+            fieldName="cardColor"
+            label="Card Color"
+          />
+        </div>
       </form>
     </FormProvider>
   );

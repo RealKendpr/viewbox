@@ -4,12 +4,22 @@ import colors from "@/styles/colors.json";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-export function BackgroundSelector({ background }: { background: string }) {
+export function ColorSelector({
+  currentStyle,
+  fieldName,
+  label,
+  isOpen,
+}: {
+  currentStyle: string;
+  fieldName: string;
+  label: string;
+  isOpen?: boolean;
+}) {
   const currentTab = () => {
-    if (colors.solid.includes(background) || background == "") {
+    if (colors.solid.includes(currentStyle) || currentStyle == "") {
       return "solid";
     }
-    if (colors.gradient.includes(background)) {
+    if (colors.gradient.includes(currentStyle)) {
       return "gradient";
     }
     return "image";
@@ -19,23 +29,26 @@ export function BackgroundSelector({ background }: { background: string }) {
   const [openTab, setOpenTab] = useState<string>(currentTab());
 
   const { setValue } = useFormContext();
-  const [color, setColor] = useState<string>(background);
+  const [color, setColor] = useState<string>(currentStyle);
 
   const handleSelection = (i: string) => {
-    setValue("background", i);
+    setValue(fieldName, i);
     setColor(i);
   };
 
   return (
     <div className="bg-base-200/50 collapse">
-      <label className="collapse-title font-medium" htmlFor="backgrounds">
-        Backgrounds
+      <label
+        className="collapse-title font-medium capitalize"
+        htmlFor="backgrounds"
+      >
+        {label}
       </label>
       <input
         type="checkbox"
         name="backgrounds"
         id="backgrounds"
-        defaultChecked={true}
+        defaultChecked={isOpen ? isOpen : false}
       />
       <div className="collapse-content">
         <div className="tabs tabs-box tabs-sm mb-5 p-2" role="tablist">
@@ -55,8 +68,8 @@ export function BackgroundSelector({ background }: { background: string }) {
             {colors.solid.map((i) => (
               <li key={i}>
                 <button
-                  className={`size-12 rounded-full hover:cursor-pointer ${i == color ? "border-2" : null}`}
-                  style={{ backgroundColor: i }}
+                  className={`size-12 rounded-full hover:cursor-pointer ${i == color ? "border-3" : null}`}
+                  style={{ background: i }}
                   type="button"
                   onClick={() => handleSelection(i)}
                 />
