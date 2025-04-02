@@ -24,6 +24,7 @@ export function StylesForm({
       styles: {
         background: formData.background || styles?.background,
         cardColor: formData.cardColor || styles?.cardColor,
+        linkColor: formData.linkColor || styles?.linkColor,
       },
     };
 
@@ -58,6 +59,11 @@ export function StylesForm({
             currentStyle={styles?.cardColor || ""}
             fieldName="cardColor"
             label="Card Color"
+          />
+          <BackgroundSelector
+            currentStyle={styles?.linkColor || ""}
+            fieldName="linkColor"
+            label="Link Color"
           />
         </div>
       </form>

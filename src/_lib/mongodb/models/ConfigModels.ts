@@ -2,6 +2,7 @@ import {
   LayoutsExtendedType,
   OptionsExtendedType,
   StylesExtendedType,
+  StylesType,
 } from "@/types/PageTypes";
 import mongoose, { Schema, model } from "mongoose";
 import layouts from "@/layouts/layouts.json";
@@ -48,6 +49,21 @@ const ActiveLayoutModel =
 
 //
 
+const Styles = new Schema<StylesType>(
+  {
+    background: {
+      type: String,
+    },
+    cardColor: {
+      type: String,
+    },
+    linkColor: {
+      type: String,
+    },
+  },
+  { strict: false },
+);
+
 const StylesSchema = new Schema<StylesExtendedType>({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -58,14 +74,7 @@ const StylesSchema = new Schema<StylesExtendedType>({
     type: String,
     required: true,
   },
-  styles: {
-    background: {
-      type: String,
-    },
-    cardColor: {
-      type: String,
-    },
-  },
+  styles: Styles,
 });
 const StylesModel =
   mongoose.models.Styles || model<StylesExtendedType>("Styles", StylesSchema);

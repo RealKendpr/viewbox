@@ -69,7 +69,7 @@ export function ColorSelector({
         </div>
         {openTab == "solid" && (
           <ul className="flex flex-wrap gap-2">
-            {fieldName == "cardColor" && (
+            {(fieldName == "cardColor" || fieldName == "linkColor") && (
               <li>
                 <button
                   className={`grid size-12 place-items-center overflow-hidden rounded-full hover:cursor-pointer ${color == "transparent" ? "border-3" : null}`}
