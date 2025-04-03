@@ -1,6 +1,6 @@
 import { getActiveLayout, getStyles } from "@/_lib/getPageConfig";
-import "@/globals.css";
-import "@[pages]/styles.css";
+import "@/global.css";
+import "@[pages]/style.css";
 
 export default async function RootLayout({
   children,

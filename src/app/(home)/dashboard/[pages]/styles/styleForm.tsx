@@ -22,9 +22,8 @@ export function StylesForm({
     const formValues = {
       slug: slug,
       styles: {
-        background: formData.background || styles?.background,
-        cardColor: formData.cardColor || styles?.cardColor,
-        linkColor: formData.linkColor || styles?.linkColor,
+        ...styles,
+        ...formData,
       },
     };
 
@@ -54,16 +53,24 @@ export function StylesForm({
             fieldName="background"
             label="Background"
             isOpen={true}
+            gradient={true}
+          />
+          <BackgroundSelector
+            currentStyle={styles?.textColor || ""}
+            fieldName="textColor"
+            label="Text Color"
           />
           <BackgroundSelector
             currentStyle={styles?.cardColor || ""}
             fieldName="cardColor"
             label="Card Color"
+            gradient={true}
           />
           <BackgroundSelector
-            currentStyle={styles?.linkColor || ""}
-            fieldName="linkColor"
-            label="Link Color"
+            currentStyle={styles?.linkBackground || ""}
+            fieldName="linkBackground"
+            label="Link Background"
+            gradient={true}
           />
         </div>
       </form>

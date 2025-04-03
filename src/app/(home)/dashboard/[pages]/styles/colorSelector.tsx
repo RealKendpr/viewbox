@@ -1,6 +1,7 @@
 "use client";
 
 import colors from "@/styles/colors.json";
+import { StylesType } from "@/types/PageTypes";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -9,11 +10,13 @@ export function ColorSelector({
   fieldName,
   label,
   isOpen,
+  gradient,
 }: {
   currentStyle: string;
-  fieldName: string;
+  fieldName: keyof StylesType;
   label: string;
   isOpen?: boolean;
+  gradient?: boolean;
 }) {
   const currentTab = () => {
     if (
@@ -55,21 +58,23 @@ export function ColorSelector({
         defaultChecked={isOpen ? isOpen : false}
       />
       <div className="collapse-content">
-        <div className="tabs tabs-box tabs-sm mb-5 p-2" role="tablist">
-          {tabs.map((i) => (
-            <button
-              key={i}
-              className={`tab capitalize ${openTab == i && "tab-active"}`}
-              type="button"
-              onClick={() => setOpenTab(i)}
-            >
-              {i}
-            </button>
-          ))}
-        </div>
+        {gradient && (
+          <div className="tabs tabs-box tabs-sm mb-5 p-2" role="tablist">
+            {tabs.map((i) => (
+              <button
+                key={i}
+                className={`tab capitalize ${openTab == i && "tab-active"}`}
+                type="button"
+                onClick={() => setOpenTab(i)}
+              >
+                {i}
+              </button>
+            ))}
+          </div>
+        )}
         {openTab == "solid" && (
           <ul className="flex flex-wrap gap-2">
-            {(fieldName == "cardColor" || fieldName == "linkColor") && (
+            {(fieldName == "cardColor" || fieldName == "linkBackground") && (
               <li>
                 <button
                   className={`grid size-12 place-items-center overflow-hidden rounded-full hover:cursor-pointer ${color == "transparent" ? "border-3" : null}`}
@@ -105,7 +110,7 @@ export function ColorSelector({
             ))}
           </ul>
         )}
-        {openTab == "gradient" && (
+        {gradient && openTab == "gradient" && (
           <ul className="flex flex-wrap gap-2">
             {colors.gradient.map((i) => (
               <li key={i}>

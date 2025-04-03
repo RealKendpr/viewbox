@@ -7,8 +7,9 @@ export const StylesSchema = z.object({
   slug: z.string(),
   styles: z.object({
     background: z.string(),
+    textColor: z.string(),
     cardColor: z.string(),
-    linkColor: z.string(),
+    linkBackground: z.string(),
   }),
 });
 

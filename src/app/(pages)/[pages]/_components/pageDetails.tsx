@@ -18,7 +18,7 @@ export async function PageDetails({
   return (
     <div
       className="card bg-base-100 rounded-lg"
-      style={{ background: styles?.cardColor }}
+      style={{ background: styles?.cardColor, color: styles?.textColor }}
     >
       <div className="card-header">
         <div className="profile-image">
@@ -44,7 +44,10 @@ export async function PageDetails({
           <li key={index}>
             <a
               className="btn btn-soft btn-block hover:!bg-amber-50/15"
-              style={{ background: styles?.linkColor }}
+              style={{
+                background: styles?.linkBackground,
+                color: styles?.textColor,
+              }}
               href={item.linkUrl}
               target={options?.newTab ? "_blank" : "_self"}
             >
