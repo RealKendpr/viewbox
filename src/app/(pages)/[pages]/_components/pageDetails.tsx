@@ -43,7 +43,8 @@ export async function PageDetails({
         {page.links.map((item, index) => (
           <li key={index}>
             <a
-              className="btn btn-soft btn-block"
+              className="btn btn-soft btn-block hover:!bg-amber-50/15"
+              style={{ background: styles?.linkColor }}
               href={item.linkUrl}
               target={options?.newTab ? "_blank" : "_self"}
             >
