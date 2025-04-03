@@ -18,7 +18,7 @@ export async function PageDetails({
   return (
     <div
       className="card bg-base-100 rounded-lg"
-      style={{ background: styles?.cardColor }}
+      style={{ background: styles?.cardColor, color: styles?.textColor }}
     >
       <div className="card-header">
         <div className="profile-image">
