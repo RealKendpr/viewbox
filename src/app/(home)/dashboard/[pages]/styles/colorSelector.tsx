@@ -1,6 +1,7 @@
 "use client";
 
 import colors from "@/styles/colors.json";
+import { StylesType } from "@/types/PageTypes";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -11,7 +12,7 @@ export function ColorSelector({
   isOpen,
 }: {
   currentStyle: string;
-  fieldName: string;
+  fieldName: keyof StylesType;
   label: string;
   isOpen?: boolean;
 }) {
@@ -69,7 +70,7 @@ export function ColorSelector({
         </div>
         {openTab == "solid" && (
           <ul className="flex flex-wrap gap-2">
-            {(fieldName == "cardColor" || fieldName == "linkColor") && (
+            {(fieldName == "cardColor" || fieldName == "linkBackground") && (
               <li>
                 <button
                   className={`grid size-12 place-items-center overflow-hidden rounded-full hover:cursor-pointer ${color == "transparent" ? "border-3" : null}`}

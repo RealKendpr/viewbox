@@ -57,7 +57,7 @@ const Styles = new Schema<StylesType>(
     cardColor: {
       type: String,
     },
-    linkColor: {
+    linkBackground: {
       type: String,
     },
   },

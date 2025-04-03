@@ -3,7 +3,8 @@ import mongoose, { Document } from "mongoose";
 export interface StylesType {
   background: string;
   cardColor: string;
-  linkColor: string;
+  linkBackground: string;
+  textColor: string;
 }
 
 export interface StylesExtendedType extends Document {
