@@ -10,11 +10,13 @@ export function ColorSelector({
   fieldName,
   label,
   isOpen,
+  gradient,
 }: {
   currentStyle: string;
   fieldName: keyof StylesType;
   label: string;
   isOpen?: boolean;
+  gradient?: boolean;
 }) {
   const currentTab = () => {
     if (
@@ -56,18 +58,20 @@ export function ColorSelector({
         defaultChecked={isOpen ? isOpen : false}
       />
       <div className="collapse-content">
-        <div className="tabs tabs-box tabs-sm mb-5 p-2" role="tablist">
-          {tabs.map((i) => (
-            <button
-              key={i}
-              className={`tab capitalize ${openTab == i && "tab-active"}`}
-              type="button"
-              onClick={() => setOpenTab(i)}
-            >
-              {i}
-            </button>
-          ))}
-        </div>
+        {gradient && (
+          <div className="tabs tabs-box tabs-sm mb-5 p-2" role="tablist">
+            {tabs.map((i) => (
+              <button
+                key={i}
+                className={`tab capitalize ${openTab == i && "tab-active"}`}
+                type="button"
+                onClick={() => setOpenTab(i)}
+              >
+                {i}
+              </button>
+            ))}
+          </div>
+        )}
         {openTab == "solid" && (
           <ul className="flex flex-wrap gap-2">
             {(fieldName == "cardColor" || fieldName == "linkBackground") && (
@@ -106,7 +110,7 @@ export function ColorSelector({
             ))}
           </ul>
         )}
-        {openTab == "gradient" && (
+        {gradient && openTab == "gradient" && (
           <ul className="flex flex-wrap gap-2">
             {colors.gradient.map((i) => (
               <li key={i}>

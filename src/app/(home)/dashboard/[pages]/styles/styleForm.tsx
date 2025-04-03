@@ -53,9 +53,10 @@ export function StylesForm({
             fieldName="background"
             label="Background"
             isOpen={true}
+            gradient={true}
           />
           <BackgroundSelector
-            currentStyle={styles?.linkBackground || ""}
+            currentStyle={styles?.textColor || ""}
             fieldName="textColor"
             label="Text Color"
           />
@@ -63,11 +64,13 @@ export function StylesForm({
             currentStyle={styles?.cardColor || ""}
             fieldName="cardColor"
             label="Card Color"
+            gradient={true}
           />
           <BackgroundSelector
             currentStyle={styles?.linkBackground || ""}
             fieldName="linkBackground"
             label="Link Background"
+            gradient={true}
           />
         </div>
       </form>
