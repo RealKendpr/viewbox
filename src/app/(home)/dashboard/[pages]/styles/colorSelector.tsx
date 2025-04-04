@@ -75,13 +75,13 @@ export function ColorSelector({
                   className="visibility-hidden peer absolute size-0"
                   {...register(fieldName)}
                   type="radio"
-                  id="transparent"
+                  id={`${fieldName}transparent`}
                   value="transparent"
                   defaultChecked={currentStyle == "transparent"}
                 />
                 <label
                   className="grid size-12 place-items-center overflow-hidden rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75"
-                  htmlFor="transparent"
+                  htmlFor={`${fieldName}transparent`}
                 >
                   <svg
                     width="16"
@@ -106,14 +106,14 @@ export function ColorSelector({
                   className="visibility-hidden peer absolute size-0"
                   {...register(fieldName)}
                   type="radio"
-                  id={i}
+                  id={fieldName + i}
                   value={i}
                   defaultChecked={currentStyle == i}
                 />
                 <label
                   className="block size-12 rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75"
                   style={{ background: i }}
-                  htmlFor={i}
+                  htmlFor={fieldName + i}
                 />
               </li>
             ))}
@@ -127,14 +127,14 @@ export function ColorSelector({
                   className="visibility-hidden peer absolute size-0"
                   {...register(fieldName)}
                   type="radio"
-                  id={i}
+                  id={fieldName + i}
                   value={i}
                   defaultChecked={currentStyle == i}
                 />
                 <label
                   className={`block size-12 rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75`}
                   style={{ background: i }}
-                  htmlFor={i}
+                  htmlFor={fieldName + i}
                 />
               </li>
             ))}
