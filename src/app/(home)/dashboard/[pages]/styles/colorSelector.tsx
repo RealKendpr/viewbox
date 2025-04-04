@@ -11,12 +11,14 @@ export function ColorSelector({
   label,
   isOpen,
   gradient,
+  needTransparent,
 }: {
   currentStyle: string;
   fieldName: keyof StylesType;
   label: string;
   isOpen?: boolean;
   gradient?: boolean;
+  needTransparent?: boolean;
 }) {
   const currentTab = () => {
     if (
@@ -34,19 +36,12 @@ export function ColorSelector({
 
   const tabs = ["solid", "gradient", "image"];
   const [openTab, setOpenTab] = useState<string>(currentTab());
-
-  const { setValue } = useFormContext();
-  const [color, setColor] = useState<string>(currentStyle);
-
-  const handleSelection = (i: string) => {
-    setValue(fieldName, i);
-    setColor(i);
-  };
+  const { register } = useFormContext();
 
   return (
     <div className="bg-base-200/50 collapse">
       <label
-        className="collapse-title font-medium capitalize"
+        className="collapse-title text-base font-medium capitalize"
         htmlFor="backgrounds"
       >
         {label}
@@ -74,12 +69,19 @@ export function ColorSelector({
         )}
         {openTab == "solid" && (
           <ul className="flex flex-wrap gap-2">
-            {(fieldName == "cardColor" || fieldName == "linkBackground") && (
+            {needTransparent && (
               <li>
-                <button
-                  className={`grid size-12 place-items-center overflow-hidden rounded-full hover:cursor-pointer ${color == "transparent" ? "border-3" : null}`}
-                  type="button"
-                  onClick={() => handleSelection("transparent")}
+                <input
+                  className="visibility-hidden peer absolute size-0"
+                  {...register(fieldName)}
+                  type="radio"
+                  id={`${fieldName}transparent`}
+                  value="transparent"
+                  defaultChecked={currentStyle == "transparent"}
+                />
+                <label
+                  className="grid size-12 place-items-center overflow-hidden rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75"
+                  htmlFor={`${fieldName}transparent`}
                 >
                   <svg
                     width="16"
@@ -95,16 +97,23 @@ export function ColorSelector({
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                </button>
+                </label>
               </li>
             )}
             {colors.solid.map((i) => (
               <li key={i}>
-                <button
-                  className={`size-12 rounded-full transition-opacity hover:cursor-pointer hover:opacity-75 ${color == i ? "border-3" : null}`}
+                <input
+                  className="visibility-hidden peer absolute size-0"
+                  {...register(fieldName)}
+                  type="radio"
+                  id={fieldName + i}
+                  value={i}
+                  defaultChecked={currentStyle == i}
+                />
+                <label
+                  className="block size-12 rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75"
                   style={{ background: i }}
-                  type="button"
-                  onClick={() => handleSelection(i)}
+                  htmlFor={fieldName + i}
                 />
               </li>
             ))}
@@ -114,11 +123,18 @@ export function ColorSelector({
           <ul className="flex flex-wrap gap-2">
             {colors.gradient.map((i) => (
               <li key={i}>
-                <button
-                  className={`size-12 rounded-full hover:cursor-pointer hover:opacity-75 ${i == color && "border-3"}`}
+                <input
+                  className="visibility-hidden peer absolute size-0"
+                  {...register(fieldName)}
+                  type="radio"
+                  id={fieldName + i}
+                  value={i}
+                  defaultChecked={currentStyle == i}
+                />
+                <label
+                  className={`block size-12 rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75`}
                   style={{ background: i }}
-                  type="button"
-                  onClick={() => handleSelection(i)}
+                  htmlFor={fieldName + i}
                 />
               </li>
             ))}
