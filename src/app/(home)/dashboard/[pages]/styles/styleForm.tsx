@@ -65,13 +65,28 @@ export function StylesForm({
             fieldName="cardColor"
             label="Card Color"
             gradient={true}
+            needTransparent={true}
           />
-          <BackgroundSelector
-            currentStyle={styles?.linkBackground || ""}
-            fieldName="linkBackground"
-            label="Link Background"
-            gradient={true}
-          />
+          <fieldset className="fieldset mt-3 px-1">
+            <legend className="fieldset-legend">Link Style</legend>
+            <BackgroundSelector
+              currentStyle={styles?.linkColor || ""}
+              fieldName="linkColor"
+              label="Color"
+            />
+            <BackgroundSelector
+              currentStyle={styles?.linkBackground || ""}
+              fieldName="linkBackground"
+              label="Background"
+              needTransparent={true}
+            />
+            <BackgroundSelector
+              currentStyle={styles?.linkBorder || ""}
+              fieldName="linkBorder"
+              label="Border"
+              needTransparent={true}
+            />
+          </fieldset>
         </div>
       </form>
     </FormProvider>

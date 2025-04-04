@@ -18,10 +18,14 @@ export async function PageDetails({
   return (
     <>
       <style>{`
+        .card-copy {
+        color: ${styles?.textColor};
+        }
+
         .link-list {
           & li {
             background: ${styles?.linkBackground};
-            color: ${styles?.textColor};
+            color: ${styles?.linkColor};
           }
 
           & .colored-card {
@@ -49,7 +53,7 @@ export async function PageDetails({
       `}</style>
       <div
         className="card bg-base-100 rounded-lg"
-        style={{ background: styles?.cardColor, color: styles?.textColor }}
+        style={{ background: styles?.cardColor }}
       >
         <div className="card-header">
           <div className="profile-image">
@@ -77,7 +81,7 @@ export async function PageDetails({
         <ul className="link-list">
           {page.links.map((item, index) => (
             <li
-              className={`btn btn-soft btn-block overflow-hidden bg-transparent px-0 transition-all duration-300 ${styles?.cardColor != "transparent" && styles?.linkBackground == "transparent" ? "colored-card after:transition-all after:duration-300" : "hover:scale-105 hover:bg-amber-50/15"}`}
+              className={`btn btn-soft btn-block overflow-hidden bg-transparent px-0 transition-all duration-300 ${styles?.cardColor != "transparent" && styles?.linkBackground == "transparent" ? "colored-card after:transition-all after:duration-300" : "transform-gpu hover:scale-105 hover:bg-amber-50/15"}`}
               key={index}
             >
               <a

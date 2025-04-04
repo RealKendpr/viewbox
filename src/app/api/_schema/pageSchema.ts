@@ -6,10 +6,12 @@ const layoutsEnum = layouts.layouts as [string, ...string[]];
 export const StylesSchema = z.object({
   slug: z.string(),
   styles: z.object({
-    background: z.string(),
-    textColor: z.string(),
-    cardColor: z.string(),
-    linkBackground: z.string(),
+    background: z.string().nullable(),
+    textColor: z.string().nullable(),
+    cardColor: z.string().nullable(),
+    linkColor: z.string().nullable(),
+    linkBackground: z.string().nullable(),
+    linkBorder: z.string().nullable(),
   }),
 });
 
