@@ -5,7 +5,7 @@ import { SubmitBtn } from "../../_components/saveButton";
 import { StylesType } from "@/types/PageTypes";
 import dynamic from "next/dynamic";
 import { revalidateForm } from "../_utils/revalidateForm";
-const BackgroundSelector = dynamic(() =>
+const ColorSelector = dynamic(() =>
   import("./colorSelector").then((mod) => mod.ColorSelector),
 );
 
@@ -48,19 +48,19 @@ export function StylesForm({
           <SubmitBtn />
         </div>
         <div className="grid gap-y-3">
-          <BackgroundSelector
+          <ColorSelector
             currentStyle={styles?.background || ""}
             fieldName="background"
             label="Background"
             isOpen={true}
             gradient={true}
           />
-          <BackgroundSelector
+          <ColorSelector
             currentStyle={styles?.textColor || ""}
             fieldName="textColor"
             label="Text Color"
           />
-          <BackgroundSelector
+          <ColorSelector
             currentStyle={styles?.cardColor || ""}
             fieldName="cardColor"
             label="Card Color"
@@ -69,18 +69,18 @@ export function StylesForm({
           />
           <fieldset className="fieldset mt-3 px-1">
             <legend className="fieldset-legend">Link Style</legend>
-            <BackgroundSelector
+            <ColorSelector
               currentStyle={styles?.linkColor || ""}
               fieldName="linkColor"
               label="Color"
             />
-            <BackgroundSelector
+            <ColorSelector
               currentStyle={styles?.linkBackground || ""}
               fieldName="linkBackground"
               label="Background"
               needTransparent={true}
             />
-            <BackgroundSelector
+            <ColorSelector
               currentStyle={styles?.linkBorder || ""}
               fieldName="linkBorder"
               label="Border"
