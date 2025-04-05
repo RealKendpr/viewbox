@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 export default function Modal({
   children,
@@ -11,7 +11,9 @@ export default function Modal({
 }) {
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
-  const handleModal = () => setIsOpen((isOpen) => !isOpen);
+  const handleModal = useCallback(() => {
+    setIsOpen((prevIsOpen) => !prevIsOpen);
+  }, [setIsOpen]);
 
   useEffect(() => {
     const modal = modalRef.current;
@@ -22,7 +24,7 @@ export default function Modal({
       modal.close();
       setIsOpen(false);
     }
-  }, [isOpen]);
+  }, [isOpen, setIsOpen]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -36,7 +38,7 @@ export default function Modal({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, handleModal]);
 
   return (
     <dialog ref={modalRef} className="modal">

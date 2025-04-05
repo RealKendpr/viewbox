@@ -5,6 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { Input } from "../create/_components/input";
 import dynamic from "next/dynamic";
 import testUrl from "../_utils/testUrl";
+import Image from "next/image";
 const Modal = dynamic(() => import("@/_components/modal"));
 
 export default function LinkDisplay({
@@ -69,12 +70,12 @@ export default function LinkDisplay({
     if (errors.links && newLinkValue.linkName !== "") {
       clearErrors("links.1.linkName");
     }
-  }, [newLinkValue && newLinkValue.linkName]);
+  }, [newLinkValue, clearErrors, errors]);
   useEffect(() => {
     if (errors.links && testUrl(newLinkValue.linkUrl)) {
       clearErrors("links.1.linkUrl");
     }
-  }, [newLinkValue && newLinkValue.linkUrl]);
+  }, [newLinkValue, clearErrors, errors]);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // enter should be allowed when user is focused on the Add button
@@ -97,7 +98,7 @@ export default function LinkDisplay({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [editField]);
+  }, [editField, clearErrors, newLinkValue]);
 
   return (
     <>
@@ -120,7 +121,7 @@ export default function LinkDisplay({
             </svg>
           </span>
           <span className="text-center">
-            <p className="mb-3 font-semibold">There's nothing here yet!</p>
+            <p className="mb-3 font-semibold">There&apos;s nothing here yet!</p>
           </span>
         </div>
       ) : (
@@ -132,7 +133,7 @@ export default function LinkDisplay({
                 key={index}
               >
                 <div className="flex gap-x-3">
-                  <img
+                  <Image
                     src={favicon(item.linkUrl)}
                     width={24}
                     height={24}

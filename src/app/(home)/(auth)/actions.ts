@@ -77,6 +77,7 @@ export async function register(formData: FormUserType) {
         },
       };
     } catch (error) {
+      console.error(error);
       return null;
     }
   } else

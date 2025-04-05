@@ -17,7 +17,7 @@ export function Input({
 }) {
   const {
     register,
-    formState: { errors },
+    // formState: { errors },
   } = useFormContext();
 
   const validationRule = {

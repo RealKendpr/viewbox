@@ -1,5 +1,5 @@
 import { getUserData } from "@/_lib/getUserData";
-import { OptionsExtendedType, PageDocumentType } from "@/types/PageTypes";
+import { OptionsExtendedType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
 import { optionsSchema } from "../../_schema/pageSchema";
 import { connectDB } from "@/_lib/mongodb/mongodb";
