@@ -21,7 +21,7 @@ export function SolidSelector({
       {transparent && (
         <li>
           <input
-            className="visibility-hidden peer absolute size-0"
+            className="visibility-hidden absolute size-0"
             {...register(fieldName)}
             type="radio"
             id={`${fieldName}transparent`}
@@ -30,7 +30,7 @@ export function SolidSelector({
             onChange={() => setSelected("transparent")}
           />
           <label
-            className={`grid size-12 place-items-center overflow-hidden rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75 ${selected == "transparent" && "border-3"}`}
+            className={`grid size-12 place-items-center overflow-hidden rounded-full transition-opacity hover:cursor-pointer hover:opacity-75 ${selected == "transparent" && "border-3"}`}
             htmlFor={`${fieldName}transparent`}
           >
             <svg
@@ -53,7 +53,7 @@ export function SolidSelector({
       {colors.solid.map((i, index) => (
         <li key={i}>
           <input
-            className="visibility-hidden peer absolute size-0"
+            className="visibility-hidden absolute size-0"
             {...register(fieldName)}
             type="radio"
             id={fieldName + index + "solid"}
@@ -62,7 +62,7 @@ export function SolidSelector({
             onChange={() => setSelected(i)}
           />
           <label
-            className={`block size-12 rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75 ${selected == i && "border-3"}`}
+            className={`block size-12 rounded-full transition-opacity hover:cursor-pointer hover:opacity-75 ${selected == i && "border-3"}`}
             style={{ background: i }}
             htmlFor={fieldName + index + "solid"}
           />
@@ -87,7 +87,7 @@ export function GradientSelector({
       {colors.gradient.map((i, index) => (
         <li key={i}>
           <input
-            className="visibility-hidden peer absolute size-0"
+            className="visibility-hidden absolute size-0"
             {...register(fieldName)}
             type="radio"
             id={fieldName + index + "gradient"}
@@ -98,7 +98,7 @@ export function GradientSelector({
             onChange={() => setSelected(i)}
           />
           <label
-            className={`block size-12 rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75 ${selected == i && "border-3"}`}
+            className={`block size-12 rounded-full transition-opacity hover:cursor-pointer hover:opacity-75 ${selected == i && "border-3"}`}
             style={{ background: i }}
             htmlFor={fieldName + index + "gradient"}
           />
@@ -110,9 +110,11 @@ export function GradientSelector({
 
 export function MultiColorTabs({
   currentStyle,
+  fieldName,
   transparent,
 }: {
   currentStyle: string;
+  fieldName: string;
   transparent?: boolean;
 }) {
   const currentTab = () => {
@@ -148,12 +150,12 @@ export function MultiColorTabs({
       </div>
       {openTab == "solid" ? (
         <SolidSelector
-          fieldName="background"
+          fieldName={fieldName}
           currentStyle={currentStyle}
           transparent={transparent}
         />
       ) : (
-        <GradientSelector fieldName="background" currentStyle={currentStyle} />
+        <GradientSelector fieldName={fieldName} currentStyle={currentStyle} />
       )}
     </>
   );
