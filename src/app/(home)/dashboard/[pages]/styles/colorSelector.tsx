@@ -14,6 +14,7 @@ export function SolidSelector({
   transparent?: boolean;
 }) {
   const { register } = useFormContext();
+  const [selected, setSelected] = useState<string>(currentStyle);
 
   return (
     <ul className="flex flex-wrap gap-2">
@@ -25,10 +26,11 @@ export function SolidSelector({
             type="radio"
             id={`${fieldName}transparent`}
             value="transparent"
-            defaultChecked={currentStyle == "transparent"}
+            // defaultChecked={currentStyle == "transparent"}
+            onChange={() => setSelected("transparent")}
           />
           <label
-            className="grid size-12 place-items-center overflow-hidden rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75"
+            className={`grid size-12 place-items-center overflow-hidden rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75 ${selected == "transparent" && "border-3"}`}
             htmlFor={`${fieldName}transparent`}
           >
             <svg
@@ -48,20 +50,21 @@ export function SolidSelector({
           </label>
         </li>
       )}
-      {colors.solid.map((i) => (
+      {colors.solid.map((i, index) => (
         <li key={i}>
           <input
             className="visibility-hidden peer absolute size-0"
             {...register(fieldName)}
             type="radio"
-            id={fieldName + i}
+            id={fieldName + index + "solid"}
             value={i}
-            defaultChecked={currentStyle == i}
+            // defaultChecked={currentStyle == i}
+            onChange={() => setSelected(i)}
           />
           <label
-            className="block size-12 rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75"
+            className={`block size-12 rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75 ${selected == i && "border-3"}`}
             style={{ background: i }}
-            htmlFor={fieldName + i}
+            htmlFor={fieldName + index + "solid"}
           />
         </li>
       ))}
@@ -77,23 +80,27 @@ export function GradientSelector({
   currentStyle: string;
 }) {
   const { register } = useFormContext();
+  const [selected, setSelected] = useState(currentStyle);
 
   return (
     <ul className="flex flex-wrap gap-2">
-      {colors.gradient.map((i) => (
+      {colors.gradient.map((i, index) => (
         <li key={i}>
           <input
             className="visibility-hidden peer absolute size-0"
             {...register(fieldName)}
             type="radio"
-            id={fieldName + i}
+            id={fieldName + index + "gradient"}
             value={i}
-            defaultChecked={currentStyle == i}
+            // defaultChecked={
+            //   currentStyle?.replace(/\s/g, "") == i.replace(/\s/g, "")
+            // }
+            onChange={() => setSelected(i)}
           />
           <label
-            className={`block size-12 rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75`}
+            className={`block size-12 rounded-full transition-opacity peer-checked:border-3 hover:cursor-pointer hover:opacity-75 ${selected == i && "border-3"}`}
             style={{ background: i }}
-            htmlFor={fieldName + i}
+            htmlFor={fieldName + index + "gradient"}
           />
         </li>
       ))}
