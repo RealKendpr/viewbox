@@ -26,6 +26,7 @@ export async function PageDetails({
           & li {
             background: ${styles?.linkBackground};
             color: ${styles?.linkColor};
+            border-color: ${styles?.linkBorder};
           }
 
           & .colored-card {
@@ -38,7 +39,7 @@ export async function PageDetails({
               bottom: 0;
               right: 0;
               left: 0;
-              }
+            }
 
             &:hover::after {
               background: ${styles?.cardColor};
