@@ -19,7 +19,7 @@ export function NoPages() {
         </svg>
       </span>
       <span className="text-center">
-        <h1 className="mb-3 font-semibold">There's nothing here yet!</h1>
+        <h1 className="mb-3 font-semibold">There&apos;s nothing here yet!</h1>
         <p className="text-sm">
           Start creating a page by clicking the <br /> Create Page button
         </p>

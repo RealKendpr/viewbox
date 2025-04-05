@@ -45,7 +45,7 @@ export async function DELETE(request: NextRequest) {
       userId: passedChecks.userId,
     });
 
-    findPage;
+    await findPage;
 
     return NextResponse.json(
       { message: "selected resource updated" },

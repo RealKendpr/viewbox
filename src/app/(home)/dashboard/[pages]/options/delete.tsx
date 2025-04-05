@@ -52,8 +52,8 @@ export function DeleteBtn({ pageSlug }: { pageSlug: string }) {
             <span>Delete!</span>
           </p>
           <p className="my-4 text-sm">
-            Are you sure you wan't to delete this page? This action cannot be
-            undone.
+            Are you sure you wan&apos;t to delete this page? This action cannot
+            be undone.
           </p>
           <div className="flex justify-around gap-x-2">
             <button

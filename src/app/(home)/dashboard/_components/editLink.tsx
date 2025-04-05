@@ -5,6 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { Input } from "../create/_components/input";
 import dynamic from "next/dynamic";
 import testUrl from "../_utils/testUrl";
+import Image from "next/image";
 const Modal = dynamic(() => import("@/_components/modal"));
 
 export default function LinkDisplay({
@@ -120,7 +121,7 @@ export default function LinkDisplay({
             </svg>
           </span>
           <span className="text-center">
-            <p className="mb-3 font-semibold">There's nothing here yet!</p>
+            <p className="mb-3 font-semibold">There&apos;s nothing here yet!</p>
           </span>
         </div>
       ) : (
@@ -132,7 +133,7 @@ export default function LinkDisplay({
                 key={index}
               >
                 <div className="flex gap-x-3">
-                  <img
+                  <Image
                     src={favicon(item.linkUrl)}
                     width={24}
                     height={24}
