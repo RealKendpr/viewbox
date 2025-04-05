@@ -58,12 +58,9 @@ export async function getStyles(slug: string): Promise<StylesType | null> {
       return null;
     }
 
-    const styles = () => {
-      const { _id, ...rest } = JSON.parse(JSON.stringify(findStyles.styles));
-      return rest;
-    };
+    const styles = JSON.parse(JSON.stringify(findStyles.styles));
 
-    return styles();
+    return styles;
   } catch (error) {
     console.log(error);
     return null;

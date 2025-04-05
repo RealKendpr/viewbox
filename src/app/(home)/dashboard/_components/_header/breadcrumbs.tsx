@@ -4,9 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export function Breadcrumbs() {
-  const isDashboard = usePathname() == "/dashboard";
-  const isCreatePage = usePathname() === "/dashboard/create";
-
   // just taking the last part of the current path and removing the dashes (-), and is being capitalize with CSS
   // I didnt over complicate the crumbs since its not very deep
   const editPagePath = usePathname().split("/").slice(1); // take out the first empty string
