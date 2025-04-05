@@ -50,7 +50,7 @@ export function StylesForm({
         <div className="grid gap-y-3">
           <Background currentStyle={styles?.background || ""} />
           <TextColor currentStyle={styles?.textColor || ""} />
-          <CardBackground currentStyle={styles?.textColor || ""} />
+          <CardBackground currentStyle={styles?.cardColor || ""} />
           <LinkStyle currentStyle={linkStyles} />
         </div>
       </form>
