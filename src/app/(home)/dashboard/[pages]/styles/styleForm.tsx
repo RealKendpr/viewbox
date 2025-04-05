@@ -3,11 +3,13 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { SubmitBtn } from "../../_components/saveButton";
 import { StylesType } from "@/types/PageTypes";
-import dynamic from "next/dynamic";
 import { revalidateForm } from "../_utils/revalidateForm";
-const BackgroundSelector = dynamic(() =>
-  import("./colorSelector").then((mod) => mod.ColorSelector),
-);
+import {
+  Background,
+  CardBackground,
+  LinkStyle,
+  TextColor,
+} from "./_components/styleSelector";
 
 export function StylesForm({
   slug,
@@ -16,28 +18,26 @@ export function StylesForm({
   slug: string;
   styles: StylesType | null;
 }) {
-  const methods = useForm<StylesType>();
+  const methods = useForm<StylesType>({ defaultValues: styles || {} });
+
+  const linkStyles = {
+    linkBackground: styles?.linkBackground || "",
+    linkColor: styles?.linkColor || "",
+    linkBorder: styles?.linkBorder || "",
+  };
 
   const onSubmit: SubmitHandler<StylesType> = async (formData) => {
-    const formValues = {
-      slug: slug,
-      styles: {
-        ...styles,
-        ...formData,
-      },
-    };
-
     const response = await fetch("/api/update/styles", {
       method: "PUT",
       headers: { "Content-Type": "applications/json" },
-      body: JSON.stringify(formValues),
+      body: JSON.stringify({ slug: slug, styles: formData }),
     });
 
     if (!response.ok) {
       return;
     }
 
-    revalidateForm(`${slug}/styles`);
+    await revalidateForm(`${slug}/styles`);
   };
 
   return (
@@ -48,45 +48,10 @@ export function StylesForm({
           <SubmitBtn />
         </div>
         <div className="grid gap-y-3">
-          <BackgroundSelector
-            currentStyle={styles?.background || ""}
-            fieldName="background"
-            label="Background"
-            isOpen={true}
-            gradient={true}
-          />
-          <BackgroundSelector
-            currentStyle={styles?.textColor || ""}
-            fieldName="textColor"
-            label="Text Color"
-          />
-          <BackgroundSelector
-            currentStyle={styles?.cardColor || ""}
-            fieldName="cardColor"
-            label="Card Color"
-            gradient={true}
-            needTransparent={true}
-          />
-          <fieldset className="fieldset mt-3 px-1">
-            <legend className="fieldset-legend">Link Style</legend>
-            <BackgroundSelector
-              currentStyle={styles?.linkColor || ""}
-              fieldName="linkColor"
-              label="Color"
-            />
-            <BackgroundSelector
-              currentStyle={styles?.linkBackground || ""}
-              fieldName="linkBackground"
-              label="Background"
-              needTransparent={true}
-            />
-            <BackgroundSelector
-              currentStyle={styles?.linkBorder || ""}
-              fieldName="linkBorder"
-              label="Border"
-              needTransparent={true}
-            />
-          </fieldset>
+          <Background currentStyle={styles?.background || ""} />
+          <TextColor currentStyle={styles?.textColor || ""} />
+          <CardBackground currentStyle={styles?.textColor || ""} />
+          <LinkStyle currentStyle={linkStyles} />
         </div>
       </form>
     </FormProvider>
