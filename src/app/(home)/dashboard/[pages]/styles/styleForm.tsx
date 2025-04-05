@@ -18,7 +18,7 @@ export function StylesForm({
   slug: string;
   styles: StylesType | null;
 }) {
-  const methods = useForm<StylesType>();
+  const methods = useForm<StylesType>({ defaultValues: styles || {} });
 
   const linkStyles = {
     linkBackground: styles?.linkBackground || "",
@@ -27,25 +27,17 @@ export function StylesForm({
   };
 
   const onSubmit: SubmitHandler<StylesType> = async (formData) => {
-    const formValues = {
-      slug: slug,
-      styles: {
-        ...styles,
-        ...formData,
-      },
-    };
-
     const response = await fetch("/api/update/styles", {
       method: "PUT",
       headers: { "Content-Type": "applications/json" },
-      body: JSON.stringify(formValues),
+      body: JSON.stringify({ slug: slug, styles: formData }),
     });
 
     if (!response.ok) {
       return;
     }
 
-    revalidateForm(`${slug}/styles`);
+    await revalidateForm(`${slug}/styles`);
   };
 
   return (
