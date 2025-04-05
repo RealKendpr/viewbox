@@ -69,12 +69,12 @@ export default function LinkDisplay({
     if (errors.links && newLinkValue.linkName !== "") {
       clearErrors("links.1.linkName");
     }
-  }, [newLinkValue && newLinkValue.linkName]);
+  }, [newLinkValue, clearErrors, errors]);
   useEffect(() => {
     if (errors.links && testUrl(newLinkValue.linkUrl)) {
       clearErrors("links.1.linkUrl");
     }
-  }, [newLinkValue && newLinkValue.linkUrl]);
+  }, [newLinkValue, clearErrors, errors]);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // enter should be allowed when user is focused on the Add button
@@ -97,7 +97,7 @@ export default function LinkDisplay({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [editField]);
+  }, [editField, clearErrors, newLinkValue]);
 
   return (
     <>

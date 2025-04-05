@@ -13,7 +13,7 @@ export function SubmitBtn() {
       reset();
     }, 2000);
     return () => clearTimeout(resetState);
-  }, [formState]);
+  }, [formState, reset]);
 
   return (
     <>

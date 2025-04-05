@@ -18,7 +18,7 @@ export function UserAvatar({
       seed: username,
       size: size,
     }).toDataUri();
-  }, []);
+  }, [size, style, username]);
 
   return (
     <Image
