@@ -3,11 +3,13 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { SubmitBtn } from "../../_components/saveButton";
 import { StylesType } from "@/types/PageTypes";
-import dynamic from "next/dynamic";
 import { revalidateForm } from "../_utils/revalidateForm";
-const ColorSelector = dynamic(() =>
-  import("./colorSelector").then((mod) => mod.ColorSelector),
-);
+import {
+  Background,
+  CardBackground,
+  LinkStyle,
+  TextColor,
+} from "./_components/styleSelector";
 
 export function StylesForm({
   slug,
@@ -17,6 +19,12 @@ export function StylesForm({
   styles: StylesType | null;
 }) {
   const methods = useForm<StylesType>();
+
+  const linkStyles = {
+    linkBackground: styles?.linkBackground || "",
+    linkColor: styles?.linkColor || "",
+    linkBorder: styles?.linkBorder || "",
+  };
 
   const onSubmit: SubmitHandler<StylesType> = async (formData) => {
     const formValues = {
@@ -48,45 +56,10 @@ export function StylesForm({
           <SubmitBtn />
         </div>
         <div className="grid gap-y-3">
-          <ColorSelector
-            currentStyle={styles?.background || ""}
-            fieldName="background"
-            label="Background"
-            isOpen={true}
-            gradient={true}
-          />
-          <ColorSelector
-            currentStyle={styles?.textColor || ""}
-            fieldName="textColor"
-            label="Text Color"
-          />
-          <ColorSelector
-            currentStyle={styles?.cardColor || ""}
-            fieldName="cardColor"
-            label="Card Color"
-            gradient={true}
-            needTransparent={true}
-          />
-          <fieldset className="fieldset mt-3 px-1">
-            <legend className="fieldset-legend">Link Style</legend>
-            <ColorSelector
-              currentStyle={styles?.linkColor || ""}
-              fieldName="linkColor"
-              label="Color"
-            />
-            <ColorSelector
-              currentStyle={styles?.linkBackground || ""}
-              fieldName="linkBackground"
-              label="Background"
-              needTransparent={true}
-            />
-            <ColorSelector
-              currentStyle={styles?.linkBorder || ""}
-              fieldName="linkBorder"
-              label="Border"
-              needTransparent={true}
-            />
-          </fieldset>
+          <Background currentStyle={styles?.background || ""} />
+          <TextColor currentStyle={styles?.textColor || ""} />
+          <CardBackground currentStyle={styles?.textColor || ""} />
+          <LinkStyle currentStyle={linkStyles} />
         </div>
       </form>
     </FormProvider>
