@@ -15,41 +15,19 @@ export async function PageDetails({
   const options = await getOptions(slug);
   const styles = await getStyles(slug);
 
+  const linkStyle = () => {
+    const style = styles?.linkStyle;
+
+    if (!style) return "";
+
+    return "btn-" + style;
+  };
+
   return (
     <>
       <style>{`
         .card-copy {
         color: ${styles?.textColor};
-        }
-
-        .link-list {
-          & li {
-            background: ${styles?.linkBackground};
-            color: ${styles?.linkColor};
-            border-color: ${styles?.linkBorder};
-          }
-
-          & .colored-card {
-            position: relative;
-
-            &::after {
-              content: '';
-              position: absolute;
-              top: 0;
-              bottom: 0;
-              right: 0;
-              left: 0;
-            }
-
-            &:hover::after {
-              background: ${styles?.cardColor};
-              filter: invert(1);
-            }
-
-            &:hover {
-              color: ${styles?.cardColor};
-            }
-          }
         }
       `}</style>
       <div
@@ -82,7 +60,7 @@ export async function PageDetails({
         <ul className="link-list">
           {page.links.map((item, index) => (
             <li
-              className={`btn btn-soft btn-block overflow-hidden bg-transparent px-0 transition-all duration-300 ${styles?.cardColor != "transparent" && styles?.linkBackground == "transparent" ? "colored-card after:transition-all after:duration-300" : "transform-gpu hover:scale-105 hover:bg-amber-50/15"}`}
+              className={`btn btn-block overflow-hidden px-0 ${linkStyle()}`}
               key={index}
             >
               <a

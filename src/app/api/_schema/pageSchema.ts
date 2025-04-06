@@ -11,7 +11,7 @@ export const StylesSchema = z.object({
     cardColor: z.string().nullable(),
     linkColor: z.string().nullable(),
     linkBackground: z.string().nullable(),
-    linkBorder: z.string().nullable(),
+    linkStyle: z.string().nullable(),
   }),
 });
 

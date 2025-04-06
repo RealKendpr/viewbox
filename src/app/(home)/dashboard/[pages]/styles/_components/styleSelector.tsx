@@ -2,6 +2,9 @@
 
 import dynamic from "next/dynamic";
 import { LinkStyleType } from "@/types/PageTypes";
+const LinkStyleSelector = dynamic(() =>
+  import("./linkStyleSelector").then((mod) => mod.LinkStyleSelector),
+);
 const SolidSelector = dynamic(() =>
   import("../colorSelector").then((mod) => mod.SolidSelector),
 );
@@ -44,8 +47,15 @@ export function LinkStyle({ currentStyle }: { currentStyle: LinkStyleType }) {
   return (
     <Collapse name="link" label="Link Style">
       <div className="grid gap-y-5">
+        <p className="text-sm font-medium">Style</p>
+        <LinkStyleSelector
+          currentStyle={currentStyle.linkStyle}
+          fieldName="linkStyle"
+        />
+      </div>
+      <div className="grid gap-y-5">
         <p className="text-sm font-medium">Background</p>
-        <MultiColorTabs
+        <SolidSelector
           fieldName="linkBackground"
           currentStyle={currentStyle.linkBackground}
         />
@@ -55,14 +65,6 @@ export function LinkStyle({ currentStyle }: { currentStyle: LinkStyleType }) {
         <SolidSelector
           fieldName="linkColor"
           currentStyle={currentStyle.linkColor}
-        />
-      </div>
-      <div className="grid gap-y-5">
-        <p className="text-sm font-medium">Border</p>
-        <SolidSelector
-          fieldName="linkBorder"
-          currentStyle={currentStyle.linkBorder}
-          transparent={true}
         />
       </div>
     </Collapse>
