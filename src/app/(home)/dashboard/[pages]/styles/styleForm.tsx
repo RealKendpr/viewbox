@@ -23,7 +23,7 @@ export function StylesForm({
   const linkStyles = {
     linkBackground: styles?.linkBackground || "",
     linkColor: styles?.linkColor || "",
-    linkBorder: styles?.linkBorder || "",
+    linkStyle: styles?.linkStyle || "",
   };
 
   const onSubmit: SubmitHandler<StylesType> = async (formData) => {

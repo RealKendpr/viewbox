@@ -3,7 +3,7 @@ import mongoose, { Document } from "mongoose";
 export interface LinkStyleType {
   linkColor: string;
   linkBackground: string;
-  linkBorder: string;
+  linkStyle: string;
 }
 export interface StylesType extends LinkStyleType {
   background: string;
