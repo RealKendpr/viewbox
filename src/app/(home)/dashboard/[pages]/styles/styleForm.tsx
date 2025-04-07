@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { SubmitBtn } from "../../_components/saveButton";
 import { StylesType } from "@/types/PageTypes";
@@ -20,6 +21,11 @@ export function StylesForm({
 }) {
   const methods = useForm<StylesType>({ defaultValues: styles || {} });
 
+  const {
+    reset,
+    formState: { isSubmitSuccessful },
+  } = methods;
+
   const linkStyles = {
     linkBackground: styles?.linkBackground || "",
     linkColor: styles?.linkColor || "",
@@ -39,6 +45,10 @@ export function StylesForm({
 
     await revalidateForm(`${slug}/styles`);
   };
+
+  useEffect(() => {
+    reset(styles || {}, { keepValues: true });
+  }, [reset, isSubmitSuccessful]);
 
   return (
     <FormProvider {...methods}>
