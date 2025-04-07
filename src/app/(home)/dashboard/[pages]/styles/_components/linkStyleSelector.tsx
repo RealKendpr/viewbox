@@ -17,7 +17,7 @@ export function LinkStyleSelector({
       {styles.map((i) => (
         <li key={i}>
           <input
-            className="peer absolute"
+            className="peer visibility-hidden absolute size-0"
             {...register(fieldName)}
             type="radio"
             name={fieldName}

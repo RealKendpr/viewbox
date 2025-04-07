@@ -4,15 +4,18 @@ import layouts from "@/layouts/layouts.json";
 const layoutsEnum = layouts.layouts as [string, ...string[]];
 
 export const StylesSchema = z.object({
-  slug: z.string(),
-  styles: z.object({
-    background: z.string().nullable(),
-    textColor: z.string().nullable(),
-    cardColor: z.string().nullable(),
-    linkColor: z.string().nullable(),
-    linkBackground: z.string().nullable(),
-    linkStyle: z.string().nullable(),
-  }),
+  slug: z.string().trim().min(1, { message: "required" }),
+  styles: z.object(
+    {
+      background: z.string().nullable(),
+      textColor: z.string().nullable(),
+      cardColor: z.string().nullable(),
+      linkColor: z.string().nullable(),
+      linkBackground: z.string().nullable(),
+      linkStyle: z.string().nullable(),
+    },
+    { message: "required" },
+  ),
 });
 
 export const optionsSchema = z.object({
