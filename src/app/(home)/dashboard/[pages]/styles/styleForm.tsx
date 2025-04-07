@@ -21,10 +21,7 @@ export function StylesForm({
 }) {
   const methods = useForm<StylesType>({ defaultValues: styles || {} });
 
-  const {
-    reset,
-    formState: { isSubmitSuccessful },
-  } = methods;
+  const { reset } = methods;
 
   const linkStyles: LinkStyleType = {
     linkBackground: styles?.linkBackground || "",
@@ -47,8 +44,8 @@ export function StylesForm({
   };
 
   useEffect(() => {
-    reset(styles || {}, { keepValues: true });
-  }, [reset, isSubmitSuccessful, styles]);
+    reset(styles || {}, { keepValues: true, keepIsSubmitted: true });
+  }, [reset, styles]);
 
   return (
     <FormProvider {...methods}>

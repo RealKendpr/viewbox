@@ -1,11 +1,16 @@
+"use client";
+
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 export function SubmitBtn() {
-  const { formState, reset } = useFormContext();
+  const {
+    formState: { isSubmitting, isSubmitted },
+    reset,
+  } = useFormContext();
 
   useEffect(() => {
-    if (!formState.isSubmitted) {
+    if (!isSubmitted) {
       return;
     }
 
@@ -13,12 +18,12 @@ export function SubmitBtn() {
       reset();
     }, 2000);
     return () => clearTimeout(resetState);
-  }, [formState, reset]);
+  }, [isSubmitting, isSubmitted, reset]);
 
   return (
     <>
       <button className="btn btn-primary" type="submit">
-        {formState?.isSubmitting ? (
+        {isSubmitting ? (
           <span className="loading loading-spinner loading-xs"></span>
         ) : (
           <svg
@@ -39,7 +44,7 @@ export function SubmitBtn() {
         <span>Save</span>
       </button>
       <div
-        className={`[&.submitted]:toast fixed -right-full bottom-0 z-50 ${formState.isSubmitted && "submitted"} `}
+        className={`[&.submitted]:toast fixed -right-full bottom-0 z-50 ${isSubmitted && "submitted"} `}
       >
         <div className="alert alert-success">
           <span>Updated successfully.</span>
