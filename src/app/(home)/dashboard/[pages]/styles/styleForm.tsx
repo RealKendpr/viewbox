@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { SubmitBtn } from "../../_components/saveButton";
-import { StylesType } from "@/types/PageTypes";
+import { LinkStyleType, StylesType } from "@/types/PageTypes";
 import { revalidateForm } from "../_utils/revalidateForm";
 import {
   Background,
@@ -26,7 +26,7 @@ export function StylesForm({
     formState: { isSubmitSuccessful },
   } = methods;
 
-  const linkStyles = {
+  const linkStyles: LinkStyleType = {
     linkBackground: styles?.linkBackground || "",
     linkColor: styles?.linkColor || "",
     linkStyle: styles?.linkStyle || "",
@@ -48,7 +48,7 @@ export function StylesForm({
 
   useEffect(() => {
     reset(styles || {}, { keepValues: true });
-  }, [reset, isSubmitSuccessful]);
+  }, [reset, isSubmitSuccessful, styles]);
 
   return (
     <FormProvider {...methods}>
