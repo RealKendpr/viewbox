@@ -25,7 +25,7 @@ export function Background({ currentStyle }: { currentStyle: string }) {
 
 export function TextColor({ currentStyle }: { currentStyle: string }) {
   return (
-    <Collapse name="" label="Heading Color">
+    <Collapse name="" label="Text Color">
       <SolidSelector fieldName="textColor" currentStyle={currentStyle} />
     </Collapse>
   );
