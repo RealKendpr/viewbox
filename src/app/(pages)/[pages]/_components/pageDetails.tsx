@@ -26,8 +26,14 @@ export async function PageDetails({
   return (
     <>
       <style>{`
+        :root {
+          --btn-color: ${styles?.linkBackground};
+        }
         .card-copy {
-        color: ${styles?.textColor};
+          color: ${styles?.textColor};
+        }
+        .link-list {
+          color: ${styles?.linkColor};
         }
       `}</style>
       <div
