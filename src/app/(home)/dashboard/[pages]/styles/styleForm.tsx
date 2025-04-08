@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { SubmitBtn } from "../../_components/saveButton";
+import { SubmitBtn } from "@dashboard/_components/saveButton";
 import { LinkStyleType, StylesType } from "@/types/PageTypes";
 import { revalidateForm } from "../_utils/revalidateForm";
 import {

@@ -2,7 +2,7 @@
 
 import layouts from "@/layouts/layouts.json";
 import { revalidateForm } from "../_utils/revalidateForm";
-import { SubmitBtn } from "../../_components/saveButton";
+import { SubmitBtn } from "@dashboard/_components/saveButton";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { LayoutsType } from "@/types/PageTypes";
 
