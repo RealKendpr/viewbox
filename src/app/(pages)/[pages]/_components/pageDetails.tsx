@@ -15,12 +15,11 @@ export async function PageDetails({
   const options = await getOptions(slug);
   const styles = await getStyles(slug);
 
-  const linkStyle = () => {
-    const style = styles?.linkStyle;
-
-    if (!style) return "";
-
-    return "btn-" + style;
+  const styes = {
+    default: "",
+    soft: "btn-soft",
+    outline: "btn-outline",
+    ghost: "btn-ghost",
   };
 
   return (
@@ -64,7 +63,7 @@ export async function PageDetails({
         <ul className="link-list">
           {page.links.map((item, index) => (
             <li
-              className={`btn btn-block overflow-hidden px-0 ${linkStyle()}`}
+              className={`btn btn-block overflow-hidden px-0 ${styles?.linkStyle && styes[styles?.linkStyle]}`}
               key={index}
             >
               <a
