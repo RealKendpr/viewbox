@@ -21,7 +21,7 @@ export function StylesForm({
 }) {
   const methods = useForm<StylesType>({ defaultValues: styles || {} });
 
-  const { reset } = methods;
+  const { reset, setError } = methods;
 
   const linkStyles: LinkStyleType = {
     linkBackground: styles?.linkBackground || "",
@@ -37,6 +37,9 @@ export function StylesForm({
     });
 
     if (!response.ok) {
+      setError("root", {
+        type: `{server', message:'Something is wrong with your request; status code: ${response.status}}`,
+      });
       return;
     }
 

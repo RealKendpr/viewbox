@@ -33,6 +33,9 @@ export function LayoutsForm({
     });
 
     if (!response.ok) {
+      methods.setError("root", {
+        type: `{server', message:'Something is wrong with your request; status code: ${response.status}}`,
+      });
       return;
     }
     revalidateForm(`/dashboard${slug}/layouts`);

@@ -71,6 +71,10 @@ export function EditForm({ pageDetails }: { pageDetails: EditPageType }) {
         setIsDuplicate(true);
         return;
       }
+
+      methods.setError("root", {
+        type: `{server', message:'Something is wrong with your request; status code: ${response.status}}`,
+      });
       return;
     }
     // should revalidate the pageDetails, so, that on 2nd attempt of update with no changes a promt should popup
