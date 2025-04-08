@@ -3,7 +3,7 @@
 import { revalidateForm } from "../_utils/revalidateForm";
 import { OptionsType } from "@/types/PageTypes";
 import dynamic from "next/dynamic";
-import { SubmitBtn } from "../../_components/saveButton";
+import { SubmitBtn } from "@dashboard/_components/saveButton";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 const DeletePageBtn = dynamic(() =>
   import("./delete").then((mod) => mod.DeleteBtn),
@@ -16,7 +16,9 @@ export default function OptionsForm({
   slug: string;
   defaultValues: OptionsType | null;
 }) {
-  const methods = useForm<OptionsType>();
+  const methods = useForm<OptionsType>({
+    defaultValues: defaultValues || undefined,
+  });
   const { register } = methods;
 
   const onSubmit: SubmitHandler<OptionsType> = async (formData) => {

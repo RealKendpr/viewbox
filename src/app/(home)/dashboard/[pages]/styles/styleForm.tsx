@@ -30,6 +30,8 @@ export function StylesForm({
   };
 
   const onSubmit: SubmitHandler<StylesType> = async (formData) => {
+    if (JSON.stringify(styles) == JSON.stringify(formData)) return;
+
     const response = await fetch("/api/update/styles", {
       method: "PUT",
       headers: { "Content-Type": "applications/json" },
