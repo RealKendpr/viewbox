@@ -1,24 +1,38 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 export function SubmitBtn() {
   const {
-    formState: { isSubmitting, isSubmitted },
+    formState: { isSubmitting, isSubmitted, errors },
     reset,
   } = useFormContext();
 
+  const [status, setStatus] = useState<"error" | "success" | null>(null);
+
   useEffect(() => {
-    if (!isSubmitted) {
-      return;
+    if (errors.root) {
+      setStatus("error");
+
+      const resetState = setTimeout(() => {
+        setStatus(null);
+      }, 2000);
+
+      return () => clearTimeout(resetState);
     }
 
-    const resetState = setTimeout(() => {
-      reset();
-    }, 2000);
-    return () => clearTimeout(resetState);
-  }, [isSubmitting, isSubmitted, reset]);
+    if (isSubmitted && !errors.root) {
+      setStatus("success");
+
+      const resetState = setTimeout(() => {
+        reset();
+        setStatus(null);
+      }, 2000);
+
+      return () => clearTimeout(resetState);
+    }
+  }, [isSubmitting, isSubmitted, reset, errors, setStatus]);
 
   return (
     <>
@@ -44,10 +58,17 @@ export function SubmitBtn() {
         <span>Save</span>
       </button>
       <div
-        className={`[&.submitted]:toast fixed -right-full bottom-0 z-50 ${isSubmitted && "submitted"} `}
+        className={`[&.show]:toast fixed -right-full bottom-0 z-50 ${status == "success" && "show"} `}
       >
         <div className="alert alert-success">
           <span>Updated successfully.</span>
+        </div>
+      </div>
+      <div
+        className={`[&.show]:toast fixed -right-full bottom-0 z-50 ${status == "error" && "show"} `}
+      >
+        <div className="alert alert-error">
+          <span>Failed to update.</span>
         </div>
       </div>
     </>

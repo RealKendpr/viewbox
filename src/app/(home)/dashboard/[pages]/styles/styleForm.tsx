@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { SubmitBtn } from "../../_components/saveButton";
+import { SubmitBtn } from "@dashboard/_components/saveButton";
 import { LinkStyleType, StylesType } from "@/types/PageTypes";
 import { revalidateForm } from "../_utils/revalidateForm";
 import {
@@ -21,7 +21,7 @@ export function StylesForm({
 }) {
   const methods = useForm<StylesType>({ defaultValues: styles || {} });
 
-  const { reset } = methods;
+  const { reset, setError } = methods;
 
   const linkStyles: LinkStyleType = {
     linkBackground: styles?.linkBackground || "",
@@ -30,6 +30,8 @@ export function StylesForm({
   };
 
   const onSubmit: SubmitHandler<StylesType> = async (formData) => {
+    if (JSON.stringify(styles) == JSON.stringify(formData)) return;
+
     const response = await fetch("/api/update/styles", {
       method: "PUT",
       headers: { "Content-Type": "applications/json" },
@@ -37,6 +39,9 @@ export function StylesForm({
     });
 
     if (!response.ok) {
+      setError("root", {
+        type: `{server', message:'Something is wrong with your request; status code: ${response.status}}`,
+      });
       return;
     }
 

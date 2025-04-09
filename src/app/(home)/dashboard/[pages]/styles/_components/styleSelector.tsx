@@ -6,10 +6,10 @@ const LinkStyleSelector = dynamic(() =>
   import("./linkStyleSelector").then((mod) => mod.LinkStyleSelector),
 );
 const SolidSelector = dynamic(() =>
-  import("../colorSelector").then((mod) => mod.SolidSelector),
+  import("./colorSelector").then((mod) => mod.SolidSelector),
 );
 const MultiColorTabs = dynamic(() =>
-  import("../colorSelector").then((mod) => mod.MultiColorTabs),
+  import("./colorSelector").then((mod) => mod.MultiColorTabs),
 );
 const Collapse = dynamic(() =>
   import("./collapse").then((mod) => mod.Collapse),

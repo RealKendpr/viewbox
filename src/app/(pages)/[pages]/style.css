@@ -51,7 +51,7 @@
     & .link-list {
       @apply grid auto-rows-[100px] grid-cols-[repeat(2,minmax(100px,1fr))] gap-3;
 
-      & a {
+      & li {
         @apply h-full;
 
         & span {
