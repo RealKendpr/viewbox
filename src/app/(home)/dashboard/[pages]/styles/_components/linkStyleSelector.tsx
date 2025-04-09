@@ -20,7 +20,6 @@ export function LinkStyleSelector({
             className="peer visibility-hidden absolute size-0"
             {...register(fieldName)}
             type="radio"
-            name={fieldName}
             id={i}
             value={i}
             defaultChecked={i == currentStyle || i == "default"}

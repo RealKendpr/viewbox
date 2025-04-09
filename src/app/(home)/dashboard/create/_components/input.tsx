@@ -1,6 +1,5 @@
-import { useFormContext } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
 import RequiredAlert from "@/_components/requiredAlert";
+import { useFieldContext } from "@dashboard/hooks/form-context";
 
 export function Input({
   label,
@@ -15,22 +14,17 @@ export function Input({
   type?: "url" | "text";
   required?: boolean;
 }) {
+  const field = useFieldContext<string>();
   const {
-    register,
-    // formState: { errors },
-  } = useFormContext();
-
-  const validationRule = {
-    required: required,
-    pattern:
-      type === "url"
-        ? /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
-        : undefined,
-  };
+    state: {
+      value,
+      meta: { errors },
+    },
+  } = field;
 
   return (
     <div className="fieldset">
-      <label htmlFor={name} className="fieldset-legend place-self-start">
+      <label className="fieldset-legend place-self-start" htmlFor={name}>
         {label}
       </label>
       <input
@@ -38,18 +32,10 @@ export function Input({
         type="text"
         id={name}
         placeholder={placeholder}
-        {...register(name, validationRule)}
+        defaultValue={value}
+        onChange={(e) => field.handleChange(e.target.value)}
       />
-      <ErrorMessage
-        name={name}
-        render={() => (
-          <RequiredAlert
-            errorMsg={`Please enter a valid ${
-              type === "url" ? "URL" : label.toLowerCase()
-            }`}
-          />
-        )}
-      />
+      {errors.length > 0 && <RequiredAlert errorMsg={errors[0]} />}
     </div>
   );
 }
