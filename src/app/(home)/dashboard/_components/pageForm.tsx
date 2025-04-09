@@ -19,7 +19,7 @@ const { useAppForm } = createFormHook({
     Input,
   },
   formComponents: {
-    SubscribeButton: SubmitBtn,
+    SubmitBtn,
   },
 });
 
@@ -30,11 +30,29 @@ export function PageForm({
   pageValue: EditPageType;
   title: string;
 }) {
+  const submitHandler = async (value: EditPageType) => {
+    const unchanged = JSON.stringify(pageValue) === JSON.stringify(value);
+
+    if (unchanged) {
+      return;
+    }
+
+    console.log(value);
+    return;
+  };
+
   const form = useAppForm({
     defaultValues: pageValue,
-    onSubmit: ({ value }) => {
-      console.log(value);
+    validators: {
+      onSubmit: ({ value }) => {
+        return {
+          fields: {
+            pageName: !value.pageName ? "Page name is required" : undefined,
+          },
+        };
+      },
     },
+    onSubmit: async ({ value }) => await submitHandler(value),
   });
 
   return (
@@ -49,7 +67,7 @@ export function PageForm({
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-lg font-medium">{title}</h1>
         <form.AppForm>
-          <form.SubscribeButton />
+          <form.SubmitBtn />
         </form.AppForm>
       </div>
       <div className="grid gap-y-4">
@@ -62,9 +80,6 @@ export function PageForm({
         </div>
         <form.AppField
           name="pageName"
-          validators={{
-            onBlur: ({ value }) => !value && "Page name is required",
-          }}
           children={(field) => (
             <field.Input name="pageName" label="Page Title" />
           )}
