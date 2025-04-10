@@ -15,7 +15,7 @@ export async function PageDetails({
   const options = await getOptions(slug);
   const styles = await getStyles(slug);
 
-  const styes = {
+  const linkStyle = {
     default: "",
     soft: "btn-soft",
     outline: "btn-outline",
@@ -26,11 +26,11 @@ export async function PageDetails({
     <>
       <style>{`
         :root {
-          --color-base-content: ${styles?.textColor};
+        ${styles?.textColor && `--color-base-content: ${styles?.textColor};`}
         }
         .link-list li {
-          --btn-color: ${styles?.linkBackground};
-          --color-base-content: ${styles?.linkColor};
+        ${styles?.linkBackground && `--btn-color: ${styles?.linkBackground};`}
+        ${styles?.linkColor && `--color-base-content: ${styles?.linkColor};`}
         }
       `}</style>
       <div
@@ -63,7 +63,7 @@ export async function PageDetails({
         <ul className="link-list">
           {page.links.map((item, index) => (
             <li
-              className={`btn btn-block overflow-hidden px-0 ${styles?.linkStyle && styes[styles?.linkStyle]}`}
+              className={`btn btn-block overflow-hidden px-0 ${styles?.linkStyle ? linkStyle[styles?.linkStyle] : ""}`}
               key={index}
             >
               <a
