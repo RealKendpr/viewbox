@@ -67,7 +67,7 @@ export function EditPageForm({
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-lg font-medium">{title}</h1>
         <form.AppForm>
-          <form.SubmitBtn />
+          <form.SubmitBtn label="Save" />
         </form.AppForm>
       </div>
       <InputFields form={form as any} />

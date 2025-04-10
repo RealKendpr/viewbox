@@ -1,80 +1,69 @@
 "use client";
 
-import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
-import { InputSet } from "@/app/(home)/dashboard/_components/inputSet";
-import { PageType, LinkType } from "@/types/PageTypes";
-import { useState } from "react";
+import { PageType } from "@/types/PageTypes";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-const AddLink = dynamic(
-  () => import("@/app/(home)/dashboard/_components/addLink"),
+import { useAppForm } from "@dashboard/hooks/form-hook";
+const InputFields = dynamic(() =>
+  import("@dashboard/_components/InputFields").then((mod) => mod.InputFields),
 );
-const Modal = dynamic(() => import("@/_components/modal"));
 
 export function CreateForm() {
   const router = useRouter();
-  const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
-  const [links, setLinks] = useState<LinkType[]>([]);
-  const [linkRequired, setLinkRequired] = useState<boolean>(false);
 
-  const methods = useForm<PageType>();
-
-  const onSubmit: SubmitHandler<PageType> = async (formData) => {
-    const newFormData: PageType = {
-      ...formData,
-      links: links,
-    };
-
-    if (links.length === 0) {
-      setLinkRequired(true);
-      return;
+  const submitHandler = async (
+    value: PageType,
+  ): Promise<string | undefined> => {
+    if (!value.links) {
+      return "⚠️ At least one link is required";
     }
 
     const response = await fetch("/api/create", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "applications/json",
       },
-      body: JSON.stringify(newFormData),
+      body: JSON.stringify(value),
     });
+
     if (!response.ok) {
       if (response.status === 409) {
-        setIsDuplicate((isDuplicate) => !isDuplicate);
-        return;
+        return "Page name already exist.";
       }
-      return;
+      return "";
     }
 
-    router.push(`/dashboard/${formData.pageName}/layouts/`);
+    router.push(`/dashboard/${value.pageName}/layouts/`);
   };
 
+  const form = useAppForm({
+    defaultValues: {} as PageType,
+    validators: {
+      onSubmitAsync: async ({ value }) => {
+        const submit = await submitHandler(value);
+
+        return submit;
+      },
+    },
+  });
+
   return (
-    <>
-      <FormProvider {...methods}>
-        <form
-          className="mt-10 grid max-w-md"
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          <div className="flex items-center justify-between">
-            <h1 className="text-lg font-medium">Create</h1>
-            <button className="btn btn-primary" type="submit">
-              Create
-            </button>
-          </div>
-          <InputSet />
-          <AddLink links={links} setLinks={setLinks} />
-        </form>
-      </FormProvider>
-      <Modal isOpen={linkRequired} setIsOpen={setLinkRequired}>
-        <p>⚠️ At least one link is required</p>
-      </Modal>
-      <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
-        <p className="font-semibold">⚠️ Page already exist</p>
-        <p className="py-4 text-sm">
-          The name of the page your trying to create already exist, you may
-          choose a different name
-        </p>
-      </Modal>
-    </>
+    <form
+      className="mt-10 grid max-w-md"
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        void form.handleSubmit();
+      }}
+    >
+      <div className="mb-8 flex items-center justify-between">
+        <h1 className="text-lg font-medium">Create</h1>
+        <form.AppForm>
+          <form.SubmitBtn label="Create" />
+        </form.AppForm>
+      </div>
+
+      <InputFields form={form as any} />
+    </form>
   );
 }

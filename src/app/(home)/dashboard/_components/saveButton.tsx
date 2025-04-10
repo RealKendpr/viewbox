@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "../hooks/form-context";
 import { useStore } from "@tanstack/react-form";
 
-export function SubmitBtn() {
+export function SubmitBtn({ label }: { label: string }) {
   const form = useFormContext();
   const [status, setStatus] = useState<"error" | "success" | null>(null);
 
@@ -56,7 +56,7 @@ export function SubmitBtn() {
             ></path>
           </svg>
         )}
-        <span>Save</span>
+        <span>{label}</span>
       </button>
       <div
         className={`[&.show]:toast fixed -right-full bottom-0 z-50 ${status == "success" && "show"} `}
