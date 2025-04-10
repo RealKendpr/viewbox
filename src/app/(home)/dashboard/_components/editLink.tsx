@@ -134,7 +134,7 @@ export default function LinkDisplay({
           >
             {links.map((item, index) => (
               <Reorder.Item
-                className="group flex items-center justify-between"
+                className="group flex items-center justify-between hover:cursor-grab"
                 value={item}
                 key={item.linkName}
               >
