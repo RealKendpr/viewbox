@@ -15,7 +15,7 @@ export default async function EditPage({
 
   return (
     <>
-      <PageForm pageValue={pageDetails} title="Edit" />
+      <PageForm slug={pages} pageValue={pageDetails} title="Edit" />
     </>
   );
 }

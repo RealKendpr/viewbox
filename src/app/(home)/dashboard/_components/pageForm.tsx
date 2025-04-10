@@ -1,16 +1,12 @@
 "use client";
 
-// import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { EditPageType, PageType, LinkType } from "@/types/PageTypes";
-// import { useState } from "react";
-import dynamic from "next/dynamic";
-// import { SubmitBtn } from "../../_components/saveButton";
-// import { revalidateForm } from "../_utils/revalidateForm";
+import { EditPageType } from "@/types/PageTypes";
+// import dynamic from "next/dynamic";
+import { SubmitBtn } from "./saveButton";
+import { revalidateForm } from "../[pages]/_utils/revalidateForm";
 import { createFormHook } from "@tanstack/react-form";
 import { Input } from "../create/_components/input";
-import { SubmitBtn } from "./saveButton";
 import { fieldContext, formContext } from "../hooks/form-context";
-import { useState } from "react";
 
 const { useAppForm } = createFormHook({
   fieldContext,
@@ -24,9 +20,11 @@ const { useAppForm } = createFormHook({
 });
 
 export function PageForm({
+  slug,
   pageValue,
   title,
 }: {
+  slug: string;
   pageValue: EditPageType;
   title: string;
 }) {
@@ -34,25 +32,38 @@ export function PageForm({
     const unchanged = JSON.stringify(pageValue) === JSON.stringify(value);
 
     if (unchanged) {
-      return;
+      return true;
     }
 
-    console.log(value);
-    return;
+    const response = await fetch("/api/update", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "applications/json",
+      },
+      body: JSON.stringify(value),
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    await revalidateForm(slug);
+    return true;
   };
 
   const form = useAppForm({
-    defaultValues: pageValue,
+    defaultValues: pageValue as EditPageType,
     validators: {
-      onSubmit: ({ value }) => {
-        return {
-          fields: {
-            pageName: !value.pageName ? "Page name is required" : undefined,
-          },
-        };
+      onSubmitAsync: async ({ value }) => {
+        const isSubmitOk = await submitHandler(value);
+
+        if (!isSubmitOk) {
+          return {
+            formError: "error",
+          };
+        } else return undefined;
       },
     },
-    onSubmit: async ({ value }) => await submitHandler(value),
   });
 
   return (
@@ -61,7 +72,7 @@ export function PageForm({
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <div className="mb-8 flex items-center justify-between">
@@ -80,6 +91,10 @@ export function PageForm({
         </div>
         <form.AppField
           name="pageName"
+          validators={{
+            onSubmit: ({ value }) =>
+              !value ? "Page name is required." : undefined,
+          }}
           children={(field) => (
             <field.Input name="pageName" label="Page Title" />
           )}
