@@ -6,6 +6,7 @@ import { Input } from "../create/_components/input";
 import dynamic from "next/dynamic";
 import testUrl from "../_utils/testUrl";
 import Image from "next/image";
+import { Reorder } from "motion/react";
 const Modal = dynamic(() => import("@/_components/modal"));
 
 export default function LinkDisplay({
@@ -126,11 +127,16 @@ export default function LinkDisplay({
         </div>
       ) : (
         <>
-          <ul className="mt-3 px-2 pb-2">
+          <Reorder.Group
+            values={links}
+            onReorder={setLinks}
+            className="mt-3 px-2 pb-2"
+          >
             {links.map((item, index) => (
-              <li
+              <Reorder.Item
                 className="group flex items-center justify-between"
-                key={index}
+                value={item}
+                key={item.linkName}
               >
                 <div className="flex gap-x-3">
                   <Image
@@ -183,9 +189,9 @@ export default function LinkDisplay({
                     </svg>
                   </button>
                 </div>
-              </li>
+              </Reorder.Item>
             ))}
-          </ul>
+          </Reorder.Group>
           <Modal isOpen={editField} setIsOpen={setEditField}>
             <fieldset className="fieldset">
               <legend className="fieldset-legend">Edit Link</legend>
