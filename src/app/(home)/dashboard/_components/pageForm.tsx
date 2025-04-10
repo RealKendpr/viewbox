@@ -95,10 +95,9 @@ export function PageForm({
             onSubmit: ({ value }) =>
               !value ? "Page name is required." : undefined,
           }}
-          children={(field) => (
-            <field.Input name="pageName" label="Page Title" />
-          )}
-        />
+        >
+          {(field) => <field.Input name="pageName" label="Page Title" />}
+        </form.AppField>
         <div className="fieldset">
           <label
             htmlFor="pageDescription"
@@ -106,9 +105,8 @@ export function PageForm({
           >
             Your bio
           </label>
-          <form.Field
-            name="pageDescription"
-            children={(field: any) => (
+          <form.Field name="pageDescription">
+            {(field: any) => (
               <textarea
                 className="textarea h-11 w-full"
                 placeholder="Bio"
@@ -118,7 +116,7 @@ export function PageForm({
                 onChange={(e) => field.handleChange(e.target.value)}
               />
             )}
-          />
+          </form.Field>
           <div className="fieldset-label">Optional</div>
         </div>
       </div>
