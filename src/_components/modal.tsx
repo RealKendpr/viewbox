@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef } from "react";
+import { Suspense, useCallback, useEffect, useRef } from "react";
+import { LoadingSpinner } from "./loading";
 
 export default function Modal({
   children,
@@ -42,7 +43,9 @@ export default function Modal({
 
   return (
     <dialog ref={modalRef} className="modal">
-      <div className="modal-box">{children}</div>
+      <div className="modal-box">
+        <Suspense fallback={<LoadingSpinner />}>{children}</Suspense>
+      </div>
       <div className="modal-backdrop" onClick={() => handleModal()} />
     </dialog>
   );
