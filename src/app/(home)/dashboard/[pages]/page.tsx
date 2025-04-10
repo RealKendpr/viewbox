@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { PageForm } from "../_components/pageForm";
+import { EditPageForm } from "./_components/editForm";
 import { getPageForm } from "@/_lib/getPageData";
 
 export default async function EditPage({
@@ -15,7 +15,7 @@ export default async function EditPage({
 
   return (
     <>
-      <PageForm slug={pages} pageValue={pageDetails} title="Edit" />
+      <EditPageForm slug={pages} pageValue={pageDetails} title="Edit" />
     </>
   );
 }
