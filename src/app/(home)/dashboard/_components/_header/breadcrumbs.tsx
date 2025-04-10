@@ -22,7 +22,7 @@ export function Breadcrumbs() {
                     <span>{i}</span>
                   )
                 ) : (
-                  <span>{i}</span>
+                  <span>{i.replace("-", " ")}</span>
                 )}
               </li>
             ),
