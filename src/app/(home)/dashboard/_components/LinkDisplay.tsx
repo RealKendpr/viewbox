@@ -4,10 +4,10 @@ import { Input } from "../create/_components/input";
 import { useEffect, useState } from "react";
 import testUrl from "../_utils/testUrl";
 import dynamic from "next/dynamic";
-const LinkDisplay = dynamic(() => import("./editLink"));
+const EditLink = dynamic(() => import("./editLink"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
-export default function AddLink({
+export default function LinkDisplay({
   links,
   setLinks,
 }: {
@@ -79,11 +79,7 @@ export default function AddLink({
     <>
       <div className="mt-3 flex min-h-52 flex-col">
         <p className="text-xl font-bold">Links</p>
-        <LinkDisplay
-          links={links}
-          setLinks={setLinks}
-          removeLink={removeLink}
-        />
+        <EditLink links={links} setLinks={setLinks} removeLink={removeLink} />
         <button
           className="btn btn-dash btn-sm mb-5 w-[calc(100%-12px)] self-center"
           type="button"

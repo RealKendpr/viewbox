@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { getSlug } from "@/app/api/_utils/getSlug";
 const AddLink = dynamic(
-  () => import("@/app/(home)/dashboard/_components/addLink"),
+  () => import("@/app/(home)/dashboard/_components/LinkDisplay"),
 );
 const Modal = dynamic(() => import("@/_components/modal"));
 
