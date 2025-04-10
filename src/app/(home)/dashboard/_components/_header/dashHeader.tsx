@@ -4,6 +4,7 @@ import { getUserData } from "@/_lib/getUserData";
 import { UserAvatar } from "@/_components/userAvatar";
 import { Breadcrumbs } from "./breadcrumbs";
 import { initials } from "@dicebear/collection";
+import { ThemeSwitch } from "./themeSwitcher";
 
 export async function DashHeader() {
   const username = (await getUserData("username")) as string;
@@ -14,7 +15,8 @@ export async function DashHeader() {
         <div className="flex-1">
           <Breadcrumbs />
         </div>
-        <div className="flex gap-2">
+        <ThemeSwitch />
+        <div className="ml-3 flex gap-2">
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
