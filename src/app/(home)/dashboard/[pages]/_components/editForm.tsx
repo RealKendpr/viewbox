@@ -59,7 +59,7 @@ export function EditForm({ pageDetails }: { pageDetails: EditPageType }) {
     }
 
     const response = await fetch("/api/update", {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
