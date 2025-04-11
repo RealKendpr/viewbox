@@ -52,10 +52,7 @@ export function CreateForm() {
   return (
     <>
       <FormProvider {...methods}>
-        <form
-          className="mt-10 grid max-w-md"
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
+        <form className="mt-10" onSubmit={methods.handleSubmit(onSubmit)}>
           <div className="flex items-center justify-between">
             <h1 className="text-lg font-medium">Create</h1>
             <button className="btn btn-primary" type="submit">

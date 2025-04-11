@@ -8,7 +8,7 @@ export default async function EditPageLayout({
   params: Promise<{ pages: string }>;
 }) {
   return (
-    <div className="mx-[4%]">
+    <div className="mx-[4%] max-w-md min-[28rem]:mx-auto">
       <Tabs pageName={(await params).pages} />
       {children}
     </div>
