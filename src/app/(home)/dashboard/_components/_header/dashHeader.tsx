@@ -17,7 +17,7 @@ export async function DashHeader() {
         <div className="flex-1">
           <Breadcrumbs />
         </div>
-        <ThemeSwitch theme={theme} />
+        <ThemeSwitch currentTheme={theme} />
         <div className="ml-3 flex gap-2">
           <div className="dropdown dropdown-end">
             <div

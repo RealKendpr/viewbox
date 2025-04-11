@@ -10,7 +10,7 @@ export function SmallNav() {
     isDashboard && (
       <div className="my-4 grid px-[4%]">
         <Link
-          className="btn btn-secondary place-self-end"
+          className="btn btn-primary place-self-end"
           href={"/dashboard/create"}
         >
           Create Page
