@@ -5,9 +5,11 @@ import { UserAvatar } from "@/_components/userAvatar";
 import { Breadcrumbs } from "./breadcrumbs";
 import { initials } from "@dicebear/collection";
 import { ThemeSwitch } from "./themeSwitcher";
+import { updateTheme } from "@/_lib/updateTheme";
 
 export async function DashHeader() {
   const username = (await getUserData("username")) as string;
+  const theme = await updateTheme();
 
   return (
     <header>
@@ -15,7 +17,7 @@ export async function DashHeader() {
         <div className="flex-1">
           <Breadcrumbs />
         </div>
-        <ThemeSwitch />
+        <ThemeSwitch theme={theme} />
         <div className="ml-3 flex gap-2">
           <div className="dropdown dropdown-end">
             <div
