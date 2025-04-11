@@ -13,6 +13,10 @@ const UserSchema = new Schema<UserDocumentType>(
       type: String,
       required: true,
     },
+    userTheme: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,

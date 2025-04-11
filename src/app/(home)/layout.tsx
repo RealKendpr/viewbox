@@ -12,7 +12,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-base-100 min-h-svh">{children}</body>
+      <body className="bg-base-100 min-h-svh min-w-[375px]">{children}</body>
     </html>
   );
 }
