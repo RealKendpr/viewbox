@@ -19,7 +19,7 @@ export async function PagePreview() {
             <tr className="*:capitalize">
               <th className="hidden md:table-cell"></th>
               <th>Name</th>
-              <th>Created at</th>
+              <th className="hidden md:table-cell">Created at</th>
               <th className="min-w-[82px]"></th>
             </tr>
           </thead>
@@ -42,8 +42,10 @@ export async function PagePreview() {
                 <td>
                   <div className="truncate">{i.pageName}</div>
                 </td>
-                <td>{createdDate(i.createdAt)}</td>
-                <td>
+                <td className="hidden sm:table-cell">
+                  {createdDate(i.createdAt)}
+                </td>
+                <td className="text-center">
                   <DropdownOptions slug={i.slug} />
                 </td>
               </tr>
