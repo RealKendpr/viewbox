@@ -4,7 +4,7 @@ import { layoutSchema } from "@api/_schema/pageSchema";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import { ActiveLayoutModel } from "@/_lib/mongodb/models/ConfigModels";
 
-export async function PUT(request: NextRequest) {
+export async function PATCH(request: NextRequest) {
   const data = await request.json();
   if (!data) return NextResponse.json({ error: "no content" }, { status: 204 });
 

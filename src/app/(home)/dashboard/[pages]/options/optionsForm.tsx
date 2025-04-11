@@ -31,7 +31,7 @@ export default function OptionsForm({
     }
 
     const response = await fetch("/api/update/options", {
-      method: "PUT",
+      method: "PATCH",
       headers: { "Content-Type": "applications/json" },
       body: JSON.stringify({ slug: slug, ...formValues }),
     });
