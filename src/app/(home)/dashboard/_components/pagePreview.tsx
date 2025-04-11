@@ -14,22 +14,19 @@ export async function PagePreview() {
       {!pages ? (
         <NoPages />
       ) : (
-        <table className="table">
+        <table className="table table-fixed">
           <thead>
-            <tr className="grid grid-cols-[1fr_1fr_min-content] md:grid-cols-4">
+            <tr className="*:capitalize">
               <th className="hidden md:table-cell"></th>
               <th>Name</th>
-              <th>created at</th>
+              <th>Created at</th>
               <th className="min-w-[82px]"></th>
             </tr>
           </thead>
           <tbody>
             {pages.map((i, index) => (
-              <tr
-                className="grid grid-cols-[1fr_1fr_min-content] md:grid-cols-4"
-                key={index}
-              >
-                <th className="hidden text-end md:table-cell">
+              <tr key={index}>
+                <td className="hidden text-end md:table-cell">
                   <div className="inline-block h-[64px] w-[64px] overflow-hidden rounded-xl">
                     {i.pageIcon && (
                       <Image
@@ -41,14 +38,14 @@ export async function PagePreview() {
                       />
                     )}
                   </div>
-                </th>
-                <th>
+                </td>
+                <td>
                   <div className="truncate">{i.pageName}</div>
-                </th>
-                <th>{createdDate(i.createdAt)}</th>
-                <th>
+                </td>
+                <td>{createdDate(i.createdAt)}</td>
+                <td>
                   <DropdownOptions slug={i.slug} />
-                </th>
+                </td>
               </tr>
             ))}
           </tbody>

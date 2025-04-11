@@ -4,6 +4,7 @@ export interface UserDocumentType {
   password: string;
   createdAt: Date;
   updatedAt: Date;
+  userTheme: "light" | "dark";
 }
 
 export interface FormUserType {
