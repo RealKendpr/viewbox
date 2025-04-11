@@ -1,18 +1,31 @@
 "use client";
 
+import { updateTheme } from "@/_lib/updateTheme";
 import { useState } from "react";
 
-export function ThemeSwitch() {
-  const [isLight, setIsLight] = useState<boolean>(true);
+export function ThemeSwitch({
+  currentTheme,
+}: {
+  currentTheme: "light" | "dark" | undefined;
+}) {
+  const [isDark, setIsDark] = useState<boolean>(
+    currentTheme === "dark" ? true : false,
+  );
+
+  const handleChange = (theme: "dark" | "light") => {
+    setIsDark(!isDark);
+    updateTheme(theme);
+  };
 
   return (
     <label className="swap swap-rotate">
       {/* this hidden checkbox controls the state */}
       <input
         type="checkbox"
-        defaultChecked={isLight}
+        defaultChecked={isDark}
         className="theme-controller"
-        value="light"
+        value="dim"
+        onChange={() => handleChange(isDark ? "light" : "dark")}
       />
 
       {/* sun icon */}
