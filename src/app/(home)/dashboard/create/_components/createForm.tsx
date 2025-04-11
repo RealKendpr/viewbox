@@ -6,8 +6,9 @@ import { PageType, LinkType } from "@/types/PageTypes";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import { getSlug } from "@/app/api/_utils/getSlug";
 const AddLink = dynamic(
-  () => import("@/app/(home)/dashboard/_components/addLink"),
+  () => import("@/app/(home)/dashboard/_components/LinkDisplay"),
 );
 const Modal = dynamic(() => import("@/_components/modal"));
 
@@ -45,7 +46,7 @@ export function CreateForm() {
       return;
     }
 
-    router.push(`/dashboard/${formData.pageName}/layouts/`);
+    router.push(`/dashboard/${getSlug(formData.pageName)}/layouts/`);
   };
 
   return (

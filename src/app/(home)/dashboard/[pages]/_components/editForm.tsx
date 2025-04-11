@@ -8,8 +8,8 @@ import dynamic from "next/dynamic";
 import { SubmitBtn } from "../../_components/saveButton";
 import { revalidateForm } from "../_utils/revalidateForm";
 
-const AddLink = dynamic(
-  () => import("@/app/(home)/dashboard/_components/addLink"),
+const LinkDisplay = dynamic(
+  () => import("@/app/(home)/dashboard/_components/LinkDisplay"),
 );
 const Modal = dynamic(() => import("@/_components/modal"));
 
@@ -93,7 +93,7 @@ export function EditForm({ pageDetails }: { pageDetails: EditPageType }) {
             <SubmitBtn />
           </div>
           <InputSet />
-          <AddLink links={links} setLinks={setLinks} />
+          <LinkDisplay links={links} setLinks={setLinks} />
         </form>
       </FormProvider>
       <Modal isOpen={linkRequired} setIsOpen={setLinkRequired}>

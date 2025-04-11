@@ -9,7 +9,7 @@ import Image from "next/image";
 import { Reorder } from "motion/react";
 const Modal = dynamic(() => import("@/_components/modal"));
 
-export default function LinkDisplay({
+export default function EditLink({
   links,
   setLinks,
   removeLink,
@@ -134,7 +134,7 @@ export default function LinkDisplay({
           >
             {links.map((item, index) => (
               <Reorder.Item
-                className="group flex items-center justify-between"
+                className="group flex items-center justify-between hover:cursor-grab"
                 value={item}
                 key={item.linkName}
               >
