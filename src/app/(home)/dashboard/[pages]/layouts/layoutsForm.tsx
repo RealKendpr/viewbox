@@ -27,7 +27,7 @@ export function LayoutsForm({
     };
 
     const response = await fetch("/api/update/layouts", {
-      method: "PUT",
+      method: "PATCH",
       headers: { "Content-Type": "applications/json" },
       body: JSON.stringify(formValues),
     });

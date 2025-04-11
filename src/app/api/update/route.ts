@@ -7,7 +7,7 @@ import PageModel from "@/_lib/mongodb/models/PageModel";
 import { getSlug } from "../_utils/getSlug";
 import { findDuplicates } from "../_utils/findDuplicates";
 
-export async function PUT(request: NextRequest) {
+export async function PATCH(request: NextRequest) {
   const data: EditPageType = await request.json();
 
   if (!data)

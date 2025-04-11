@@ -33,7 +33,7 @@ export function StylesForm({
     if (JSON.stringify(styles) == JSON.stringify(formData)) return;
 
     const response = await fetch("/api/update/styles", {
-      method: "PUT",
+      method: "PATCH",
       headers: { "Content-Type": "applications/json" },
       body: JSON.stringify({ slug: slug, styles: formData }),
     });
