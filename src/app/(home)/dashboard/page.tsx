@@ -5,7 +5,9 @@ import { LoadingSpinner } from "@/_components/loading";
 export default function Dashboard() {
   return (
     <Suspense fallback={<LoadingSpinner />}>
-      <PagePreview />
+      <div className="md:px-[4%]">
+        <PagePreview />
+      </div>
     </Suspense>
   );
 }

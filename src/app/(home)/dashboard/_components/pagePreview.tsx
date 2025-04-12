@@ -10,11 +10,11 @@ export async function PagePreview() {
   const createdDate = (date: Date) => new Date(date).toLocaleDateString();
 
   return (
-    <div className="shadow-md">
+    <>
       {!pages ? (
         <NoPages />
       ) : (
-        <table className="table table-fixed">
+        <table className="table table-fixed shadow-md">
           <thead>
             <tr className="*:capitalize">
               <th className="hidden md:table-cell"></th>
@@ -53,6 +53,6 @@ export async function PagePreview() {
           </tbody>
         </table>
       )}
-    </div>
+    </>
   );
 }

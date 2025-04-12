@@ -8,7 +8,7 @@ export default function DashboardLayout({
   return (
     <>
       <DashHeader />
-      <main className="pb-28 md:px-[4%]">{children}</main>
+      <main className="h-full pb-28">{children}</main>
     </>
   );
 }
