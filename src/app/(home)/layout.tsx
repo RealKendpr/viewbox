@@ -12,7 +12,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-base-100 min-h-svh min-w-[375px]">{children}</body>
+      <body className="bg-base-100 grid min-h-svh min-w-[375px] grid-rows-[auto_1fr]">
+        {children}
+      </body>
     </html>
   );
 }
