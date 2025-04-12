@@ -46,21 +46,21 @@ export function CardBackground({ currentStyle }: { currentStyle: string }) {
 export function LinkStyle({ currentStyle }: { currentStyle: LinkStyleType }) {
   return (
     <Collapse name="link" label="Link Style">
-      <div className="grid gap-y-5">
+      <div className="grid gap-y-2">
         <p className="text-sm font-medium">Style</p>
         <LinkStyleSelector
           currentStyle={currentStyle.linkStyle}
           fieldName="linkStyle"
         />
       </div>
-      <div className="grid gap-y-5">
+      <div className="grid gap-y-2">
         <p className="text-sm font-medium">Background</p>
         <SolidSelector
           fieldName="linkBackground"
           currentStyle={currentStyle.linkBackground}
         />
       </div>
-      <div className="grid gap-y-5">
+      <div className="grid gap-y-2">
         <p className="text-sm font-medium">Color</p>
         <SolidSelector
           fieldName="linkColor"
