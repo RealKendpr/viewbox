@@ -1,11 +1,11 @@
 "use client";
 
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { InputSet } from "../../_components/inputSet";
+import { InputSet } from "@dashboard/_components/inputSet";
 import { EditPageType, PageType, LinkType } from "@/types/PageTypes";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { SubmitBtn } from "../../_components/saveButton";
+import { FormHeader } from "@/app/(home)/dashboard/_components/formHeader";
 import { revalidateForm } from "../_utils/revalidateForm";
 
 const LinkDisplay = dynamic(
@@ -13,7 +13,13 @@ const LinkDisplay = dynamic(
 );
 const Modal = dynamic(() => import("@/_components/modal"));
 
-export function EditForm({ pageDetails }: { pageDetails: EditPageType }) {
+export function EditForm({
+  pageDetails,
+  slug,
+}: {
+  pageDetails: EditPageType;
+  slug: string;
+}) {
   const extendedKeys = {
     _id: pageDetails._id,
     createdAt: pageDetails.createdAt,
@@ -85,10 +91,7 @@ export function EditForm({ pageDetails }: { pageDetails: EditPageType }) {
     <>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-lg font-medium">Edit</h1>
-            <SubmitBtn />
-          </div>
+          <FormHeader slug={slug} title="Edit" />
           <InputSet />
           <LinkDisplay links={links} setLinks={setLinks} />
         </form>

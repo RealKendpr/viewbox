@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { SubmitBtn } from "@dashboard/_components/saveButton";
+import { FormHeader } from "@/app/(home)/dashboard/_components/formHeader";
 import { LinkStyleType, StylesType } from "@/types/PageTypes";
 import { revalidateForm } from "../_utils/revalidateForm";
 import {
@@ -55,10 +55,7 @@ export function StylesForm({
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-lg font-medium capitalize">Styles</h1>
-          <SubmitBtn />
-        </div>
+        <FormHeader slug={slug} title="Styles" />
         <div className="grid gap-y-3">
           <Background currentStyle={styles?.background || ""} />
           <TextColor currentStyle={styles?.textColor || ""} />
