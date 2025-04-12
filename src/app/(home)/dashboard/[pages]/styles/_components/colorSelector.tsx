@@ -136,7 +136,7 @@ export function MultiColorTabs({
 
   return (
     <>
-      <div className="tabs tabs-box tabs-sm p-2" role="tablist">
+      <div className="tabs tabs-box tabs-sm bg-base-300 p-2" role="tablist">
         {tabs.map((i) => (
           <button
             key={i}
