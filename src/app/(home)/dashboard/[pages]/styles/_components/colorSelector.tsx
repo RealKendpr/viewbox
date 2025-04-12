@@ -23,7 +23,7 @@ export function SolidSelector({
           className="border-base-content size-6 rounded border-2"
           style={{ background: selected }}
         />
-        <span className="w-1/2 truncate">{selected}</span>
+        <span className="w-1/2 truncate text-sm">{selected}</span>
       </div>
       <ul className="flex flex-wrap gap-1">
         {transparent && (
@@ -98,7 +98,7 @@ export function GradientSelector({
           className="border-base-content size-6 shrink-0 rounded border-2"
           style={{ background: selected }}
         />
-        <span className="w-3/4 truncate">{selected}</span>
+        <span className="w-3/4 truncate text-sm">{selected}</span>
       </div>
       <ul className="flex flex-wrap gap-1">
         {colors.gradient.map((i, index) => (
