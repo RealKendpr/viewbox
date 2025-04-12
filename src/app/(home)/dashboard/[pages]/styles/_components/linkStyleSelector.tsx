@@ -26,7 +26,7 @@ export function LinkStyleSelector({
             defaultChecked={i == currentStyle || i == "default"}
           />
           <label
-            className={`btn peer-checked:btn-primary btn-soft capitalize`}
+            className="btn peer-checked:btn-primary btn-soft capitalize"
             htmlFor={i}
           >
             {i}

@@ -10,7 +10,7 @@ export function Collapse({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-base-200/50 collapse">
+    <div className="bg-base-200 collapse">
       <label
         className="collapse-title text-base font-medium capitalize"
         htmlFor={name}

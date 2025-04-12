@@ -2,7 +2,7 @@
 
 import layouts from "@/layouts/layouts.json";
 import { revalidateForm } from "../_utils/revalidateForm";
-import { SubmitBtn } from "@dashboard/_components/saveButton";
+import { FormHeader } from "@/app/(home)/dashboard/_components/formHeader";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { LayoutsType } from "@/types/PageTypes";
 
@@ -45,10 +45,7 @@ export function LayoutsForm({
     <>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-lg font-medium capitalize">Layouts</h1>
-            <SubmitBtn />
-          </div>
+          <FormHeader slug={slug} title="Layouts" />
           <div>
             {layouts.layouts?.map((i) => (
               <label

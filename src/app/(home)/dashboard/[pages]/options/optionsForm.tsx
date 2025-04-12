@@ -3,7 +3,7 @@
 import { revalidateForm } from "../_utils/revalidateForm";
 import { OptionsType } from "@/types/PageTypes";
 import dynamic from "next/dynamic";
-import { SubmitBtn } from "@dashboard/_components/saveButton";
+import { FormHeader } from "@/app/(home)/dashboard/_components/formHeader";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 const DeletePageBtn = dynamic(() =>
   import("./delete").then((mod) => mod.DeleteBtn),
@@ -50,10 +50,7 @@ export default function OptionsForm({
     <>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-lg font-medium capitalize">Options</h1>
-            <SubmitBtn />
-          </div>
+          <FormHeader slug={slug} title="Options" />
           <div className="flex justify-between">
             <label className="label" htmlFor="newTab">
               Open links in new tab?
