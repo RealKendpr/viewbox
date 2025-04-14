@@ -20,6 +20,7 @@ export default function EditLink({
   updateLink: (index: number, link: LinkType) => void;
   moveField: UseFieldArrayMove;
 }) {
+  const [activeDrag, setActiveDrag] = useState<number>();
   const [openField, setOpenField] = useState<boolean>(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -110,7 +111,15 @@ export default function EditLink({
         <>
           <Reorder.Group
             values={links}
-            onReorder={(e) => console.log(e)}
+            onReorder={(e) => {
+              e.map((item, index) => {
+                const activeElement = links[activeDrag!];
+                if (item === activeElement) {
+                  moveField(activeDrag!, index);
+                  setActiveDrag(index);
+                }
+              });
+            }}
             className="mt-3 px-2 pb-2"
           >
             {links.map((item, index) => (
@@ -118,6 +127,9 @@ export default function EditLink({
                 className="group flex items-center justify-between hover:cursor-grab"
                 value={item}
                 key={item.id}
+                onDragStart={() => {
+                  setActiveDrag(index);
+                }}
               >
                 <div className="flex gap-x-3">
                   {item.linkUrl != "" && (
