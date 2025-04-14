@@ -22,7 +22,7 @@ export function EditForm({
   const [linkRequired, setLinkRequired] = useState<boolean>(false);
 
   const methods = useForm<EditPageType>({
-    defaultValues: pageDetails,
+    defaultValues: async () => pageDetails,
   });
 
   const onSubmit: SubmitHandler<PageType> = async (formData) => {
