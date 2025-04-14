@@ -8,7 +8,7 @@ export function getFavicon(url: string) {
     const iconSrc = `http://api.faviconkit.com/${domain}/32`;
 
     return iconSrc;
-  } catch (_) {
+  } catch {
     return "";
   }
 }

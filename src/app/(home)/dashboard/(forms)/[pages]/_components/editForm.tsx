@@ -1,16 +1,14 @@
 "use client";
 
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { InputSet } from "@dashboard/_components/inputSet";
-import { EditPageType, PageType, LinkType } from "@/types/PageTypes";
+import { InputSet } from "@(forms)/_components/inputSet";
+import { EditPageType, PageType } from "@/types/PageTypes";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { FormHeader } from "@/app/(home)/dashboard/_components/formHeader";
+import { FormHeader } from "@(forms)/_components/formHeader";
 import { revalidateForm } from "../_utils/revalidateForm";
-import { FormState } from "../../(forms)/formState";
-const LinkDisplay = dynamic(
-  () => import("@/app/(home)/dashboard/_components/LinkDisplay"),
-);
+import { FormState } from "@(forms)/_components/formState";
+const LinkDisplay = dynamic(() => import("@(forms)/_components/LinkDisplay"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
 export function EditForm({

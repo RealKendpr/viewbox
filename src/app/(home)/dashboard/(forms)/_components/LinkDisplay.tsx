@@ -1,11 +1,11 @@
 import { LinkType } from "@/types/PageTypes";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { Input } from "../create/_components/input";
+import { Input } from "@(forms)/_components/input";
 import { useEffect, useState } from "react";
-import testUrl from "../_utils/testUrl";
+import testUrl from "@(forms)/_utils/testUrl";
 import dynamic from "next/dynamic";
-import { emptyIndex } from "../_utils/emptyIndex";
-const EditLink = dynamic(() => import("./editLink"));
+import { emptyIndex } from "@(forms)/_utils/emptyIndex";
+const EditLink = dynamic(() => import("@(forms)/_components/editLink"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
 export default function LinkDisplay() {
@@ -77,13 +77,13 @@ export default function LinkDisplay() {
       if (errors.links && newLink.linkName !== "") {
         clearErrors(`${newField}.linkName`);
       }
-  }, [newLink, clearErrors, errors]);
+  }, [newLink, clearErrors, errors, newField]);
   useEffect(() => {
     if (newLink !== undefined)
       if (errors.links && testUrl(newLink.linkUrl)) {
         clearErrors(`${newField}.linkUrl`);
       }
-  }, [newLink, clearErrors, errors]);
+  }, [newLink, clearErrors, errors, newField]);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // enter should be allowed when user is focused on the Add button
@@ -101,13 +101,15 @@ export default function LinkDisplay() {
           clearErrors(newField);
         }
     }
-    if (!openField) {
-      remove(emptyIndex(fields as any));
-    }
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [openField, clearErrors, newLink]);
+  }, [openField, clearErrors, newLink, newField]);
+  useEffect(() => {
+    if (!openField) {
+      remove(emptyIndex(fields as any));
+    }
+  }, [openField, fields, remove]);
 
   return (
     <>

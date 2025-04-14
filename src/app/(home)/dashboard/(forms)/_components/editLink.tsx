@@ -2,7 +2,7 @@ import { getFavicon } from "@/app/_utils/getFavicon";
 import { LinkType } from "@/types/PageTypes";
 import { useEffect, useState } from "react";
 import { UseFieldArrayMove, useFormContext } from "react-hook-form";
-import { Input } from "../create/_components/input";
+import { Input } from "./input";
 import dynamic from "next/dynamic";
 import testUrl from "../_utils/testUrl";
 import Image from "next/image";

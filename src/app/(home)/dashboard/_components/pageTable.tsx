@@ -3,7 +3,7 @@ import { PagePreviewType } from "@/types/PageTypes";
 import { DropdownOptions } from "./_header/dropdownOptions";
 import { NoPages } from "./noPages";
 import { getPagesPreview } from "@/_lib/getPageData";
-import { Suspense, use } from "react";
+import { Suspense } from "react";
 import { PageListSkeleton } from "@/_components/loading";
 
 export function PageItemRow({ pages }: { pages: PagePreviewType[] }) {
