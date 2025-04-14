@@ -1,58 +1,88 @@
 import { LinkType } from "@/types/PageTypes";
-import { useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { Input } from "../create/_components/input";
 import { useEffect, useState } from "react";
 import testUrl from "../_utils/testUrl";
 import dynamic from "next/dynamic";
+import { emptyIndex } from "../_utils/emptyIndex";
 const EditLink = dynamic(() => import("./editLink"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
-export default function LinkDisplay({
-  links,
-  setLinks,
-}: {
-  links: LinkType[];
-  setLinks: React.Dispatch<React.SetStateAction<LinkType[]>>;
-}) {
+export default function LinkDisplay() {
   const [openField, setOPenField] = useState<boolean>(false);
-  const methods = useFormContext();
   const {
     setError,
     clearErrors,
     getValues,
-    setValue,
     formState: { errors },
-  } = methods;
+  } = useFormContext();
 
-  const newLink: LinkType = getValues("links.0");
+  const { append, update, remove, move, fields } = useFieldArray({
+    name: "links",
+  });
 
-  const addLink = () => {
-    const linkUrl = testUrl(newLink.linkUrl);
-    if (newLink.linkName === "") {
-      setError("links.0.linkName", { type: "required" }, { shouldFocus: true });
+  const lastIndex = fields.length - 1;
+  const newField = `links.${lastIndex}`;
+  const newLink: LinkType = getValues(newField);
+
+  const handleOpenField = () => {
+    setOPenField(true);
+    append({ linkName: "", linkUrl: "" });
+    return;
+  };
+
+  const validateLink = (link: LinkType) => {
+    const linkUrl = testUrl(link.linkUrl);
+
+    if (link.linkName === "") {
+      setError(
+        `${newField}.linkName`,
+        { type: "required" },
+        { shouldFocus: true },
+      );
     }
     if (!linkUrl) {
-      setError("links.0.linkUrl", { type: "pattern" }, { shouldFocus: true });
-      return;
+      setError(
+        `${newField}.linkUrl`,
+        { type: "pattern" },
+        { shouldFocus: true },
+      );
+      return null;
     }
-    setLinks((prev) => [...prev, newLink]);
-    setValue("links.0", { linkName: "", linkUrl: "" });
-    setOPenField(false);
+    return link;
+  };
+
+  const addLink = () => {
+    const validLink = validateLink(newLink);
+
+    if (validLink) {
+      update(lastIndex, validLink);
+      setOPenField(false);
+    }
+  };
+  const updateLink = (index: number, link: LinkType) => {
+    const linkToUpdate = getValues(`links.${index}`);
+
+    if (link.id === linkToUpdate.id) {
+      update(index, link);
+    }
+    return;
   };
   const removeLink = (index: number) => {
-    const newItems = links.filter((_, i) => i !== index);
-    setLinks(newItems);
+    remove(index);
   };
 
   useEffect(() => {
-    if (errors.links && newLink.linkName !== "") {
-      clearErrors("links.0.linkName");
-    }
+    if (newLink !== undefined)
+      if (errors.links && newLink.linkName !== "") {
+        clearErrors(`${newField}.linkName`);
+      }
   }, [newLink, clearErrors, errors]);
   useEffect(() => {
-    if (errors.links && testUrl(newLink.linkUrl)) {
-      clearErrors("links.0.linkUrl");
-    }
+    if (newLink !== undefined)
+      if (errors.links && testUrl(newLink.linkUrl)) {
+        clearErrors(`${newField}.linkUrl`);
+      }
   }, [newLink, clearErrors, errors]);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -66,9 +96,13 @@ export default function LinkDisplay({
     };
     if (openField) {
       window.addEventListener("keydown", handleKeyDown);
-      if (newLink.linkUrl === "" && newLink.linkName === "") {
-        clearErrors("links.0");
-      }
+      if (newLink !== undefined)
+        if (newLink.linkUrl === "" && newLink.linkName === "") {
+          clearErrors(newField);
+        }
+    }
+    if (!openField) {
+      remove(emptyIndex(fields as any));
     }
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
@@ -79,11 +113,16 @@ export default function LinkDisplay({
     <>
       <div className="mt-3 flex min-h-52 flex-col">
         <p className="text-xl font-bold">Links</p>
-        <EditLink links={links} setLinks={setLinks} removeLink={removeLink} />
+        <EditLink
+          links={fields as any}
+          removeLink={removeLink}
+          updateLink={updateLink}
+          moveField={move}
+        />
         <button
           className="btn btn-dash btn-sm mb-5 w-[calc(100%-12px)] self-center"
           type="button"
-          onClick={() => setOPenField(true)}
+          onClick={() => handleOpenField()}
         >
           Add a link
         </button>
@@ -91,10 +130,14 @@ export default function LinkDisplay({
       <Modal isOpen={openField} setIsOpen={setOPenField}>
         <fieldset className="fieldset">
           <legend className="fieldset-legend">Add Link</legend>
-          <Input label="Name" name="links.0.linkName" placeholder="Youtube" />
+          <Input
+            label="Name"
+            name={`${newField}.linkName`}
+            placeholder="Youtube"
+          />
           <Input
             label="URL"
-            name="links.0.linkUrl"
+            name={`${newField}.linkUrl`}
             placeholder="https://"
             type="url"
           />

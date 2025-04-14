@@ -41,6 +41,7 @@ export interface ConfigType {
 }
 
 export interface LinkType {
+  id: string;
   linkName: string;
   linkUrl: string;
   linkIcon?: string;
