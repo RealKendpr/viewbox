@@ -107,9 +107,13 @@ export default function LinkDisplay() {
   }, [openField, clearErrors, newLink, newField]);
   useEffect(() => {
     if (!openField) {
-      remove(emptyIndex(fields as any));
+      const test = emptyIndex(fields as any);
+
+      if (test.length >= 1) {
+        remove(test);
+      }
     }
-  }, [openField, fields, remove]);
+  }, [openField, remove, fields]);
 
   return (
     <>
