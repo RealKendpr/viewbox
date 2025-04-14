@@ -1,9 +1,14 @@
-export function favicon(url: string) {
+export function getFavicon(url: string) {
   const hasProtocol = /https?:\/\//;
 
-  const domain = new URL(hasProtocol.test(url) ? url : `https://${url}`)
-    .hostname;
-  const iconSrc = `http://api.faviconkit.com/${domain}/32`;
+  const formattedUrl = hasProtocol.test(url) ? url : `https://${url}`;
 
-  return iconSrc;
+  try {
+    const domain = new URL(formattedUrl).hostname;
+    const iconSrc = `http://api.faviconkit.com/${domain}/32`;
+
+    return iconSrc;
+  } catch (_) {
+    return "";
+  }
 }

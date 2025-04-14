@@ -1,4 +1,4 @@
-import { favicon } from "@/app/_utils/getFavicon";
+import { getFavicon } from "@/app/_utils/getFavicon";
 import { LinkType } from "@/types/PageTypes";
 import { useEffect, useState } from "react";
 import { UseFieldArrayMove, useFormContext } from "react-hook-form";
@@ -120,12 +120,14 @@ export default function EditLink({
                 key={item.id}
               >
                 <div className="flex gap-x-3">
-                  <Image
-                    src={favicon(item.linkUrl)}
-                    width={24}
-                    height={24}
-                    alt=""
-                  />
+                  {item.linkUrl != "" && (
+                    <Image
+                      src={getFavicon(item.linkUrl)}
+                      width={24}
+                      height={24}
+                      alt=""
+                    />
+                  )}
                   <span>{item.linkName}</span>
                 </div>
                 <div className="opacity-0 transition-opacity group-hover:opacity-100">
