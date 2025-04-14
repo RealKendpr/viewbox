@@ -2,7 +2,7 @@
 
 import layouts from "@/layouts/layouts.json";
 import { revalidateForm } from "../_utils/revalidateForm";
-import { FormHeader } from "@/app/(home)/dashboard/_components/formHeader";
+import { FormHeader } from "@/app/(home)/dashboard/(forms)/_components/formHeader";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { LayoutsType } from "@/types/PageTypes";
 

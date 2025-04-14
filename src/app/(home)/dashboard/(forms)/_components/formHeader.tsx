@@ -27,7 +27,7 @@ export function FormHeader({ slug, title }: { slug: string; title: string }) {
       setStatus("success");
 
       const resetState = setTimeout(() => {
-        reset();
+        reset(undefined, { keepValues: true });
         setStatus(null);
       }, 2000);
 

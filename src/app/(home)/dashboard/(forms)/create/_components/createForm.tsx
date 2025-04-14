@@ -1,15 +1,13 @@
 "use client";
 
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
-import { InputSet } from "@/app/(home)/dashboard/_components/inputSet";
+import { InputSet } from "@(forms)/_components/inputSet";
 import { PageType, LinkType } from "@/types/PageTypes";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import { getSlug } from "@/app/api/_utils/getSlug";
-const AddLink = dynamic(
-  () => import("@/app/(home)/dashboard/_components/LinkDisplay"),
-);
+import { getSlug } from "@api/_utils/getSlug";
+const AddLink = dynamic(() => import("@(forms)/_components/LinkDisplay"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
 export function CreateForm() {
@@ -60,7 +58,7 @@ export function CreateForm() {
             </button>
           </div>
           <InputSet />
-          <AddLink links={links} setLinks={setLinks} />
+          <AddLink />
         </form>
       </FormProvider>
       <Modal isOpen={linkRequired} setIsOpen={setLinkRequired}>

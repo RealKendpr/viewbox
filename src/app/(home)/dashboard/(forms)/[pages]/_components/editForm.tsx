@@ -1,16 +1,14 @@
 "use client";
 
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { InputSet } from "@dashboard/_components/inputSet";
-import { EditPageType, PageType, LinkType } from "@/types/PageTypes";
+import { InputSet } from "@(forms)/_components/inputSet";
+import { EditPageType, PageType } from "@/types/PageTypes";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { FormHeader } from "@/app/(home)/dashboard/_components/formHeader";
+import { FormHeader } from "@(forms)/_components/formHeader";
 import { revalidateForm } from "../_utils/revalidateForm";
-
-const LinkDisplay = dynamic(
-  () => import("@/app/(home)/dashboard/_components/LinkDisplay"),
-);
+import { FormState } from "@(forms)/_components/formState";
+const LinkDisplay = dynamic(() => import("@(forms)/_components/LinkDisplay"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
 export function EditForm({
@@ -20,47 +18,26 @@ export function EditForm({
   pageDetails: EditPageType;
   slug: string;
 }) {
-  const extendedKeys = {
-    _id: pageDetails._id,
-    createdAt: pageDetails.createdAt,
-  };
-  const formDefaultValues = {
-    pageIcon: pageDetails?.pageIcon,
-    pageName: pageDetails?.pageName,
-    pageDescription: pageDetails.pageDescription,
-  }; // links must be handled by a useState,
-  // because it was not exclusively a part of the form when data
-  // was created/submitted to server
-  const [links, setLinks] = useState<LinkType[]>(pageDetails.links);
-
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
   const [linkRequired, setLinkRequired] = useState<boolean>(false);
 
-  const methods = useForm<PageType>({
-    defaultValues: formDefaultValues,
+  const methods = useForm<EditPageType>({
+    defaultValues: async () => pageDetails,
   });
 
   const onSubmit: SubmitHandler<PageType> = async (formData) => {
-    const newFormData: PageType = {
-      ...formData,
-      links: links,
-    };
-
     // check if submitted data and current value is the same,
     // before proceeding to avoid unnecessary request
     // and show an alert about it
-    if (
-      JSON.stringify(newFormData) ===
-      JSON.stringify({
-        ...formDefaultValues,
-        links: pageDetails.links,
-      })
-    ) {
+    if (JSON.stringify(formData) === JSON.stringify(pageDetails)) {
       return;
     }
 
-    if (links.length === 0) {
+    if (formData.links.length === 0) {
       setLinkRequired(true);
+      methods.setError("root", {
+        type: `{server', message:'Something is wrong with your request}`,
+      });
       return;
     }
 
@@ -69,7 +46,7 @@ export function EditForm({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...newFormData, ...extendedKeys }),
+      body: JSON.stringify(formData),
     });
 
     if (!response.ok) {
@@ -84,7 +61,7 @@ export function EditForm({
       return;
     }
     // should revalidate the pageDetails, so, that on 2nd attempt of update with no changes a promt should popup
-    revalidateForm(formDefaultValues.pageName);
+    revalidateForm(formData.pageName);
   };
 
   return (
@@ -93,8 +70,9 @@ export function EditForm({
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <FormHeader slug={slug} title="Edit" />
           <InputSet />
-          <LinkDisplay links={links} setLinks={setLinks} />
+          <LinkDisplay />
         </form>
+        <FormState />
       </FormProvider>
       <Modal isOpen={linkRequired} setIsOpen={setLinkRequired}>
         <p>⚠️ At least one link is required</p>

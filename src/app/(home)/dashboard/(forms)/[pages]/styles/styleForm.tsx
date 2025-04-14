@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { FormHeader } from "@/app/(home)/dashboard/_components/formHeader";
+import { FormHeader } from "@/app/(home)/dashboard/(forms)/_components/formHeader";
 import { LinkStyleType, StylesType } from "@/types/PageTypes";
 import { revalidateForm } from "../_utils/revalidateForm";
 import {

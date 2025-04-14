@@ -1,8 +1,8 @@
-import { favicon } from "@/app/_utils/getFavicon";
+import { getFavicon } from "@/app/_utils/getFavicon";
 import { LinkType } from "@/types/PageTypes";
 import { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
-import { Input } from "../create/_components/input";
+import { UseFieldArrayMove, useFormContext } from "react-hook-form";
+import { Input } from "./input";
 import dynamic from "next/dynamic";
 import testUrl from "../_utils/testUrl";
 import Image from "next/image";
@@ -11,60 +11,41 @@ const Modal = dynamic(() => import("@/_components/modal"));
 
 export default function EditLink({
   links,
-  setLinks,
   removeLink,
+  updateLink,
+  moveField,
 }: {
   links: LinkType[];
-  setLinks: React.Dispatch<React.SetStateAction<LinkType[]>>;
   removeLink: (index: number) => void;
+  updateLink: (index: number, link: LinkType) => void;
+  moveField: UseFieldArrayMove;
 }) {
-  const [editField, setEditField] = useState<boolean>(false);
-  const [selectedEditIndex, setSelectedEditIndex] = useState<number | null>(
-    null,
-  );
+  const [openField, setOpenField] = useState<boolean>(false);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const methods = useFormContext();
   const {
     getValues,
-    setValue,
     clearErrors,
-    setError,
     formState: { errors },
-  } = methods;
+  } = useFormContext();
 
-  const newLinkValue: LinkType = getValues("links.1");
+  const activeField = `links.${activeIndex}`;
+  const newLinkValue: LinkType = getValues(activeField);
 
-  const openEdit = (link: LinkType, selectedIndex: number) => {
-    setValue("links.1", {
-      linkName: link.linkName,
-      linkUrl: link.linkUrl,
-    });
-    setEditField(true);
-    setSelectedEditIndex(selectedIndex);
+  const openEdit = (index: number) => {
+    setOpenField(true);
+    setActiveIndex(index);
+    return;
   };
   const editLink = (selectedIndex: number | null) => {
     if (selectedIndex === null) {
       return;
     }
-    if (newLinkValue.linkName === "") {
-      setError("links.1.linkName", { type: "required" }, { shouldFocus: true });
-    }
-    if (!testUrl(newLinkValue.linkUrl)) {
-      setError("links.1.linkUrl", { type: "pattern" }, { shouldFocus: true });
-      return;
-    }
 
-    const updatedLink = (prev: LinkType[]) => {
-      return prev.map((item, index) =>
-        index === selectedIndex ? { ...item, ...newLinkValue } : item,
-      );
-    };
-
-    setLinks((prev) => updatedLink(prev));
-
-    setValue("links.1", { linkName: "", linkUrl: "" });
-    setEditField(false);
-    setSelectedEditIndex(null);
+    updateLink(selectedIndex, newLinkValue);
+    setOpenField(false);
+    setActiveIndex(null);
+    return;
   };
 
   useEffect(() => {
@@ -87,19 +68,19 @@ export default function EditLink({
         event.preventDefault();
       }
     };
-    if (editField) {
+    if (openField) {
       window.addEventListener("keydown", handleKeyDown);
       if (newLinkValue.linkUrl === "" && newLinkValue.linkName === "") {
         clearErrors("links.1");
       }
     }
-    if (!editField) {
-      setSelectedEditIndex(null);
+    if (!openField) {
+      setActiveIndex(null);
     }
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [editField, clearErrors, newLinkValue]);
+  }, [openField, clearErrors, newLinkValue, setActiveIndex]);
 
   return (
     <>
@@ -129,29 +110,31 @@ export default function EditLink({
         <>
           <Reorder.Group
             values={links}
-            onReorder={setLinks}
+            onReorder={(e) => console.log(e)}
             className="mt-3 px-2 pb-2"
           >
             {links.map((item, index) => (
               <Reorder.Item
                 className="group flex items-center justify-between hover:cursor-grab"
                 value={item}
-                key={item.linkName}
+                key={item.id}
               >
                 <div className="flex gap-x-3">
-                  <Image
-                    src={favicon(item.linkUrl)}
-                    width={24}
-                    height={24}
-                    alt=""
-                  />
+                  {item.linkUrl != "" && (
+                    <Image
+                      src={getFavicon(item.linkUrl)}
+                      width={24}
+                      height={24}
+                      alt=""
+                    />
+                  )}
                   <span>{item.linkName}</span>
                 </div>
                 <div className="opacity-0 transition-opacity group-hover:opacity-100">
                   <button
                     className="btn btn-circle btn-ghost btn-sm"
                     type="button"
-                    onClick={() => openEdit(item, index)}
+                    onClick={() => openEdit(index)}
                   >
                     <svg
                       width="16"
@@ -192,17 +175,17 @@ export default function EditLink({
               </Reorder.Item>
             ))}
           </Reorder.Group>
-          <Modal isOpen={editField} setIsOpen={setEditField}>
+          <Modal isOpen={openField} setIsOpen={setOpenField}>
             <fieldset className="fieldset">
               <legend className="fieldset-legend">Edit Link</legend>
               <Input
                 label="Name"
-                name="links.1.linkName"
+                name={`${activeField}.linkName`}
                 placeholder="Youtube"
               />
               <Input
                 label="URL"
-                name="links.1.linkUrl"
+                name={`${activeField}.linkUrl`}
                 placeholder="https://"
                 type="url"
               />
@@ -210,14 +193,14 @@ export default function EditLink({
                 <button
                   className="btn grow"
                   type="button"
-                  onClick={() => setEditField(false)}
+                  onClick={() => setOpenField(false)}
                 >
                   Cancel
                 </button>
                 <button
                   className="btn grow"
                   type="button"
-                  onClick={() => editLink(selectedEditIndex)}
+                  onClick={() => editLink(activeIndex)}
                 >
                   Done
                 </button>
