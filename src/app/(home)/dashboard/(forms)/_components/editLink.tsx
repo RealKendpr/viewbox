@@ -27,6 +27,7 @@ export default function EditLink({
   const {
     getValues,
     clearErrors,
+    resetField,
     // formState: { errors },
   } = useFormContext();
 
@@ -36,6 +37,12 @@ export default function EditLink({
   const openEdit = (index: number) => {
     setOpenField(true);
     setActiveIndex(index);
+    return;
+  };
+  const closeEdit = () => {
+    setOpenField(false);
+    setActiveIndex(null);
+    resetField(activeField);
     return;
   };
   const editLink = () => {
@@ -76,13 +83,10 @@ export default function EditLink({
     };
     if (openField) {
       window.addEventListener("keydown", handleKeyDown);
-      if (newLinkValue !== undefined)
-        if (newLinkValue.linkUrl === "" && newLinkValue.linkName === "") {
-          clearErrors(activeField);
-        }
     }
     if (!openField) {
       setActiveIndex(null);
+      resetField(activeField);
     }
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
@@ -211,7 +215,7 @@ export default function EditLink({
                 <button
                   className="btn grow"
                   type="button"
-                  onClick={() => setOpenField(false)}
+                  onClick={() => closeEdit()}
                 >
                   Cancel
                 </button>
