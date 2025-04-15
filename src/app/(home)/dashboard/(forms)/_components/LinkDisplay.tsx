@@ -14,7 +14,7 @@ export default function LinkDisplay() {
     setError,
     clearErrors,
     getValues,
-    formState: { errors },
+    // formState: { errors },
   } = useFormContext();
 
   const { append, update, remove, move, fields } = useFieldArray({
@@ -31,28 +31,29 @@ export default function LinkDisplay() {
     return;
   };
 
-  const validateLink = (link: LinkType) => {
+  const validateLink = (link: LinkType, fieldName: string) => {
     const linkUrl = testUrl(link.linkUrl);
 
     if (link.linkName === "") {
       setError(
-        `${newField}.linkName`,
+        `${fieldName}.linkName`,
         { type: "required" },
         { shouldFocus: true },
       );
-    }
+      return null;
+    } else clearErrors(`${fieldName}.linkName`);
     if (!linkUrl) {
       setError(
-        `${newField}.linkUrl`,
+        `${fieldName}.linkUrl`,
         { type: "pattern" },
         { shouldFocus: true },
       );
       return null;
-    }
+    } else clearErrors(`${fieldName}.linkUrl`);
     return link;
   };
   const addLink = () => {
-    const validLink = validateLink(newLink);
+    const validLink = validateLink(newLink, newField);
 
     if (validLink) {
       update(lastIndex, validLink);
@@ -61,12 +62,18 @@ export default function LinkDisplay() {
     return;
   };
   const updateLink = (index: number, link: LinkType) => {
-    const linkToUpdate = getValues(`links.${index}`);
+    const fieldName = `links.${index}`;
+    const linkToUpdate = getValues(fieldName);
+    const validLink = validateLink(link, fieldName);
 
     if (link.id === linkToUpdate.id) {
-      update(index, link);
+      if (validLink) {
+        update(index, validLink);
+
+        return true;
+      }
     }
-    return;
+    return false;
   };
   const removeLink = (index: number) => {
     remove(index);

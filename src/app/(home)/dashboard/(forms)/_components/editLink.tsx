@@ -17,7 +17,7 @@ export default function EditLink({
 }: {
   links: LinkType[];
   removeLink: (index: number) => void;
-  updateLink: (index: number, link: LinkType) => void;
+  updateLink: (index: number, link: LinkType) => boolean;
   moveField: UseFieldArrayMove;
 }) {
   const [activeDrag, setActiveDrag] = useState<number>();
@@ -27,7 +27,7 @@ export default function EditLink({
   const {
     getValues,
     clearErrors,
-    formState: { errors },
+    // formState: { errors },
   } = useFormContext();
 
   const activeField = `links.${activeIndex}`;
@@ -38,14 +38,17 @@ export default function EditLink({
     setActiveIndex(index);
     return;
   };
-  const editLink = (selectedIndex: number | null) => {
-    if (selectedIndex === null) {
+  const editLink = () => {
+    if (activeIndex === null) {
       return;
     }
 
-    updateLink(selectedIndex, newLinkValue);
-    setOpenField(false);
-    setActiveIndex(null);
+    const updateOk = updateLink(activeIndex, newLinkValue);
+
+    if (updateOk) {
+      setOpenField(false);
+      setActiveIndex(null);
+    }
     return;
   };
 
@@ -215,7 +218,7 @@ export default function EditLink({
                 <button
                   className="btn grow"
                   type="button"
-                  onClick={() => editLink(activeIndex)}
+                  onClick={() => editLink()}
                 >
                   Done
                 </button>
