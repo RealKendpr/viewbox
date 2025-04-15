@@ -103,10 +103,6 @@ export default function LinkDisplay() {
     };
     if (openField) {
       window.addEventListener("keydown", handleKeyDown);
-      if (newLink !== undefined)
-        if (newLink.linkUrl === "" && newLink.linkName === "") {
-          clearErrors(newField);
-        }
     }
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
