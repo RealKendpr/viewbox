@@ -51,7 +51,6 @@ export default function LinkDisplay() {
     }
     return link;
   };
-
   const addLink = () => {
     const validLink = validateLink(newLink);
 
@@ -59,6 +58,7 @@ export default function LinkDisplay() {
       update(lastIndex, validLink);
       setOPenField(false);
     }
+    return;
   };
   const updateLink = (index: number, link: LinkType) => {
     const linkToUpdate = getValues(`links.${index}`);
@@ -72,18 +72,18 @@ export default function LinkDisplay() {
     remove(index);
   };
 
-  useEffect(() => {
-    if (newLink !== undefined)
-      if (errors.links && newLink.linkName !== "") {
-        clearErrors(`${newField}.linkName`);
-      }
-  }, [newLink, clearErrors, errors, newField]);
-  useEffect(() => {
-    if (newLink !== undefined)
-      if (errors.links && testUrl(newLink.linkUrl)) {
-        clearErrors(`${newField}.linkUrl`);
-      }
-  }, [newLink, clearErrors, errors, newField]);
+  // useEffect(() => {
+  //   if (newLink !== undefined)
+  //     if (errors.links && newLink.linkName !== "") {
+  //       clearErrors(`${newField}.linkName`);
+  //     }
+  // }, [newLink, clearErrors, errors, newField]);
+  // useEffect(() => {
+  //   if (newLink !== undefined)
+  //     if (errors.links && testUrl(newLink.linkUrl)) {
+  //       clearErrors(`${newField}.linkUrl`);
+  //     }
+  // }, [newLink, clearErrors, errors, newField]);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // enter should be allowed when user is focused on the Add button
@@ -140,6 +140,7 @@ export default function LinkDisplay() {
             label="Name"
             name={`${newField}.linkName`}
             placeholder="Youtube"
+            required={true}
           />
           <Input
             label="URL"

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { UseFieldArrayMove, useFormContext } from "react-hook-form";
 import { Input } from "./input";
 import dynamic from "next/dynamic";
-import testUrl from "../_utils/testUrl";
+// import testUrl from "../_utils/testUrl";
 import Image from "next/image";
 import { Reorder } from "motion/react";
 const Modal = dynamic(() => import("@/_components/modal"));
@@ -49,16 +49,18 @@ export default function EditLink({
     return;
   };
 
-  useEffect(() => {
-    if (errors.links && newLinkValue.linkName !== "") {
-      clearErrors("links.1.linkName");
-    }
-  }, [newLinkValue, clearErrors, errors]);
-  useEffect(() => {
-    if (errors.links && testUrl(newLinkValue.linkUrl)) {
-      clearErrors("links.1.linkUrl");
-    }
-  }, [newLinkValue, clearErrors, errors]);
+  // useEffect(() => {
+  //   if (newLinkValue !== undefined)
+  //     if (errors.links && newLinkValue.linkName !== "") {
+  //       clearErrors(`${activeField}.linkName`);
+  //     }
+  // }, [newLinkValue, clearErrors, errors, activeField]);
+  // useEffect(() => {
+  //   if (newLinkValue !== undefined)
+  //     if (errors.links && testUrl(newLinkValue.linkUrl)) {
+  //       clearErrors(`${activeField}.linkUrl`);
+  //     }
+  // }, [newLinkValue, clearErrors, errors, activeField]);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // enter should be allowed when user is focused on the Add button
@@ -71,9 +73,10 @@ export default function EditLink({
     };
     if (openField) {
       window.addEventListener("keydown", handleKeyDown);
-      if (newLinkValue.linkUrl === "" && newLinkValue.linkName === "") {
-        clearErrors("links.1");
-      }
+      if (newLinkValue !== undefined)
+        if (newLinkValue.linkUrl === "" && newLinkValue.linkName === "") {
+          clearErrors(activeField);
+        }
     }
     if (!openField) {
       setActiveIndex(null);
@@ -81,7 +84,7 @@ export default function EditLink({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [openField, clearErrors, newLinkValue, setActiveIndex]);
+  }, [openField, clearErrors, newLinkValue, setActiveIndex, activeField]);
 
   return (
     <>
