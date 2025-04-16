@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { UseFieldArrayMove, useFormContext } from "react-hook-form";
 import { Input } from "./input";
 import dynamic from "next/dynamic";
-// import testUrl from "../_utils/testUrl";
 import Image from "next/image";
 import { Reorder } from "motion/react";
 const Modal = dynamic(() => import("@/_components/modal"));
@@ -59,18 +58,6 @@ export default function EditLink({
     return;
   };
 
-  // useEffect(() => {
-  //   if (newLinkValue !== undefined)
-  //     if (errors.links && newLinkValue.linkName !== "") {
-  //       clearErrors(`${activeField}.linkName`);
-  //     }
-  // }, [newLinkValue, clearErrors, errors, activeField]);
-  // useEffect(() => {
-  //   if (newLinkValue !== undefined)
-  //     if (errors.links && testUrl(newLinkValue.linkUrl)) {
-  //       clearErrors(`${activeField}.linkUrl`);
-  //     }
-  // }, [newLinkValue, clearErrors, errors, activeField]);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // enter should be allowed when user is focused on the Add button

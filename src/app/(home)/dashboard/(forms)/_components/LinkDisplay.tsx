@@ -79,18 +79,6 @@ export default function LinkDisplay() {
     remove(index);
   };
 
-  // useEffect(() => {
-  //   if (newLink !== undefined)
-  //     if (errors.links && newLink.linkName !== "") {
-  //       clearErrors(`${newField}.linkName`);
-  //     }
-  // }, [newLink, clearErrors, errors, newField]);
-  // useEffect(() => {
-  //   if (newLink !== undefined)
-  //     if (errors.links && testUrl(newLink.linkUrl)) {
-  //       clearErrors(`${newField}.linkUrl`);
-  //     }
-  // }, [newLink, clearErrors, errors, newField]);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // enter should be allowed when user is focused on the Add button
