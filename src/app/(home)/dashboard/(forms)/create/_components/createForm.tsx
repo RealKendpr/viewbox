@@ -2,7 +2,7 @@
 
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { InputSet } from "@(forms)/_components/inputSet";
-import { PageType, LinkType } from "@/types/PageTypes";
+import { PageType } from "@/types/PageTypes";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
