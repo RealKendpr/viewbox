@@ -78,7 +78,14 @@ export default function EditLink({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [openField, clearErrors, newLinkValue, setActiveIndex, activeField]);
+  }, [
+    openField,
+    clearErrors,
+    newLinkValue,
+    setActiveIndex,
+    activeField,
+    resetField,
+  ]);
 
   return (
     <>
