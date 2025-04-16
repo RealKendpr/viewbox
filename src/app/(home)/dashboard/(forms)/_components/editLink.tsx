@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { UseFieldArrayMove, useFormContext } from "react-hook-form";
 import { Input } from "./input";
 import dynamic from "next/dynamic";
-import testUrl from "../_utils/testUrl";
 import Image from "next/image";
 import { Reorder } from "motion/react";
 const Modal = dynamic(() => import("@/_components/modal"));
@@ -17,16 +16,18 @@ export default function EditLink({
 }: {
   links: LinkType[];
   removeLink: (index: number) => void;
-  updateLink: (index: number, link: LinkType) => void;
+  updateLink: (index: number, link: LinkType) => boolean;
   moveField: UseFieldArrayMove;
 }) {
+  const [activeDrag, setActiveDrag] = useState<number>();
   const [openField, setOpenField] = useState<boolean>(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const {
     getValues,
     clearErrors,
-    formState: { errors },
+    resetField,
+    // formState: { errors },
   } = useFormContext();
 
   const activeField = `links.${activeIndex}`;
@@ -37,27 +38,26 @@ export default function EditLink({
     setActiveIndex(index);
     return;
   };
-  const editLink = (selectedIndex: number | null) => {
-    if (selectedIndex === null) {
+  const closeEdit = () => {
+    setOpenField(false);
+    setActiveIndex(null);
+    resetField(activeField);
+    return;
+  };
+  const editLink = () => {
+    if (activeIndex === null) {
       return;
     }
 
-    updateLink(selectedIndex, newLinkValue);
-    setOpenField(false);
-    setActiveIndex(null);
+    const updateOk = updateLink(activeIndex, newLinkValue);
+
+    if (updateOk) {
+      setOpenField(false);
+      setActiveIndex(null);
+    }
     return;
   };
 
-  useEffect(() => {
-    if (errors.links && newLinkValue.linkName !== "") {
-      clearErrors("links.1.linkName");
-    }
-  }, [newLinkValue, clearErrors, errors]);
-  useEffect(() => {
-    if (errors.links && testUrl(newLinkValue.linkUrl)) {
-      clearErrors("links.1.linkUrl");
-    }
-  }, [newLinkValue, clearErrors, errors]);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // enter should be allowed when user is focused on the Add button
@@ -70,17 +70,15 @@ export default function EditLink({
     };
     if (openField) {
       window.addEventListener("keydown", handleKeyDown);
-      if (newLinkValue.linkUrl === "" && newLinkValue.linkName === "") {
-        clearErrors("links.1");
-      }
     }
     if (!openField) {
       setActiveIndex(null);
+      resetField(activeField);
     }
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [openField, clearErrors, newLinkValue, setActiveIndex]);
+  }, [openField, clearErrors, newLinkValue, setActiveIndex, activeField]);
 
   return (
     <>
@@ -110,7 +108,15 @@ export default function EditLink({
         <>
           <Reorder.Group
             values={links}
-            onReorder={(e) => console.log(e)}
+            onReorder={(e) => {
+              e.map((item, index) => {
+                const activeElement = links[activeDrag!];
+                if (item === activeElement) {
+                  moveField(activeDrag!, index);
+                  setActiveDrag(index);
+                }
+              });
+            }}
             className="mt-3 px-2 pb-2"
           >
             {links.map((item, index) => (
@@ -118,6 +124,9 @@ export default function EditLink({
                 className="group flex items-center justify-between hover:cursor-grab"
                 value={item}
                 key={item.id}
+                onDragStart={() => {
+                  setActiveDrag(index);
+                }}
               >
                 <div className="flex gap-x-3">
                   {item.linkUrl != "" && (
@@ -193,14 +202,14 @@ export default function EditLink({
                 <button
                   className="btn grow"
                   type="button"
-                  onClick={() => setOpenField(false)}
+                  onClick={() => closeEdit()}
                 >
                   Cancel
                 </button>
                 <button
                   className="btn grow"
                   type="button"
-                  onClick={() => editLink(activeIndex)}
+                  onClick={() => editLink()}
                 >
                   Done
                 </button>

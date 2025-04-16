@@ -13,18 +13,12 @@ const Modal = dynamic(() => import("@/_components/modal"));
 export function CreateForm() {
   const router = useRouter();
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
-  const [links, setLinks] = useState<LinkType[]>([]);
   const [linkRequired, setLinkRequired] = useState<boolean>(false);
 
   const methods = useForm<PageType>();
 
   const onSubmit: SubmitHandler<PageType> = async (formData) => {
-    const newFormData: PageType = {
-      ...formData,
-      links: links,
-    };
-
-    if (links.length === 0) {
+    if (formData.links.length === 0) {
       setLinkRequired(true);
       return;
     }
@@ -34,7 +28,7 @@ export function CreateForm() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newFormData),
+      body: JSON.stringify(formData),
     });
     if (!response.ok) {
       if (response.status === 409) {
