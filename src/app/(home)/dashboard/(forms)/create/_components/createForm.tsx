@@ -7,19 +7,22 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { getSlug } from "@api/_utils/getSlug";
+import { FormState } from "@(forms)/_components/formState";
 const AddLink = dynamic(() => import("@(forms)/_components/LinkDisplay"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
 export function CreateForm() {
   const router = useRouter();
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
-  const [linkRequired, setLinkRequired] = useState<boolean>(false);
 
   const methods = useForm<PageType>();
 
   const onSubmit: SubmitHandler<PageType> = async (formData) => {
     if (formData.links.length === 0) {
-      setLinkRequired(true);
+      methods.setError("root", {
+        type: "server",
+        message: "⚠️ At least one link is required",
+      });
       return;
     }
 
@@ -35,6 +38,11 @@ export function CreateForm() {
         setIsDuplicate((isDuplicate) => !isDuplicate);
         return;
       }
+
+      methods.setError("root", {
+        type: "server",
+        message: `Something went wrong, code ${response.status}`,
+      });
       return;
     }
 
@@ -54,10 +62,8 @@ export function CreateForm() {
           <InputSet />
           <AddLink />
         </form>
+        <FormState />
       </FormProvider>
-      <Modal isOpen={linkRequired} setIsOpen={setLinkRequired}>
-        <p>⚠️ At least one link is required</p>
-      </Modal>
       <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
         <p className="font-semibold">⚠️ Page already exist</p>
         <p className="py-4 text-sm">

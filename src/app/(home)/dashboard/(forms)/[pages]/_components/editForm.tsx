@@ -19,7 +19,6 @@ export function EditForm({
   slug: string;
 }) {
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
-  const [linkRequired, setLinkRequired] = useState<boolean>(false);
 
   const methods = useForm<EditPageType>({
     defaultValues: async () => pageDetails,
@@ -34,9 +33,9 @@ export function EditForm({
     }
 
     if (formData.links.length === 0) {
-      setLinkRequired(true);
       methods.setError("root", {
-        type: `{server', message:'Something is wrong with your request}`,
+        type: "server",
+        message: "⚠️ At least one link is required",
       });
       return;
     }
@@ -56,7 +55,8 @@ export function EditForm({
       }
 
       methods.setError("root", {
-        type: `{server', message:'Something is wrong with your request; status code: ${response.status}}`,
+        type: "server",
+        message: `Something went wrong, code ${response.status}`,
       });
       return;
     }
@@ -74,9 +74,6 @@ export function EditForm({
         </form>
         <FormState />
       </FormProvider>
-      <Modal isOpen={linkRequired} setIsOpen={setLinkRequired}>
-        <p>⚠️ At least one link is required</p>
-      </Modal>
       <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
         <p className="font-semibold">⚠️ Page already exist</p>
         <p className="py-4 text-sm">
