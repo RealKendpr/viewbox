@@ -1,39 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 export function FormHeader({ slug, title }: { slug: string; title: string }) {
   const {
-    formState: { isSubmitting, isSubmitted, errors },
-    reset,
+    formState: { isSubmitting },
   } = useFormContext();
-
-  const [status, setStatus] = useState<"error" | "success" | null>(null);
-
-  useEffect(() => {
-    if (errors.root) {
-      setStatus("error");
-
-      const resetState = setTimeout(() => {
-        setStatus(null);
-      }, 2000);
-
-      return () => clearTimeout(resetState);
-    }
-
-    if (isSubmitted && !errors.root) {
-      setStatus("success");
-
-      const resetState = setTimeout(() => {
-        reset(undefined, { keepValues: true });
-        setStatus(null);
-      }, 2000);
-
-      return () => clearTimeout(resetState);
-    }
-  }, [isSubmitting, isSubmitted, reset, errors, setStatus]);
 
   return (
     <>
@@ -82,20 +55,6 @@ export function FormHeader({ slug, title }: { slug: string; title: string }) {
             </svg>
             <span>Visit</span>
           </Link>
-        </div>
-      </div>
-      <div
-        className={`[&.show]:toast fixed -right-full bottom-0 z-50 ${status == "success" && "show"} `}
-      >
-        <div className="alert alert-success">
-          <span>Updated successfully.</span>
-        </div>
-      </div>
-      <div
-        className={`[&.show]:toast fixed -right-full bottom-0 z-50 ${status == "error" && "show"} `}
-      >
-        <div className="alert alert-error">
-          <span>Failed to update.</span>
         </div>
       </div>
     </>
