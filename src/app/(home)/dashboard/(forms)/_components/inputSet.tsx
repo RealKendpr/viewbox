@@ -1,18 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { Input } from "./input";
+import { IconDropzone } from "./dropzone/iconDropzone";
 
 export function InputSet() {
   const { register } = useFormContext();
 
   return (
     <div className="grid gap-y-4">
-      <div className="fieldset">
-        <label htmlFor="avatar" className="fieldset-legend place-self-start">
-          Pick an Avatar
-        </label>
-        <input type="file" id="avatar" className="file-input w-full" />
-        <p className="fieldset-label">Max size 2MB</p>
-      </div>
+      <IconDropzone />
       <Input
         label="Page Title"
         name="pageName"
