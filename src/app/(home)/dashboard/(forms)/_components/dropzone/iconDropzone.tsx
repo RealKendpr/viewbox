@@ -33,7 +33,7 @@ export function IconDropzone() {
   });
 
   return (
-    <div className="fieldset flex">
+    <div className="fieldset flex pt-4">
       <div
         {...getRootProps({
           className: "dropzone",

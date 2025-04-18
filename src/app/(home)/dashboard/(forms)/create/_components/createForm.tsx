@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { getSlug } from "@api/_utils/getSlug";
 import { FormState } from "@(forms)/_components/formState";
+import { UploadButton } from "@(forms)/_components/uploadthing";
 const AddLink = dynamic(() => import("@(forms)/_components/LinkDisplay"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
@@ -17,8 +18,8 @@ export function CreateForm() {
 
   const methods = useForm<PageType>();
 
-  const onSubmit: SubmitHandler<PageType> = async (formData) => {
-    if (formData.links.length === 0) {
+  const onSubmit: SubmitHandler<PageType> = async (data) => {
+    if (data.links.length === 0) {
       methods.setError("root", {
         type: "server",
         message: "⚠️ At least one link is required",
@@ -26,12 +27,17 @@ export function CreateForm() {
       return;
     }
 
+    const { pageIcon, ...rest } = data;
+
+    const formData = new FormData();
+    formData.append("pageIcon", pageIcon);
+    formData.append("pageName", rest.pageName);
+    formData.append("pageDescription", rest.pageDescription);
+    formData.append("links", JSON.stringify(rest.links));
+
     const response = await fetch("/api/create", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
+      body: formData,
     });
     if (!response.ok) {
       if (response.status === 409) {
@@ -46,7 +52,7 @@ export function CreateForm() {
       return;
     }
 
-    router.push(`/dashboard/${getSlug(formData.pageName)}/layouts/`);
+    // router.push(`/dashboard/${getSlug(formData.pageName)}/layouts/`);
   };
 
   return (
