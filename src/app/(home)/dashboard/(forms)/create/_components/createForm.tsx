@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { getSlug } from "@api/_utils/getSlug";
 import { FormState } from "@(forms)/_components/formState";
-import { UploadButton } from "@(forms)/_components/uploadthing";
 const AddLink = dynamic(() => import("@(forms)/_components/LinkDisplay"));
 const Modal = dynamic(() => import("@/_components/modal"));
 

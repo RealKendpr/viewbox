@@ -6,27 +6,45 @@ import { NextRequest, NextResponse } from "next/server";
 import { pageSchema } from "../_schema/pageSchema";
 import { getSlug } from "../_utils/getSlug";
 import { findDuplicates } from "../_utils/findDuplicates";
+import { utapi } from "@api/_uploadthing/uploadthing";
+import { FileEsque } from "uploadthing/types";
 
 export async function POST(request: NextRequest) {
-  const data: PageType = await request.json();
-
-  if (!data)
+  const formData = await request.formData();
+  if (!formData)
     return NextResponse.json(
       { error: "empty request not accepted" },
       { status: 400 },
     );
 
-  if (data.links.length === 0)
-    return NextResponse.json(
-      { error: "at least one link is requried" },
-      { status: 411 },
-    );
   const userId = (await getUserData("userId")) as string;
-
   if (!userId)
     return NextResponse.json(
       { error: "request is unauthenticated" },
       { status: 401 },
+    );
+
+  const uploadThing = await utapi.uploadFiles(
+    formData.get("pageIcon") as FileEsque,
+  );
+  if (uploadThing.error) {
+    return NextResponse.json({ error: uploadThing.error }, { status: 400 });
+  }
+
+  const { key, ufsUrl } = uploadThing.data;
+
+  const formValues = Object.fromEntries(formData) as any as PageType;
+  const data: PageType = {
+    pageIcon: ufsUrl,
+    pageName: formValues.pageName,
+    pageDescription: formValues.pageDescription,
+    links: JSON.parse(formValues.links as any),
+  };
+
+  if (data.links.length === 0)
+    return NextResponse.json(
+      { error: "at least one link is requried" },
+      { status: 411 },
     );
 
   const result = pageSchema.safeParse(data);
