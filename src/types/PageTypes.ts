@@ -61,7 +61,7 @@ export interface PageDocumentType extends Document {
 export interface PageType {
   pageIcon: string;
   pageName: string;
-  pageDescription: string;
+  pageDescription?: string;
   links: LinkType[];
 }
 

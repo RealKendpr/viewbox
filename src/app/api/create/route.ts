@@ -1,21 +1,25 @@
 import { getUserData } from "@/_lib/getUserData";
 import PageModel from "@/_lib/mongodb/models/PageModel";
 import { connectDB } from "@/_lib/mongodb/mongodb";
-import { PageType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
-import { pageSchema } from "../_schema/pageSchema";
 import { getSlug } from "../_utils/getSlug";
 import { findDuplicates } from "../_utils/findDuplicates";
 import { utapi } from "@api/_uploadthing/uploadthing";
 import { FileEsque } from "uploadthing/types";
+import { ServerCreateSchema } from "../_schema/schema";
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
-  if (!formData)
-    return NextResponse.json(
-      { error: "empty request not accepted" },
-      { status: 400 },
-    );
+  const formValues = Object.fromEntries(formData);
+  const { links, ...rest } = formValues;
+  const validData = ServerCreateSchema.safeParse({
+    linkList: JSON.parse(links as any),
+    ...rest,
+  });
+
+  if (validData.error) {
+    return NextResponse.json({ error: validData.error }, { status: 422 });
+  }
 
   const userId = (await getUserData("userId")) as string;
   if (!userId)
@@ -24,36 +28,20 @@ export async function POST(request: NextRequest) {
       { status: 401 },
     );
 
-  const uploadThing = await utapi.uploadFiles(
-    formData.get("pageIcon") as FileEsque,
-  );
-  if (uploadThing.error) {
-    return NextResponse.json({ error: uploadThing.error }, { status: 400 });
-  }
+  const { pageIcon, pageName, pageDescription, linkList } = validData.data;
 
-  const { key, ufsUrl } = uploadThing.data;
-
-  const formValues = Object.fromEntries(formData) as any as PageType;
-  const data: PageType = {
-    pageIcon: ufsUrl,
-    pageName: formValues.pageName,
-    pageDescription: formValues.pageDescription,
-    links: JSON.parse(formValues.links as any),
-  };
-
-  if (data.links.length === 0)
+  if (linkList.length === 0)
     return NextResponse.json(
       { error: "at least one link is requried" },
       { status: 411 },
     );
 
-  const result = pageSchema.safeParse(data);
-
-  if (!result.success) {
-    return NextResponse.json({ error: result.error }, { status: 422 });
+  const uploadThing = await utapi.uploadFiles(pageIcon as FileEsque);
+  if (uploadThing.error) {
+    return NextResponse.json({ error: uploadThing.error }, { status: 400 });
   }
 
-  const { pageIcon, pageName, pageDescription, links } = result.data;
+  const { ufsUrl } = uploadThing.data;
 
   try {
     await connectDB();
@@ -67,12 +55,12 @@ export async function POST(request: NextRequest) {
     }
 
     const page = await new PageModel({
-      pageIcon: pageIcon,
+      pageIcon: ufsUrl,
       pageName: pageName,
       pageDescription: pageDescription,
       slug: getSlug(pageName),
       userId: userId,
-      links: links,
+      links: linkList,
     });
 
     await page.save();
