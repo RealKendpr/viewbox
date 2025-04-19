@@ -39,10 +39,10 @@ export async function PageDetails({
       >
         <div className="card-header">
           <div className="profile-image">
-            {page.pageIcon ? (
+            {page.pageIcon.url ? (
               <Image
                 className="size-20 object-cover"
-                src={page.pageIcon}
+                src={page.pageIcon.url}
                 width={80}
                 height={80}
                 alt=""

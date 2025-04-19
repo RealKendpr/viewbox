@@ -15,10 +15,10 @@ export function PageItemRow({ pages }: { pages: PagePreviewType[] }) {
         <tr key={index}>
           <td className="hidden text-end md:table-cell">
             <div className="inline-block h-[64px] w-[64px] overflow-hidden rounded-xl">
-              {i.pageIcon && (
+              {i.pageIcon.url && (
                 <Image
                   className="size-[64px] object-cover"
-                  src={i.pageIcon}
+                  src={i.pageIcon.url}
                   alt=""
                   width={100}
                   height={100}

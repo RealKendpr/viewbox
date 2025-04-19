@@ -1,41 +1,41 @@
 import { getUserData } from "@/_lib/getUserData";
 import PageModel from "@/_lib/mongodb/models/PageModel";
 import { connectDB } from "@/_lib/mongodb/mongodb";
-import { PageType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
-import { pageSchema } from "../_schema/pageSchema";
 import { getSlug } from "../_utils/getSlug";
 import { findDuplicates } from "../_utils/findDuplicates";
+import { uploadThing } from "@api/_uploadthing/uploadthing";
+import { ServerCreateSchema } from "../_schema/schema";
 
 export async function POST(request: NextRequest) {
-  const data: PageType = await request.json();
+  const formData = await request.formData();
+  const formValues = Object.fromEntries(formData);
+  const { links, ...rest } = formValues;
+  const validData = ServerCreateSchema.safeParse({
+    linkList: JSON.parse(links as any),
+    ...rest,
+  });
 
-  if (!data)
-    return NextResponse.json(
-      { error: "empty request not accepted" },
-      { status: 400 },
-    );
+  if (validData.error) {
+    return NextResponse.json({ error: validData.error }, { status: 422 });
+  }
 
-  if (data.links.length === 0)
-    return NextResponse.json(
-      { error: "at least one link is requried" },
-      { status: 411 },
-    );
   const userId = (await getUserData("userId")) as string;
-
   if (!userId)
     return NextResponse.json(
       { error: "request is unauthenticated" },
       { status: 401 },
     );
 
-  const result = pageSchema.safeParse(data);
+  const { pageIcon, pageName, pageDescription, linkList } = validData.data;
 
-  if (!result.success) {
-    return NextResponse.json({ error: result.error }, { status: 422 });
-  }
+  if (linkList.length === 0)
+    return NextResponse.json(
+      { error: "at least one link is requried" },
+      { status: 411 },
+    );
 
-  const { pageIcon, pageName, pageDescription, links } = result.data;
+  const uploadedIcon = await uploadThing(pageIcon);
 
   try {
     await connectDB();
@@ -49,12 +49,12 @@ export async function POST(request: NextRequest) {
     }
 
     const page = await new PageModel({
-      pageIcon: pageIcon,
+      pageIcon: uploadedIcon,
       pageName: pageName,
       pageDescription: pageDescription,
       slug: getSlug(pageName),
       userId: userId,
-      links: links,
+      links: linkList,
     });
 
     await page.save();

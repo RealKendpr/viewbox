@@ -19,8 +19,11 @@ const linksSchema = new Schema<LinkType>({
 const PageSchema = new Schema<PageDocumentType>(
   {
     pageIcon: {
-      type: String,
-      default: "",
+      type: Object,
+      default: {
+        key: "",
+        url: "",
+      },
     },
     pageName: {
       type: String,

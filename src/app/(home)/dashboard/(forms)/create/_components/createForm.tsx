@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { getSlug } from "@api/_utils/getSlug";
 import { FormState } from "@(forms)/_components/formState";
-import { UploadButton } from "@(forms)/_components/uploadthing";
 const AddLink = dynamic(() => import("@(forms)/_components/LinkDisplay"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
@@ -27,13 +26,11 @@ export function CreateForm() {
       return;
     }
 
-    const { pageIcon, ...rest } = data;
-
     const formData = new FormData();
-    formData.append("pageIcon", pageIcon);
-    formData.append("pageName", rest.pageName);
-    formData.append("pageDescription", rest.pageDescription);
-    formData.append("links", JSON.stringify(rest.links));
+    formData.append("pageIcon", data.pageIcon);
+    formData.append("pageName", data.pageName);
+    formData.append("pageDescription", data.pageDescription || "");
+    formData.append("links", JSON.stringify(data.links));
 
     const response = await fetch("/api/create", {
       method: "POST",
@@ -52,7 +49,7 @@ export function CreateForm() {
       return;
     }
 
-    // router.push(`/dashboard/${getSlug(formData.pageName)}/layouts/`);
+    router.push(`/dashboard/${getSlug(data.pageName)}/layouts/`);
   };
 
   return (

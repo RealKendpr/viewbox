@@ -14,7 +14,7 @@ export async function generateMetadata({
   return {
     title: pageResult?.pageName,
     icons: {
-      icon: pageResult?.pageIcon ? pageResult.pageIcon : "/favicon.ico",
+      icon: pageResult?.pageIcon.url ? pageResult.pageIcon.url : "/favicon.ico",
     },
   };
 }
