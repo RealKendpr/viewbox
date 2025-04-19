@@ -44,7 +44,7 @@ export async function PageTable() {
 
   return (
     <>
-      {!pages ? (
+      {pages == null || pages.length < 1 ? (
         <NoPages />
       ) : (
         <table className="table table-fixed shadow-md">
