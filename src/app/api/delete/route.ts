@@ -3,6 +3,7 @@ import { PageDocumentType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import PageModel from "@/_lib/mongodb/models/PageModel";
+import { deleteThing } from "../_uploadthing/deleteThing";
 
 const checks = async (request: NextRequest) => {
   const pageSlug = await request.text();
@@ -45,6 +46,7 @@ export async function DELETE(request: NextRequest) {
       userId: passedChecks.userId,
     });
 
+    await deleteThing(findPage?.pageIcon.key!);
     await findPage;
 
     return NextResponse.json(
