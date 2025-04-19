@@ -4,8 +4,7 @@ import { connectDB } from "@/_lib/mongodb/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import { getSlug } from "../_utils/getSlug";
 import { findDuplicates } from "../_utils/findDuplicates";
-import { utapi } from "@api/_uploadthing/uploadthing";
-import { FileEsque } from "uploadthing/types";
+import { uploadThing } from "@api/_uploadthing/uploadthing";
 import { ServerCreateSchema } from "../_schema/schema";
 
 export async function POST(request: NextRequest) {
@@ -36,12 +35,7 @@ export async function POST(request: NextRequest) {
       { status: 411 },
     );
 
-  const uploadThing = await utapi.uploadFiles(pageIcon as FileEsque);
-  if (uploadThing.error) {
-    return NextResponse.json({ error: uploadThing.error }, { status: 400 });
-  }
-
-  const { ufsUrl } = uploadThing.data;
+  const pageIconUrl = await uploadThing(pageIcon);
 
   try {
     await connectDB();
@@ -55,7 +49,7 @@ export async function POST(request: NextRequest) {
     }
 
     const page = await new PageModel({
-      pageIcon: ufsUrl,
+      pageIcon: pageIconUrl,
       pageName: pageName,
       pageDescription: pageDescription,
       slug: getSlug(pageName),

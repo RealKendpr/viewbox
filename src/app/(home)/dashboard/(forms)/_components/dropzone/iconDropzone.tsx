@@ -42,7 +42,6 @@ export function IconDropzone() {
       >
         <input
           className="invisible absolute size-0"
-          type="file"
           id="pageIcon"
           {...register("pageIcon")}
           aria-hidden

@@ -16,7 +16,7 @@ export const ImageSchemaValidation = z
   .refine((file) => file.size <= fileSizeLimit);
 
 export const ServerCreateSchema = z.object({
-  pageIcon: ImageSchemaValidation,
+  pageIcon: z.union([ImageSchemaValidation, z.literal("")]),
   pageName: z.string(),
   pageDescription: z.string().max(100).optional(),
   linkList: z.array(linksSchema),
