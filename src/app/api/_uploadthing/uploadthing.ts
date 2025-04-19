@@ -10,7 +10,10 @@ export const utapi = new UTApi({
 
 export const uploadThing = async (pageIcon: FileEsque | "") => {
   if (pageIcon === "") {
-    return "";
+    return {
+      key: "",
+      url: "",
+    };
   }
 
   const uploadThing = await utapi.uploadFiles(pageIcon);
@@ -41,5 +44,8 @@ export const uploadThing = async (pageIcon: FileEsque | "") => {
     newName: `${random(18)}${fileExt(pageIcon.type)}`,
   });
 
-  return ufsUrl;
+  return {
+    key: key,
+    url: ufsUrl,
+  };
 };

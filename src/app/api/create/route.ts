@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
       { status: 411 },
     );
 
-  const pageIconUrl = await uploadThing(pageIcon);
+  const uploadedIcon = await uploadThing(pageIcon);
 
   try {
     await connectDB();
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     }
 
     const page = await new PageModel({
-      pageIcon: pageIconUrl,
+      pageIcon: uploadedIcon,
       pageName: pageName,
       pageDescription: pageDescription,
       slug: getSlug(pageName),
