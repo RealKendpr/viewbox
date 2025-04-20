@@ -1,5 +1,4 @@
 import "server-only";
-import { NextResponse } from "next/server";
 import random from "random-string-generator";
 import { UTApi } from "uploadthing/server";
 import { FileEsque } from "uploadthing/types";
@@ -25,7 +24,8 @@ export const uploadThing = async (pageIcon: File | "") => {
 
   const uploadThing = await utapi.uploadFiles(renamedIcon);
   if (uploadThing.error) {
-    return NextResponse.json({ error: uploadThing.error }, { status: 400 });
+    console.error("UploadThing Error", uploadThing.error);
+    return null;
   }
 
   const { ufsUrl, key } = uploadThing.data;
