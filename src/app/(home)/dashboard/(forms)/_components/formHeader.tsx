@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useFormContext } from "react-hook-form";
 
-export function FormHeader({ slug, title }: { slug: string; title: string }) {
+export function FormHeader({ slug, title }: { slug?: string; title: string }) {
   const {
     formState: { isSubmitting },
   } = useFormContext();
@@ -15,7 +15,7 @@ export function FormHeader({ slug, title }: { slug: string; title: string }) {
         <div>
           <button className="btn btn-primary" type="submit">
             {isSubmitting ? (
-              <span className="loading loading-spinner loading-xs"></span>
+              <span className="loading loading-spinner loading-xs" />
             ) : (
               <svg
                 width="16"

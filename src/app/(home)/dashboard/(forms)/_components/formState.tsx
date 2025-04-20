@@ -32,7 +32,7 @@ export function FormState() {
 
       return resetState();
     }
-  }, [errors, setStatus, reset, isSubmitted, resetState]);
+  }, [errors, setStatus, isSubmitted, resetState]);
 
   return (
     <>
@@ -45,7 +45,7 @@ export function FormState() {
           </div>
         </div>
         <div
-          className={`[&.show]:toast fixed -right-full bottom-0 z-50 ${errors.root && "show"} `}
+          className={`[&.show]:toast fixed -right-full bottom-0 z-50 ${status == "error" && "show"} `}
         >
           <div className="alert alert-error">
             <span>{errors.root?.message || "Failed to update"}</span>
