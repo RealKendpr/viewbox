@@ -37,6 +37,13 @@ export async function POST(request: NextRequest) {
 
   const uploadedIcon = await uploadThing(pageIcon);
 
+  if (uploadedIcon === null) {
+    return NextResponse.json(
+      { error: "Error saving in saving the page icon." },
+      { status: 400 },
+    );
+  }
+
   try {
     await connectDB();
 
