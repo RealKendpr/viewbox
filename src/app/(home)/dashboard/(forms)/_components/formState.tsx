@@ -36,22 +36,20 @@ export function FormState() {
 
   return (
     <>
-      <>
-        <div
-          className={`[&.show]:toast fixed -right-full bottom-0 z-50 ${status == "success" && "show"} `}
-        >
-          <div className="alert alert-success">
-            <span>Updated successfully.</span>
-          </div>
+      <div
+        className={`[&.show]:toast fixed -right-full bottom-0 z-50 ${status == "success" && "show"} `}
+      >
+        <div className="alert alert-success">
+          <span>Updated successfully.</span>
         </div>
-        <div
-          className={`[&.show]:toast fixed -right-full bottom-0 z-50 ${status == "error" && "show"} `}
-        >
-          <div className="alert alert-error">
-            <span>{errors.root?.message || "Failed to update"}</span>
-          </div>
+      </div>
+      <div
+        className={`[&.show]:toast fixed -right-full bottom-0 z-50 ${status == "error" && "show"} `}
+      >
+        <div className="alert alert-error">
+          <span>{errors.root?.message || "Failed to update"}</span>
         </div>
-      </>
+      </div>
     </>
   );
 }

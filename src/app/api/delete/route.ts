@@ -46,7 +46,14 @@ export async function DELETE(request: NextRequest) {
       userId: passedChecks.userId,
     });
 
-    await deleteThing(findPage?.pageIcon.key!);
+    if (!findPage) {
+      return NextResponse.json(
+        { error: "client does not have access rights to the content" },
+        { status: 403 },
+      );
+    }
+
+    await deleteThing(findPage?.pageIcon.key);
     await findPage;
 
     return NextResponse.json(

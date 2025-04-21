@@ -4,7 +4,7 @@ import { DropdownOptions } from "./_header/dropdownOptions";
 import { NoPages } from "./noPages";
 import { getPagesPreview } from "@/_lib/getPageData";
 import { Suspense } from "react";
-import { PageListSkeleton } from "@/_components/loading";
+import { PageListSkeleton } from "@/_components/loadingComponents";
 
 export function PageItemRow({ pages }: { pages: PagePreviewType[] }) {
   const createdDate = (date: Date) => new Date(date).toLocaleDateString();

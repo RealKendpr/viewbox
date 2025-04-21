@@ -108,14 +108,16 @@ export default function LinkDisplay() {
 
   return (
     <>
-      <div className="mt-3 flex min-h-52 flex-col">
+      <div className="mt-3 flex flex-col">
         <p className="text-xl font-bold">Links</p>
-        <EditLink
-          links={fields as any}
-          removeLink={removeLink}
-          updateLink={updateLink}
-          moveField={move}
-        />
+        <div className="mt-3 min-h-32 p-2">
+          <EditLink
+            links={fields as any}
+            removeLink={removeLink}
+            updateLink={updateLink}
+            moveField={move}
+          />
+        </div>
         <button
           className="btn btn-dash btn-sm mb-5 w-[calc(100%-12px)] self-center"
           type="button"

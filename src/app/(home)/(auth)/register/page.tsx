@@ -1,4 +1,4 @@
-import { LoadingSpinner } from "@/_components/loading";
+import { LoadingSpinner } from "@/_components/loadingComponents";
 import { RegisterForm } from "@/app/(home)/(auth)/_components/registerForm";
 import { Suspense } from "react";
 

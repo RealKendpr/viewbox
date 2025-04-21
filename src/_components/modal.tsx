@@ -1,5 +1,5 @@
 import { Suspense, useCallback, useEffect, useRef } from "react";
-import { LoadingSpinner } from "./loading";
+import { LoadingSpinner } from "./loadingComponents";
 
 export default function Modal({
   children,
