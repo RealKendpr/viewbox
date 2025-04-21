@@ -1,4 +1,4 @@
-import { PageType } from "@/types/PageTypes";
+import { PagePublicType } from "@/types/PageTypes";
 import Image from "next/image";
 // import { favicon } from "@/app/_utils/getFavicon";
 import { UserAvatar } from "@/_components/userAvatar";
@@ -9,7 +9,7 @@ export async function PageDetails({
   page,
   slug,
 }: {
-  page: PageType;
+  page: PagePublicType;
   slug: string;
 }) {
   const options = await getOptions(slug);
@@ -41,10 +41,10 @@ export async function PageDetails({
           <div className="profile-image">
             {page.pageIcon.url ? (
               <Image
-                className="size-20 object-cover"
+                className="mx-auto size-24! object-cover"
                 src={page.pageIcon.url}
-                width={80}
-                height={80}
+                width={96}
+                height={96}
                 alt=""
               />
             ) : (

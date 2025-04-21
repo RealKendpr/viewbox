@@ -1,6 +1,6 @@
-import type { PageType } from "@/types/PageTypes";
+import type { PageFormType } from "@/types/PageTypes";
 import Image from "next/image";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useFormContext } from "react-hook-form";
 import { DropzoneError } from "./dropzoneError";
@@ -11,7 +11,7 @@ export function IconDropzone() {
     formState: { defaultValues },
   } = useFormContext();
 
-  const { setValue, register } = useFormContext<PageType>();
+  const { setValue, register } = useFormContext<PageFormType>();
   const [preview, setPreview] = useState<string>("");
 
   const { fileRejections, getRootProps, getInputProps } = useDropzone({

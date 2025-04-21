@@ -2,7 +2,7 @@
 
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { InputSet } from "@(forms)/_components/inputSet";
-import { EditPageType, PageType } from "@/types/PageTypes";
+import { EditPageType, PageFormType } from "@/types/PageTypes";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import { FormHeader } from "@(forms)/_components/formHeader";
@@ -24,7 +24,7 @@ export function EditForm({
     defaultValues: async () => pageDetails,
   });
 
-  const onSubmit: SubmitHandler<PageType> = async (formData) => {
+  const onSubmit: SubmitHandler<PageFormType> = async (formData) => {
     // check if submitted data and current value is the same,
     // before proceeding to avoid unnecessary request
     // and show an alert about it
