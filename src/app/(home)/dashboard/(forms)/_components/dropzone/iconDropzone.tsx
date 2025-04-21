@@ -1,14 +1,19 @@
 import type { PageType } from "@/types/PageTypes";
 import Image from "next/image";
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useFormContext } from "react-hook-form";
 import { DropzoneError } from "./dropzoneError";
 import { fileSizeLimit, fileTypes } from "@/app/api/_schema/schema";
 
 export function IconDropzone() {
+  const {
+    formState: { defaultValues },
+  } = useFormContext();
+
   const { setValue, register } = useFormContext<PageType>();
   const [preview, setPreview] = useState<string>("");
+
   const { fileRejections, getRootProps, getInputProps } = useDropzone({
     accept: {
       "image/jpeg": [],
@@ -49,6 +54,14 @@ export function IconDropzone() {
     },
   });
 
+  useEffect(() => {
+    const iconUrl = defaultValues?.pageIcon.url;
+
+    if (iconUrl !== "") {
+      setPreview(iconUrl);
+    }
+  }, [defaultValues, setPreview]);
+
   return (
     <div className="fieldset flex gap-x-3 pt-4">
       <div
@@ -70,8 +83,7 @@ export function IconDropzone() {
             className="size-24 object-cover"
             src={preview}
             alt="Page icon"
-            width={100}
-            height={100}
+            fill={true}
           />
         ) : (
           <svg
