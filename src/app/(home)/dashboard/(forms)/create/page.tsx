@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { CreateForm } from "./_components/createForm";
-import { LoadingSpinner } from "@/_components/loading";
+import { LoadingSpinner } from "@/_components/loadingComponents";
 
 export default function CreatePage() {
   return (
