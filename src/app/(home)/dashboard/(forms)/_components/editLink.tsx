@@ -90,8 +90,8 @@ export default function EditLink({
   return (
     <>
       {links.length < 1 ? (
-        <div className="text-base-content/50 mt-3 p-2">
-          <span className="mb-3 flex justify-center">
+        <>
+          <span className="text-base-content/50 mb-3 flex justify-center">
             <svg
               width="64"
               height="64"
@@ -107,10 +107,10 @@ export default function EditLink({
               ></path>
             </svg>
           </span>
-          <span className="text-center">
+          <span className="text-base-content/50 text-center">
             <p className="mb-3 font-semibold">There&apos;s nothing here yet!</p>
           </span>
-        </div>
+        </>
       ) : (
         <>
           <Reorder.Group
@@ -124,7 +124,6 @@ export default function EditLink({
                 }
               });
             }}
-            className="mt-3 px-2 pb-2"
           >
             {links.map((item, index) => (
               <Reorder.Item
