@@ -47,14 +47,14 @@ export interface LinkType {
   linkIcon?: string;
 }
 
-interface pageIconType {
+interface pageIconOutputType {
   key: string;
   url: string;
 }
 
 export interface PageDocumentType extends Document {
   pageName: string;
-  pageIcon: pageIconType;
+  pageIcon: pageIconOutputType;
   pageDescription: string;
   slug: string;
   userId: mongoose.Types.ObjectId;
@@ -64,20 +64,27 @@ export interface PageDocumentType extends Document {
 }
 
 export interface PageType {
-  pageIcon: File;
   pageName: string;
   pageDescription?: string;
   links: LinkType[];
 }
 
+export interface PageFormType extends PageType {
+  pageIcon: File;
+}
+
 export interface PagePreviewType {
-  pageIcon: pageIconType;
+  pageIcon: pageIconOutputType;
   pageName: string;
   slug: string;
   createdAt: Date;
 }
 
-export interface EditPageType extends PageType {
+export interface EditPageType extends PageFormType {
   _id: string;
   createdAt: Date;
+}
+
+export interface PagePublicType extends PageType {
+  pageIcon: pageIconOutputType;
 }
