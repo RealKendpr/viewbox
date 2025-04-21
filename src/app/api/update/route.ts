@@ -55,7 +55,7 @@ export async function PATCH(request: NextRequest) {
     });
     if (!findPage)
       return NextResponse.json(
-        { message: "client does not have access rights to the content" },
+        { error: "client does not have access rights to the content" },
         { status: 403 },
       );
     // check if the slug of the current page is different than what was submitted,
