@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { getSlug } from "@api/_utils/getSlug";
+import FormError from "./formError";
 const AddLink = dynamic(() => import("@(forms)/_components/LinkDisplay"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
@@ -15,10 +16,11 @@ export function CreateForm() {
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
 
   const methods = useForm<PageType>();
+  const { setError } = methods;
 
   const onSubmit: SubmitHandler<PageType> = async (data) => {
     if (data.links.length === 0) {
-      methods.setError("root", {
+      setError("root", {
         type: "server",
         message: "⚠️ At least one link is required",
       });
@@ -41,7 +43,7 @@ export function CreateForm() {
         return;
       }
 
-      methods.setError("root", {
+      setError("root", {
         type: "server",
         message: `Something went wrong. Code ${response.status}`,
       });
@@ -81,6 +83,7 @@ export function CreateForm() {
           </div>
           <InputSet />
           <AddLink />
+          <FormError />
         </form>
       </FormProvider>
       <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
