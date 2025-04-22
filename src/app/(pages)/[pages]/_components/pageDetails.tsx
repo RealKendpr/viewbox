@@ -1,4 +1,4 @@
-import { PagePublicType } from "@/types/PageTypes";
+import { PageType } from "@/types/PageTypes";
 import Image from "next/image";
 // import { favicon } from "@/app/_utils/getFavicon";
 import { UserAvatar } from "@/_components/userAvatar";
@@ -9,11 +9,13 @@ export async function PageDetails({
   page,
   slug,
 }: {
-  page: PagePublicType;
+  page: PageType;
   slug: string;
 }) {
   const options = await getOptions(slug);
   const styles = await getStyles(slug);
+
+  const pageIcon = !(page.pageIcon instanceof File) ? page.pageIcon.url : "";
 
   const linkStyle = {
     default: "",
@@ -39,10 +41,10 @@ export async function PageDetails({
       >
         <div className="card-header">
           <div className="profile-image">
-            {page.pageIcon.url ? (
+            {pageIcon ? (
               <Image
                 className="mx-auto size-24! object-cover"
-                src={page.pageIcon.url}
+                src={pageIcon}
                 width={96}
                 height={96}
                 alt=""

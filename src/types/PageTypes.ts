@@ -64,13 +64,10 @@ export interface PageDocumentType extends Document {
 }
 
 export interface PageType {
+  pageIcon: File | pageIconOutputType;
   pageName: string;
   pageDescription?: string;
   links: LinkType[];
-}
-
-export interface PageFormType extends PageType {
-  pageIcon: File;
 }
 
 export interface PagePreviewType {
@@ -80,11 +77,7 @@ export interface PagePreviewType {
   createdAt: Date;
 }
 
-export interface EditPageType extends PageFormType {
+export interface EditPageType extends PageType {
   _id: string;
   createdAt: Date;
-}
-
-export interface PagePublicType extends PageType {
-  pageIcon: pageIconOutputType;
 }
