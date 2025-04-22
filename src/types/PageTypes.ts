@@ -47,7 +47,7 @@ export interface LinkType {
   linkIcon?: string;
 }
 
-interface pageIconOutputType {
+export interface pageIconOutputType {
   key: string;
   url: string;
 }
@@ -78,6 +78,6 @@ export interface PagePreviewType {
 }
 
 export interface EditPageType extends PageType {
-  _id: string;
+  pageId: string;
   createdAt: Date;
 }

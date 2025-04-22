@@ -3,13 +3,14 @@ import random from "random-string-generator";
 import { UTApi } from "uploadthing/server";
 import { FileEsque } from "uploadthing/types";
 import { fileExt } from "../_utils/fileExtension";
+import { pageIconOutputType } from "@/types/PageTypes";
 
 export const utapi = new UTApi({
   // ...options,
 });
 
-export const uploadThing = async (pageIcon: File | "") => {
-  if (pageIcon === "") {
+export const uploadThing = async (pageIcon: File | pageIconOutputType | "") => {
+  if (!(pageIcon instanceof File)) {
     return {
       key: "",
       url: "",
