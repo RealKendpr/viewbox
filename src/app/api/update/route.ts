@@ -7,6 +7,7 @@ import PageModel from "@/_lib/mongodb/models/PageModel";
 import { getSlug } from "../_utils/getSlug";
 import { findDuplicates } from "../_utils/findDuplicates";
 import { uploadThing } from "../_uploadthing/uploadthing";
+import { deleteThing } from "../_uploadthing/deleteThing";
 
 export async function PATCH(request: NextRequest) {
   const formData = await request.formData();
@@ -66,6 +67,9 @@ export async function PATCH(request: NextRequest) {
           { error: "page with the same name already exist" },
           { status: 409 },
         );
+    }
+    if (findPage.pageIcon.key !== uploadedIcon.key) {
+      await deleteThing(findPage.pageIcon.key);
     }
 
     const newData = {
