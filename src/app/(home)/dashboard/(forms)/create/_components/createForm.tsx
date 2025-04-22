@@ -2,7 +2,7 @@
 
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { InputSet } from "@(forms)/_components/inputSet";
-import { PageFormType } from "@/types/PageTypes";
+import { PageType } from "@/types/PageTypes";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -15,10 +15,14 @@ export function CreateForm() {
   const router = useRouter();
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
 
-  const methods = useForm<PageFormType>();
+  const methods = useForm<PageType>();
   const { setError } = methods;
 
-  const onSubmit: SubmitHandler<PageFormType> = async (data) => {
+  const onSubmit: SubmitHandler<PageType> = async (data) => {
+    if (!(data.pageIcon instanceof File)) {
+      return;
+    }
+
     if (data.links.length === 0) {
       setError("root", {
         type: "server",
