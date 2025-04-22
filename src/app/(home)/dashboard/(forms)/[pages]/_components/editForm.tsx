@@ -28,7 +28,9 @@ export function EditForm({
     // check if submitted data and current value is the same,
     // before proceeding to avoid unnecessary request
     // and show an alert about it
-    if (JSON.stringify(formData) === JSON.stringify(pageDetails)) {
+    const unchanged = JSON.stringify(formData) === JSON.stringify(pageDetails);
+
+    if (unchanged) {
       return;
     }
 

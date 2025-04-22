@@ -1,7 +1,7 @@
 import { getUserData } from "@/_lib/getUserData";
 import { EditPageType, PageDocumentType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
-import { pageSchema } from "../_schema/pageSchema";
+import { pageSchema } from "../_schema/schema";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import PageModel from "@/_lib/mongodb/models/PageModel";
 import { getSlug } from "../_utils/getSlug";
