@@ -6,5 +6,6 @@ export async function deleteThing(key: string) {
   }
 
   await utapi.deleteFiles(key);
+
   return;
 }

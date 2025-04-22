@@ -31,7 +31,7 @@ export function CreateForm() {
       if (data.pageIcon instanceof File) {
         return data.pageIcon;
       }
-      return JSON.stringify(data.pageIcon);
+      return "";
     };
 
     const formData = new FormData();

@@ -53,7 +53,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    await deleteThing(findPage?.pageIcon.key);
+    await deleteThing(findPage.pageIcon.key);
     await findPage;
 
     return NextResponse.json(
