@@ -19,10 +19,6 @@ export function CreateForm() {
   const { setError } = methods;
 
   const onSubmit: SubmitHandler<PageType> = async (data) => {
-    if (!(data.pageIcon instanceof File)) {
-      return;
-    }
-
     if (data.links.length === 0) {
       setError("root", {
         type: "server",
@@ -31,8 +27,15 @@ export function CreateForm() {
       return;
     }
 
+    const pageIcon = () => {
+      if (data.pageIcon instanceof File) {
+        return data.pageIcon;
+      }
+      return JSON.stringify(data.pageIcon);
+    };
+
     const formData = new FormData();
-    formData.append("pageIcon", data.pageIcon);
+    formData.append("pageIcon", pageIcon());
     formData.append("pageName", data.pageName);
     formData.append("pageDescription", data.pageDescription || "");
     formData.append("links", JSON.stringify(data.links));
