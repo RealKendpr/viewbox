@@ -1,49 +1,48 @@
 import { getUserData } from "@/_lib/getUserData";
-import { EditPageType, PageDocumentType } from "@/types/PageTypes";
+import { PageDocumentType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
-import { pageSchema } from "../_schema/schema";
+import { EditSchema } from "../_schema/schema";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import PageModel from "@/_lib/mongodb/models/PageModel";
 import { getSlug } from "../_utils/getSlug";
 import { findDuplicates } from "../_utils/findDuplicates";
+import { uploadThing } from "../_uploadthing/uploadthing";
 
 export async function PATCH(request: NextRequest) {
-  const data: EditPageType = await request.json();
+  const formData = await request.formData();
+  const { links, ...restData } = Object.fromEntries(formData);
+  const validData = EditSchema.safeParse({
+    linkList: JSON.parse(links as any),
+    ...restData,
+  });
 
-  if (!data)
-    return NextResponse.json(
-      { error: "empty request not accepted" },
-      { status: 400 },
-    );
-
-  if (data.links.length === 0)
-    return NextResponse.json(
-      { error: "at least one link is requried" },
-      { status: 411 },
-    );
+  if (validData.error) {
+    return NextResponse.json({ error: validData.error }, { status: 422 });
+  }
 
   const userId = await getUserData("userId");
-
   if (!userId)
     return NextResponse.json(
       { error: "request is unauthenticated" },
       { status: 401 },
     );
 
-  const result = pageSchema.safeParse(data);
+  const { pageId, pageIcon, pageName, linkList, ...rest } = validData.data;
 
-  if (!result.success) {
-    return NextResponse.json({ error: result.error }, { status: 422 });
+  if (linkList.length === 0)
+    return NextResponse.json(
+      { error: "at least one link is requried" },
+      { status: 411 },
+    );
+
+  const uploadedIcon = await uploadThing(pageIcon);
+
+  if (uploadedIcon === null) {
+    return NextResponse.json(
+      { error: "Error saving in saving the page icon." },
+      { status: 400 },
+    );
   }
-
-  const pageId = data._id;
-  const { pageName, ...rest } = result.data;
-
-  const newData = {
-    ...rest,
-    pageName: pageName,
-    slug: getSlug(pageName),
-  };
 
   try {
     await connectDB();
@@ -69,8 +68,16 @@ export async function PATCH(request: NextRequest) {
         );
     }
 
+    const newData = {
+      pageIcon: uploadedIcon,
+      pageName: pageName,
+      slug: getSlug(pageName),
+      links: linkList,
+      ...rest,
+    };
+
     const updatePage = await PageModel.findOneAndUpdate(
-      { _id: pageId },
+      { _id: pageId, userId: userId },
       newData,
     );
 
