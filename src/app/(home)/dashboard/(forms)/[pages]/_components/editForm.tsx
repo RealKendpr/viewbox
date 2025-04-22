@@ -8,6 +8,8 @@ import dynamic from "next/dynamic";
 import { FormHeader } from "@(forms)/_components/formHeader";
 import { revalidateForm } from "../_utils/revalidateForm";
 import { FormState } from "@(forms)/_components/formState";
+import { useRouter } from "next/navigation";
+import { getSlug } from "@/app/api/_utils/getSlug";
 const LinkDisplay = dynamic(() => import("@(forms)/_components/LinkDisplay"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
@@ -18,6 +20,7 @@ export function EditForm({
   pageDetails: EditPageType;
   slug: string;
 }) {
+  const router = useRouter();
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
 
   const methods = useForm<EditPageType>({
@@ -73,7 +76,10 @@ export function EditForm({
       return;
     }
     // should revalidate the pageDetails, so, that on 2nd attempt of update with no changes a promt should popup
-    revalidateForm(data.pageName);
+
+    if (data.pageName !== pageDetails.pageName) {
+      router.push(`/dashboard/${getSlug(data.pageName)}`);
+    } else revalidateForm(data.pageName);
   };
 
   return (
