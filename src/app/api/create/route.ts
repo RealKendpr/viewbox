@@ -11,6 +11,7 @@ export async function POST(request: NextRequest) {
   const formData = await request.formData();
   const formValues = Object.fromEntries(formData);
   const { links, ...rest } = formValues;
+
   const validData = ServerCreateSchema.safeParse({
     linkList: JSON.parse(links as any),
     ...rest,
