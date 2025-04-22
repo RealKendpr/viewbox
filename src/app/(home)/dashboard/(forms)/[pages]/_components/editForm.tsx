@@ -2,7 +2,7 @@
 
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { InputSet } from "@(forms)/_components/inputSet";
-import { EditPageType, PageType } from "@/types/PageTypes";
+import { EditPageType } from "@/types/PageTypes";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import { FormHeader } from "@(forms)/_components/formHeader";
@@ -24,17 +24,16 @@ export function EditForm({
     defaultValues: async () => pageDetails,
   });
 
-  const onSubmit: SubmitHandler<PageType> = async (formData) => {
+  const onSubmit: SubmitHandler<EditPageType> = async (data) => {
     // check if submitted data and current value is the same,
     // before proceeding to avoid unnecessary request
     // and show an alert about it
-    const unchanged = JSON.stringify(formData) === JSON.stringify(pageDetails);
-
+    const unchanged = JSON.stringify(data) === JSON.stringify(pageDetails);
     if (unchanged) {
       return;
     }
 
-    if (formData.links.length === 0) {
+    if (data.links.length === 0) {
       methods.setError("root", {
         type: "server",
         message: "⚠️ At least one link is required",
@@ -42,12 +41,23 @@ export function EditForm({
       return;
     }
 
+    const pageIcon = () => {
+      if (data.pageIcon instanceof File) {
+        return data.pageIcon;
+      }
+      return JSON.stringify(data.pageIcon);
+    };
+
+    const formData = new FormData();
+    formData.append("pageIcon", pageIcon());
+    formData.append("pageName", data.pageName);
+    formData.append("pageDescription", data.pageDescription || "");
+    formData.append("links", JSON.stringify(data.links));
+    formData.append("pageId", data.pageId);
+
     const response = await fetch("/api/update", {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
+      body: formData,
     });
 
     if (!response.ok) {
@@ -63,7 +73,7 @@ export function EditForm({
       return;
     }
     // should revalidate the pageDetails, so, that on 2nd attempt of update with no changes a promt should popup
-    revalidateForm(formData.pageName);
+    revalidateForm(data.pageName);
   };
 
   return (

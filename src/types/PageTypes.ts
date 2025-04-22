@@ -79,5 +79,4 @@ export interface PagePreviewType {
 
 export interface EditPageType extends PageType {
   pageId: string;
-  createdAt: Date;
 }

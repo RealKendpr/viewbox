@@ -9,8 +9,16 @@ export const utapi = new UTApi({
   // ...options,
 });
 
-export const uploadThing = async (pageIcon: File | pageIconOutputType | "") => {
+export const uploadThing = async (
+  pageIcon: File | string,
+): Promise<pageIconOutputType | null> => {
   if (!(pageIcon instanceof File)) {
+    const currentIcon = JSON.parse(pageIcon);
+
+    if (pageIcon !== "") {
+      return currentIcon;
+    }
+
     return {
       key: "",
       url: "",

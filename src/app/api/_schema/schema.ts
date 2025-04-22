@@ -23,12 +23,8 @@ export const ServerCreateSchema = z.object({
 
 export const EditSchema = z.object({
   pageId: z.string(),
-  pageIcon: z.union([
-    ImageSchemaValidation,
-    z.object({ key: z.string(), url: z.string() }),
-  ]),
+  pageIcon: z.union([ImageSchemaValidation, z.string()]),
   pageName: z.string(),
   pageDescription: z.string().max(100).optional(),
   linkList: z.array(linksSchema),
-  createdAt: z.instanceof(Date).optional(),
 });
