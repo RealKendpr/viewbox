@@ -33,7 +33,7 @@ export async function PATCH(request: NextRequest) {
   const result = pageSchema.safeParse(data);
 
   if (!result.success) {
-    return NextResponse.json(result.error);
+    return NextResponse.json({ error: result.error }, { status: 422 });
   }
 
   const pageId = data._id;
