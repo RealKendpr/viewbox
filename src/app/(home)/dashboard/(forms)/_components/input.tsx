@@ -1,6 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import RequiredAlert from "@/_components/requiredAlert";
+import { pageNameRegex } from "@/app/api/_utils/regEx";
 
 export function Input({
   label,
@@ -13,7 +14,7 @@ export function Input({
   name: string;
   placeholder?: string;
   type?: "url" | "text";
-  required?: boolean;
+  required?: boolean | undefined;
 }) {
   const {
     register,
@@ -25,7 +26,7 @@ export function Input({
     pattern:
       type === "url"
         ? /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
-        : undefined,
+        : pageNameRegex,
   };
 
   return (
