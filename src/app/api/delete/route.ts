@@ -4,6 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import PageModel from "@/_lib/mongodb/models/PageModel";
 import { deleteThing } from "../_uploadthing/deleteThing";
+import {
+  ActiveLayoutModel,
+  OptionsModel,
+  StylesModel,
+} from "@/_lib/mongodb/models/ConfigModels";
 
 const checks = async (request: NextRequest) => {
   const pageSlug = await request.text();
@@ -41,20 +46,26 @@ export async function DELETE(request: NextRequest) {
   try {
     await connectDB();
 
-    const findPage: PageDocumentType | null = await PageModel.findOneAndDelete({
+    const documentId = {
       slug: passedChecks.pageSlug,
       userId: passedChecks.userId,
-    });
+    };
 
-    if (!findPage) {
+    const pageToDelete: PageDocumentType | null =
+      await PageModel.findOneAndDelete(documentId);
+
+    if (!pageToDelete) {
       return NextResponse.json(
         { error: "client does not have access rights to the content" },
         { status: 403 },
       );
     }
 
-    await deleteThing(findPage.pageIcon.key);
-    await findPage;
+    await pageToDelete;
+    await deleteThing(pageToDelete.pageIcon.key);
+    await ActiveLayoutModel.findOneAndDelete(documentId);
+    await StylesModel.findOneAndDelete(documentId);
+    await OptionsModel.findOneAndDelete(documentId);
 
     return NextResponse.json(
       { message: "selected resource updated" },
