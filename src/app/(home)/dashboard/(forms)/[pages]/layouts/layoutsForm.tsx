@@ -5,6 +5,7 @@ import { revalidateForm } from "../_utils/revalidateForm";
 import { FormHeader } from "@/app/(home)/dashboard/(forms)/_components/formHeader";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { LayoutsType } from "@/types/PageTypes";
+import { FormState } from "@(forms)/_components/formState";
 
 export function LayoutsForm({
   slug,
@@ -70,6 +71,7 @@ export function LayoutsForm({
             ))}
           </div>
         </form>
+        <FormState />
       </FormProvider>
     </>
   );

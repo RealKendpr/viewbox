@@ -5,6 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FormHeader } from "@/app/(home)/dashboard/(forms)/_components/formHeader";
 import { LinkStyleType, StylesType } from "@/types/PageTypes";
 import { revalidateForm } from "../_utils/revalidateForm";
+import { FormState } from "@(forms)/_components/formState";
 import {
   Background,
   CardBackground,
@@ -63,6 +64,7 @@ export function StylesForm({
           <LinkStyle currentStyle={linkStyles} />
         </div>
       </form>
+      <FormState />
     </FormProvider>
   );
 }

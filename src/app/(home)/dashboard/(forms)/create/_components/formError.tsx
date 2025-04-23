@@ -15,7 +15,7 @@ export default function FormError() {
 
       return () => clearTimeout(resetState);
     }
-  }, [errors, clearErrors]);
+  }, [errors.root, clearErrors]);
 
   return (
     <div

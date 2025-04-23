@@ -10,8 +10,20 @@ import {
   OptionsModel,
   StylesModel,
 } from "./mongodb/models/ConfigModels";
+import PageModel from "./mongodb/models/PageModel";
+import { redirect } from "next/navigation";
+
+const findPage = async (slug: string) => {
+  await connectDB();
+  const page = await PageModel.findOne({ slug: slug });
+
+  if (!page) redirect("/dashboard");
+  else return;
+};
 
 export async function getOptions(slug: string) {
+  await findPage(slug);
+
   try {
     await connectDB();
     const options: OptionsExtendedType | null = await OptionsModel.findOne({
@@ -30,6 +42,8 @@ export async function getOptions(slug: string) {
 }
 
 export async function getActiveLayout(slug: string) {
+  await findPage(slug);
+
   try {
     await connectDB();
     const findLayout: LayoutsExtendedType | null =
@@ -48,6 +62,8 @@ export async function getActiveLayout(slug: string) {
 }
 
 export async function getStyles(slug: string): Promise<StylesType | null> {
+  await findPage(slug);
+
   try {
     await connectDB();
     const findStyles: StylesExtendedType | null = await StylesModel.findOne({
