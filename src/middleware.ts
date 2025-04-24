@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { hasSession } from "@/_lib/session";
+import { auth } from "./auth";
 
 const protectedRoutes = ["/dashboard"];
 const publicRoutes = ["/login", "/register"];
@@ -11,7 +11,7 @@ export default async function middleware(request: NextRequest) {
     pathname.startsWith(route),
   );
   const isPublic = publicRoutes.includes(pathname);
-  const session = await hasSession();
+  const session = await auth();
 
   if (isProtected && !session) {
     return NextResponse.redirect(new URL("/login", request.nextUrl));
