@@ -3,7 +3,7 @@
 import { connectDB } from "./mongodb/mongodb";
 import { LinkType, PageDocumentType, PagePreviewType } from "@/types/PageTypes";
 import PageModel from "./mongodb/models/PageModel";
-import { getUserData } from "./getUserData";
+import { getUserId } from "./getUserData";
 
 const pageData = (page: PageDocumentType) => {
   return {
@@ -58,9 +58,7 @@ export async function getPage(slug: string) {
 }
 
 export async function getPageForm(slug: string) {
-  const userId = await getUserData("userId");
-
-  if (!userId) return null;
+  const userId = await getUserId();
 
   try {
     await connectDB();
@@ -77,9 +75,7 @@ export async function getPageForm(slug: string) {
 }
 
 export async function getPagesPreview() {
-  const userId = await getUserData("userId");
-
-  if (!userId) return null;
+  const userId = await getUserId();
 
   try {
     await connectDB();

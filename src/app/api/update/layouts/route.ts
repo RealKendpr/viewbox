@@ -1,4 +1,4 @@
-import { getUserData } from "@/_lib/getUserData";
+import { getUserId } from "@/_lib/getUserData";
 import { NextRequest, NextResponse } from "next/server";
 import { layoutSchema } from "@api/_schema/pageSchema";
 import { connectDB } from "@/_lib/mongodb/mongodb";
@@ -8,7 +8,7 @@ export async function PATCH(request: NextRequest) {
   const data = await request.json();
   if (!data) return NextResponse.json({ error: "no content" }, { status: 204 });
 
-  const userId = await getUserData("userId");
+  const userId = await getUserId();
   if (!userId)
     return NextResponse.json(
       { error: "request is unauthenticated" },

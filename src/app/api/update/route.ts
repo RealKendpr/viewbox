@@ -1,4 +1,4 @@
-import { getUserData } from "@/_lib/getUserData";
+import { getUserId } from "@/_lib/getUserData";
 import { PageDocumentType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
 import { EditSchema } from "../_schema/schema";
@@ -21,7 +21,7 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: validData.error }, { status: 422 });
   }
 
-  const userId = await getUserData("userId");
+  const userId = await getUserId();
   if (!userId)
     return NextResponse.json(
       { error: "request is unauthenticated" },

@@ -1,13 +1,13 @@
 "use server";
 
-import { getUserData } from "./getUserData";
+import { getUserId } from "./getUserData";
 import UserModel from "./mongodb/models/UserModel";
 import { connectDB } from "./mongodb/mongodb";
 
 export async function updateTheme(
   theme?: "dark" | "light",
 ): Promise<"light" | "dark" | undefined> {
-  const userId = (await getUserData("userId")) as string;
+  const userId = await getUserId();
 
   if (!userId) return;
 
