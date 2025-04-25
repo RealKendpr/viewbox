@@ -1,14 +1,17 @@
-"use client";
-
-import { logout } from "@/app/(home)/(auth)/actions";
+import { signOut } from "@/auth";
 
 export default function LogoutBtn() {
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  return <button onClick={handleLogout}>Log Out</button>;
+  return (
+    <form
+      className="auto-cols-fr"
+      action={async () => {
+        "use server";
+        await signOut();
+      }}
+    >
+      <button className="text-start hover:cursor-pointer" type="submit">
+        logout
+      </button>
+    </form>
+  );
 }
