@@ -8,7 +8,7 @@ import { ThemeSwitch } from "./themeSwitcher";
 import { updateTheme } from "@/_lib/updateTheme";
 
 export async function DashHeader() {
-  const username = (await getUserData("username")) as string;
+  // const username = (await getUserData("username")) as string;
   const theme = await updateTheme();
 
   return (
@@ -26,12 +26,12 @@ export async function DashHeader() {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="size-9 grow rounded-full">
-                <UserAvatar
+                {/* <UserAvatar
                   className="size-8 rounded-full object-cover"
                   username={username}
                   size={32}
                   style={initials}
-                />
+                /> */}
               </div>
             </div>
             <ul

@@ -1,17 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
-import { auth } from "./auth";
+import { NextResponse } from "next/server";
+import NextAuth from "next-auth";
+import authConfig from "./auth.config";
 
 const protectedRoutes = ["/dashboard"];
 const publicRoutes = ["/login", "/register"];
 
-export default async function middleware(request: NextRequest) {
+export default NextAuth(authConfig).auth((request) => {
   const { pathname } = request.nextUrl;
 
   const isProtected = protectedRoutes.some((route) =>
     pathname.startsWith(route),
   );
   const isPublic = publicRoutes.includes(pathname);
-  const session = await auth();
+  const session = request.auth;
 
   if (isProtected && !session) {
     return NextResponse.redirect(new URL("/login", request.nextUrl));
@@ -21,7 +22,7 @@ export default async function middleware(request: NextRequest) {
   }
 
   return NextResponse.next();
-}
+});
 
 export const config = {
   // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
