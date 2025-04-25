@@ -8,7 +8,6 @@ import { updateTheme } from "@/_lib/updateTheme";
 
 export async function DashHeader() {
   const imageSource = await getUserImage();
-
   const theme = await updateTheme();
 
   return (
