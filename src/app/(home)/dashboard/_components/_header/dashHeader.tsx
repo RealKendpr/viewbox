@@ -1,14 +1,14 @@
 import LogoutBtn from "./logout";
 import { SmallNav } from "./smallNav";
-import { getUserData } from "@/_lib/getUserData";
-import { UserAvatar } from "@/_components/userAvatar";
+import { getUserImage } from "@/_lib/getUserData";
 import { Breadcrumbs } from "./breadcrumbs";
-import { initials } from "@dicebear/collection";
+import Image from "next/image";
 import { ThemeSwitch } from "./themeSwitcher";
 import { updateTheme } from "@/_lib/updateTheme";
 
 export async function DashHeader() {
-  // const username = (await getUserData("username")) as string;
+  const imageSource = await getUserImage();
+
   const theme = await updateTheme();
 
   return (
@@ -26,12 +26,14 @@ export async function DashHeader() {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="size-9 grow rounded-full">
-                {/* <UserAvatar
-                  className="size-8 rounded-full object-cover"
-                  username={username}
-                  size={32}
-                  style={initials}
-                /> */}
+                {imageSource && (
+                  <Image
+                    className="size-8 rounded-full object-cover"
+                    src={imageSource}
+                    alt=""
+                    fill={true}
+                  />
+                )}
               </div>
             </div>
             <ul

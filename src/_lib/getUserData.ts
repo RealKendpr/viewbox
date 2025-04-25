@@ -5,6 +5,7 @@ import { connectDB } from "./mongodb/mongodb";
 import { cache } from "react";
 import { hasSession } from "./session";
 import { UserDocumentType } from "@/types/UserTypes";
+import { auth } from "@/auth";
 
 // this is to get user's data such as username to for the avatar, and also to get the user's _id for when they create pages
 export const getUserData = cache(
@@ -38,3 +39,5 @@ function getUsername(userData: UserDocumentType) {
 function getUserId(userData: UserDocumentType) {
   return userData._id;
 }
+
+export const getUserImage = async () => (await auth())?.user?.image;
