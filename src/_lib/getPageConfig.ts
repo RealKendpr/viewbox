@@ -1,3 +1,5 @@
+"use server";
+
 import {
   LayoutsExtendedType,
   OptionsExtendedType,
@@ -12,10 +14,13 @@ import {
 } from "./mongodb/models/ConfigModels";
 import PageModel from "./mongodb/models/PageModel";
 import { redirect } from "next/navigation";
+import { getUserId } from "./getUserData";
 
 const findPage = async (slug: string) => {
+  const userId = await getUserId();
+
   await connectDB();
-  const page = await PageModel.findOne({ slug: slug });
+  const page = await PageModel.findOne({ slug: slug, userId: userId });
 
   if (!page) redirect("/dashboard");
   else return;
