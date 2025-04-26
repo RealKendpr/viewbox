@@ -14,13 +14,10 @@ import {
 } from "./mongodb/models/ConfigModels";
 import PageModel from "./mongodb/models/PageModel";
 import { redirect } from "next/navigation";
-import { getUserId } from "./getUserData";
 
 const findPage = async (slug: string) => {
-  const userId = await getUserId();
-
   await connectDB();
-  const page = await PageModel.findOne({ slug: slug, userId: userId });
+  const page = await PageModel.findOne({ slug: slug });
 
   if (!page) redirect("/dashboard");
   else return;

@@ -1,6 +1,5 @@
 import { PageType } from "@/types/PageTypes";
 import Image from "next/image";
-// import { favicon } from "@/app/_utils/getFavicon";
 import { UserAvatar } from "@/_components/userAvatar";
 import { funEmoji } from "@dicebear/collection";
 import { getOptions, getStyles } from "@/_lib/getPageConfig";
