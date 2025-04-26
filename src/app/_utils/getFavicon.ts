@@ -1,7 +1,7 @@
-export function getFavicon(url: string) {
-  const hasProtocol = /https?:\/\//;
+import { fixUrl } from "./fixUrl";
 
-  const formattedUrl = hasProtocol.test(url) ? url : `https://${url}`;
+export function getFavicon(url: string) {
+  const formattedUrl = fixUrl(url);
 
   try {
     const domain = new URL(formattedUrl).hostname;
