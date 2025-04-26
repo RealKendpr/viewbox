@@ -1,14 +1,13 @@
 import PageModel from "@/_lib/mongodb/models/PageModel";
 import { connectDB } from "@/_lib/mongodb/mongodb";
-import { NextAuthRequest } from "next-auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getSlug } from "../_utils/getSlug";
 import { findDuplicates } from "../_utils/findDuplicates";
 import { uploadThing } from "@api/_uploadthing/uploadthing";
 import { ServerCreateSchema } from "../_schema/schema";
-import { auth } from "@/auth";
+import { getUserId } from "@/_lib/getUserData";
 
-export const POST = auth(async function POST(request: NextAuthRequest) {
+export async function POST(request: NextRequest) {
   const formData = await request.formData();
   const formValues = Object.fromEntries(formData);
   const { links, ...rest } = formValues;
@@ -22,13 +21,13 @@ export const POST = auth(async function POST(request: NextAuthRequest) {
     return NextResponse.json({ error: validData.error }, { status: 422 });
   }
 
-  if (!request.auth)
+  const userId = await getUserId();
+  if (!userId)
     return NextResponse.json(
       { error: "request is unauthenticated" },
       { status: 401 },
     );
 
-  const user = request.auth.user;
   const { pageIcon, pageName, pageDescription, linkList } = validData.data;
 
   if (linkList.length === 0)
@@ -62,7 +61,7 @@ export const POST = auth(async function POST(request: NextAuthRequest) {
       pageName: pageName,
       pageDescription: pageDescription,
       slug: getSlug(pageName),
-      userId: user?.id,
+      userId: userId,
       links: linkList,
     });
 
@@ -79,4 +78,4 @@ export const POST = auth(async function POST(request: NextAuthRequest) {
       { status: 500 },
     );
   }
-});
+}
