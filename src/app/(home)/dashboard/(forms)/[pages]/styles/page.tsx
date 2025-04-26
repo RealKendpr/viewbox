@@ -9,5 +9,5 @@ export default async function StylesPage({
   const pageName = (await params).pages;
   const styles = await getStyles(pageName);
 
-  return <StylesForm styles={styles} slug={pageName} />;
+  return <StylesForm currentStyles={styles} slug={pageName} />;
 }

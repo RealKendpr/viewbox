@@ -15,23 +15,23 @@ import {
 
 export function StylesForm({
   slug,
-  styles,
+  currentStyles,
 }: {
   slug: string;
-  styles: StylesType | null;
+  currentStyles: StylesType | null;
 }) {
-  const methods = useForm<StylesType>({ defaultValues: styles || {} });
+  const methods = useForm<StylesType>({ defaultValues: currentStyles || {} });
 
   const { reset, setError } = methods;
 
   const linkStyles: LinkStyleType = {
-    linkBackground: styles?.linkBackground || "",
-    linkColor: styles?.linkColor || "",
-    linkStyle: styles?.linkStyle || "",
+    linkBackground: currentStyles?.linkBackground || "",
+    linkColor: currentStyles?.linkColor || "",
+    linkStyle: currentStyles?.linkStyle || "",
   };
 
   const onSubmit: SubmitHandler<StylesType> = async (formData) => {
-    if (JSON.stringify(styles) == JSON.stringify(formData)) return;
+    if (JSON.stringify(currentStyles) == JSON.stringify(formData)) return;
 
     const response = await fetch("/api/update/styles", {
       method: "PATCH",
@@ -50,17 +50,17 @@ export function StylesForm({
   };
 
   useEffect(() => {
-    reset(styles || {}, { keepValues: true, keepIsSubmitted: true });
-  }, [reset, styles]);
+    reset(currentStyles || {}, { keepValues: true, keepIsSubmitted: true });
+  }, [reset, currentStyles]);
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <FormHeader slug={slug} title="Styles" />
         <div className="grid gap-y-3">
-          <Background currentStyle={styles?.background || ""} />
-          <TextColor currentStyle={styles?.textColor || ""} />
-          <CardBackground currentStyle={styles?.cardColor || ""} />
+          <Background currentStyle={currentStyles?.background || ""} />
+          <TextColor currentStyle={currentStyles?.textColor || ""} />
+          <CardBackground currentStyle={currentStyles?.cardColor || ""} />
           <LinkStyle currentStyle={linkStyles} />
         </div>
       </form>
