@@ -5,7 +5,7 @@ if (!process.env.MONGODB_URI) {
   throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
 }
 
-const uri = process.env.MONGODB_URI;
+const mongoUri = process.env.MONGODB_URI;
 const options = {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -24,12 +24,12 @@ if (process.env.NODE_ENV === "development") {
   };
 
   if (!globalWithMongo._mongoClient) {
-    globalWithMongo._mongoClient = new MongoClient(uri, options);
+    globalWithMongo._mongoClient = new MongoClient(mongoUri, options);
   }
   mongoClient = globalWithMongo._mongoClient;
 } else {
   // In production mode, it's best to not use a global variable.
-  mongoClient = new MongoClient(uri, options);
+  mongoClient = new MongoClient(mongoUri, options);
 }
 
 // Export a module-scoped MongoClient. By doing this in a

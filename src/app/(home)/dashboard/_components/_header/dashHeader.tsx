@@ -4,11 +4,11 @@ import { getUserImage } from "@/_lib/getUserData";
 import { Breadcrumbs } from "./breadcrumbs";
 import Image from "next/image";
 import { ThemeSwitch } from "./themeSwitcher";
-import { updateTheme } from "@/_lib/updateTheme";
+import { getUserTheme } from "@/_lib/userTheme";
 
 export async function DashHeader() {
   const imageSource = await getUserImage();
-  const theme = await updateTheme();
+  const currentTheme = await getUserTheme();
 
   return (
     <header>
@@ -16,7 +16,7 @@ export async function DashHeader() {
         <div className="flex-1">
           <Breadcrumbs />
         </div>
-        <ThemeSwitch currentTheme={theme} />
+        <ThemeSwitch currentTheme={currentTheme} />
         <div className="ml-3 flex gap-2">
           <div className="dropdown dropdown-end">
             <div
