@@ -5,7 +5,7 @@ export function getFavicon(url: string) {
 
   try {
     const domain = new URL(formattedUrl).hostname;
-    const iconSrc = `http://api.faviconkit.com/${domain}/32`;
+    const iconSrc = `https://www.faviconextractor.com/favicon/${domain}/?larger=true`;
 
     return iconSrc;
   } catch {

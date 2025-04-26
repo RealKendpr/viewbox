@@ -10,12 +10,7 @@ const Modal = dynamic(() => import("@/_components/modal"));
 
 export default function LinkDisplay() {
   const [openField, setOPenField] = useState<boolean>(false);
-  const {
-    setError,
-    clearErrors,
-    getValues,
-    // formState: { errors },
-  } = useFormContext();
+  const { setError, clearErrors, getValues } = useFormContext();
 
   const { append, update, remove, move, fields } = useFieldArray({
     name: "links",
