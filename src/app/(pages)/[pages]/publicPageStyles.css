@@ -21,7 +21,11 @@
     @apply grid gap-y-2.5;
 
     & a {
-      @apply font-medium;
+      @apply relative font-medium;
+
+      & img {
+        @apply top-1/2! left-2! size-6! -translate-y-1/2;
+      }
     }
   }
 }
@@ -57,11 +61,17 @@
         & span {
           @apply hidden;
         }
-      }
+        & a {
+          @apply relative overflow-hidden;
 
-      & > :last-child {
-        @apply col-span-2;
+          & img {
+            @apply inset-1/2! size-12! -translate-1/2;
+          }
+        }
       }
+    }
+    & .link-list:nth-child(odd) li:last-child {
+      @apply col-span-2;
     }
   }
 }

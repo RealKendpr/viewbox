@@ -1,5 +1,5 @@
 import { PublicHeader } from "@/_components/publicHeader";
-import { hasSession } from "@/_lib/session";
+import { hasSession } from "@/_lib/getUserData";
 import Link from "next/link";
 
 export default async function Home() {
@@ -16,14 +16,9 @@ export default async function Home() {
           </h1>
           <div className="flex gap-x-3">
             {!isLoggedIn ? (
-              <>
-                <Link className="btn-primary btn" href="/login">
-                  Log In
-                </Link>
-                <Link className="btn-secondary btn" href="/register">
-                  Create an Account
-                </Link>
-              </>
+              <Link className="btn-primary btn" href="/login">
+                Log In
+              </Link>
             ) : (
               <Link className="btn-primary btn" href="/dashboard">
                 Go to dashboard

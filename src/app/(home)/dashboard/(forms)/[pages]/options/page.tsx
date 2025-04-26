@@ -7,8 +7,7 @@ export default async function OptionsPage({
   params: Promise<{ pages: string }>;
 }) {
   const pageName = (await params).pages;
+  const options = await getOptions(pageName);
 
-  const defaultValues = await getOptions(pageName);
-
-  return <OptionsForm slug={pageName} defaultValues={defaultValues} />;
+  return <OptionsForm slug={pageName} currentOptions={options} />;
 }

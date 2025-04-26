@@ -1,4 +1,3 @@
-import { getUserData } from "@/_lib/getUserData";
 import PageModel from "@/_lib/mongodb/models/PageModel";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import { NextRequest, NextResponse } from "next/server";
@@ -6,6 +5,7 @@ import { getSlug } from "../_utils/getSlug";
 import { findDuplicates } from "../_utils/findDuplicates";
 import { uploadThing } from "@api/_uploadthing/uploadthing";
 import { ServerCreateSchema } from "../_schema/schema";
+import { getUserId } from "@/_lib/getUserData";
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: validData.error }, { status: 422 });
   }
 
-  const userId = (await getUserData("userId")) as string;
+  const userId = await getUserId();
   if (!userId)
     return NextResponse.json(
       { error: "request is unauthenticated" },

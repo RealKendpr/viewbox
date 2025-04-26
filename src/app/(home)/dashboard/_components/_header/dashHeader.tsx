@@ -1,15 +1,14 @@
 import LogoutBtn from "./logout";
 import { SmallNav } from "./smallNav";
-import { getUserData } from "@/_lib/getUserData";
-import { UserAvatar } from "@/_components/userAvatar";
+import { getUserImage } from "@/_lib/getUserData";
 import { Breadcrumbs } from "./breadcrumbs";
-import { initials } from "@dicebear/collection";
+import Image from "next/image";
 import { ThemeSwitch } from "./themeSwitcher";
-import { updateTheme } from "@/_lib/updateTheme";
+import { getUserTheme } from "@/_lib/userTheme";
 
 export async function DashHeader() {
-  const username = (await getUserData("username")) as string;
-  const theme = await updateTheme();
+  const imageSource = await getUserImage();
+  const currentTheme = await getUserTheme();
 
   return (
     <header>
@@ -17,7 +16,7 @@ export async function DashHeader() {
         <div className="flex-1">
           <Breadcrumbs />
         </div>
-        <ThemeSwitch currentTheme={theme} />
+        <ThemeSwitch currentTheme={currentTheme} />
         <div className="ml-3 flex gap-2">
           <div className="dropdown dropdown-end">
             <div
@@ -26,12 +25,14 @@ export async function DashHeader() {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="size-9 grow rounded-full">
-                <UserAvatar
-                  className="size-8 rounded-full object-cover"
-                  username={username}
-                  size={32}
-                  style={initials}
-                />
+                {imageSource && (
+                  <Image
+                    className="size-8 rounded-full object-cover"
+                    src={imageSource}
+                    alt=""
+                    fill={true}
+                  />
+                )}
               </div>
             </div>
             <ul

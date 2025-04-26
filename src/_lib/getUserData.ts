@@ -1,40 +1,15 @@
-"use server";
-
-import UserModel from "./mongodb/models/UserModel";
-import { connectDB } from "./mongodb/mongodb";
+import "server-only";
 import { cache } from "react";
-import { hasSession } from "./session";
-import { UserDocumentType } from "@/types/UserTypes";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
-// this is to get user's data such as username to for the avatar, and also to get the user's _id for when they create pages
-export const getUserData = cache(
-  async (data: "username" | "userId" | "allData") => {
-    const session = await hasSession();
+export const getUserId = cache(async () => {
+  const user = (await auth())?.user;
 
-    await connectDB();
-    const userData: UserDocumentType | null = await UserModel.findOne({
-      _id: session?.userId,
-    });
+  if (!user) return redirect("/login");
+  else return user.id;
+});
 
-    if (!userData) return null;
+export const getUserImage = async () => (await auth())?.user?.image;
 
-    switch (data) {
-      case "username":
-        return getUsername(userData);
-      case "userId":
-        return getUserId(userData);
-      case "allData":
-        return userData;
-      default:
-        return null;
-    }
-  },
-);
-
-function getUsername(userData: UserDocumentType) {
-  return userData?.username;
-}
-
-function getUserId(userData: UserDocumentType) {
-  return userData._id;
-}
+export const hasSession = async () => ((await auth()) ? true : false);

@@ -1,4 +1,4 @@
-import { getUserData } from "@/_lib/getUserData";
+import { getUserId } from "@/_lib/getUserData";
 import { PageDocumentType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/_lib/mongodb/mongodb";
@@ -19,7 +19,7 @@ const checks = async (request: NextRequest) => {
       { status: 400 },
     );
 
-  const userId = (await getUserData("userId")) as string;
+  const userId = await getUserId();
 
   if (!userId)
     return NextResponse.json(

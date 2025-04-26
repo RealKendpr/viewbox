@@ -12,13 +12,13 @@ const DeletePageBtn = dynamic(() =>
 
 export default function OptionsForm({
   slug,
-  defaultValues,
+  currentOptions,
 }: {
   slug: string;
-  defaultValues: OptionsType | null;
+  currentOptions: OptionsType | null;
 }) {
   const methods = useForm<OptionsType>({
-    defaultValues: defaultValues || undefined,
+    defaultValues: currentOptions || undefined,
   });
   const { register } = methods;
 
@@ -27,7 +27,7 @@ export default function OptionsForm({
       newTab: formData.newTab,
     };
 
-    if (JSON.stringify(defaultValues) === JSON.stringify(formValues)) {
+    if (JSON.stringify(currentOptions) === JSON.stringify(formValues)) {
       return;
     }
 
@@ -60,7 +60,7 @@ export default function OptionsForm({
               id="newTab"
               {...register("newTab")}
               type="checkbox"
-              defaultChecked={defaultValues?.newTab}
+              defaultChecked={currentOptions?.newTab}
               className="checkbox"
             />
           </div>

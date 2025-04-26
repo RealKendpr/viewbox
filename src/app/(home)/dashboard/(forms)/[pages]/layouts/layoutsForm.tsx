@@ -9,16 +9,16 @@ import { FormState } from "@(forms)/_components/formState";
 
 export function LayoutsForm({
   slug,
-  activeLayout,
+  currentLayout,
 }: {
   slug: string;
-  activeLayout: string | null;
+  currentLayout: string | null;
 }) {
   const methods = useForm<LayoutsType>();
   const { register } = methods;
 
   const onSubmit: SubmitHandler<LayoutsType> = async (formData) => {
-    if (formData.activeLayout === activeLayout) {
+    if (formData.activeLayout === currentLayout) {
       return;
     }
 
@@ -63,7 +63,7 @@ export function LayoutsForm({
                     id={i}
                     value={i}
                     defaultChecked={
-                      activeLayout ? i === activeLayout : i === "default"
+                      currentLayout ? i === currentLayout : i === "default"
                     }
                   />
                 </div>

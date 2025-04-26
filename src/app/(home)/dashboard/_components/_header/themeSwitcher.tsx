@@ -1,6 +1,6 @@
 "use client";
 
-import { updateTheme } from "@/_lib/updateTheme";
+import { updateUserTheme } from "@/_lib/userTheme";
 import { useState } from "react";
 
 export function ThemeSwitch({
@@ -14,7 +14,7 @@ export function ThemeSwitch({
 
   const handleChange = (theme: "dark" | "light") => {
     setIsDark(!isDark);
-    updateTheme(theme);
+    updateUserTheme(theme);
   };
 
   return (

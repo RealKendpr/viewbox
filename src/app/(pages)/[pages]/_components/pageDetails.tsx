@@ -1,9 +1,9 @@
 import { PageType } from "@/types/PageTypes";
 import Image from "next/image";
-// import { favicon } from "@/app/_utils/getFavicon";
 import { UserAvatar } from "@/_components/userAvatar";
 import { funEmoji } from "@dicebear/collection";
 import { getOptions, getStyles } from "@/_lib/getPageConfig";
+import { getFavicon } from "@/app/_utils/getFavicon";
 
 export async function PageDetails({
   page,
@@ -73,7 +73,7 @@ export async function PageDetails({
                 href={item.linkUrl}
                 target={options?.newTab ? "_blank" : "_self"}
               >
-                {/* <img src={favicon(item.linkUrl)} width={24} height={24} alt="" /> */}
+                <Image src={getFavicon(item.linkUrl)} fill={true} alt="" />
                 <span className="z-10">{item.linkName}</span>
               </a>
             </li>
