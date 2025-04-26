@@ -24,7 +24,7 @@
       @apply relative font-medium;
 
       & img {
-        @apply absolute left-2;
+        @apply top-1/2! left-2! size-6! -translate-y-1/2;
       }
     }
   }
