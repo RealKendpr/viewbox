@@ -128,7 +128,6 @@ export default function LinkDisplay() {
             label="Name"
             name={`${newField}.linkName`}
             placeholder="Youtube"
-            required={true}
           />
           <Input
             label="URL"
