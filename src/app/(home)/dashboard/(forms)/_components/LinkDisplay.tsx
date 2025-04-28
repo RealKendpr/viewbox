@@ -90,7 +90,7 @@ export default function LinkDisplay() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [openField, clearErrors, newLink, newField]);
+  }, [openField]);
   useEffect(() => {
     if (!openField) {
       const test = emptyIndex(fields as any);
