@@ -8,12 +8,14 @@ import { getSlug } from "../_utils/getSlug";
 import { findDuplicates } from "../_utils/findDuplicates";
 import { uploadThing } from "../_uploadthing/uploadthing";
 import { deleteThing } from "../_uploadthing/deleteThing";
+import { validUrls } from "@/app/_utils/fixUrl";
 
 export async function PATCH(request: NextRequest) {
   const formData = await request.formData();
   const { links, ...restData } = Object.fromEntries(formData);
+
   const validData = EditSchema.safeParse({
-    linkList: JSON.parse(links as any),
+    linkList: validUrls(JSON.parse(links as string)),
     ...restData,
   });
 

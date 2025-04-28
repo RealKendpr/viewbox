@@ -30,9 +30,5 @@ export const layoutSchema = z.object({
 
 export const linksSchema = z.object({
   linkName: z.string(),
-  linkUrl: z
-    .string()
-    .regex(
-      /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
-    ),
+  linkUrl: z.string().url(),
 });

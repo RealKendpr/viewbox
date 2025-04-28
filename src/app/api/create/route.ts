@@ -6,6 +6,7 @@ import { findDuplicates } from "../_utils/findDuplicates";
 import { uploadThing } from "@api/_uploadthing/uploadthing";
 import { ServerCreateSchema } from "../_schema/schema";
 import { getUserId } from "@/_lib/getUserData";
+import { validUrls } from "@/app/_utils/fixUrl";
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
@@ -13,7 +14,7 @@ export async function POST(request: NextRequest) {
   const { links, ...rest } = formValues;
 
   const validData = ServerCreateSchema.safeParse({
-    linkList: JSON.parse(links as any),
+    linkList: validUrls(JSON.parse(links as string)),
     ...rest,
   });
 

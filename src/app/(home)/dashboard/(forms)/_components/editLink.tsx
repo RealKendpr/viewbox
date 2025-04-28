@@ -23,12 +23,7 @@ export default function EditLink({
   const [openField, setOpenField] = useState<boolean>(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const {
-    getValues,
-    clearErrors,
-    resetField,
-    // formState: { errors },
-  } = useFormContext();
+  const { getValues, clearErrors } = useFormContext();
 
   const activeField = `links.${activeIndex}`;
   const newLinkValue: LinkType = getValues(activeField);
@@ -41,7 +36,7 @@ export default function EditLink({
   const closeEdit = () => {
     setOpenField(false);
     setActiveIndex(null);
-    resetField(activeField);
+    clearErrors(activeField);
     return;
   };
   const editLink = () => {
@@ -72,20 +67,12 @@ export default function EditLink({
       window.addEventListener("keydown", handleKeyDown);
     }
     if (!openField) {
-      setActiveIndex(null);
-      resetField(activeField);
+      clearErrors(activeField);
     }
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [
-    openField,
-    clearErrors,
-    newLinkValue,
-    setActiveIndex,
-    activeField,
-    resetField,
-  ]);
+  }, [openField, clearErrors, activeField]);
 
   return (
     <>

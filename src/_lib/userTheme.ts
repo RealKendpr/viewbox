@@ -36,6 +36,7 @@ export async function getUserTheme(): Promise<"light" | "dark" | undefined> {
     });
     return currentTheme?.theme;
   } catch (error) {
+    console.error(error);
     return undefined;
   }
 }
