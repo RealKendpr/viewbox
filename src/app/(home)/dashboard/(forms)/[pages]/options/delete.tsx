@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 export function DeleteBtn({ pageSlug }: { pageSlug: string }) {
   const router = useRouter();
   const [openPromt, setOpenPromt] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleDelete = async (slug: string, router: any) => {
+    setLoading(true);
     const response = await fetch("/api/delete", {
       method: "DELETE",
       headers: {
@@ -16,8 +18,10 @@ export function DeleteBtn({ pageSlug }: { pageSlug: string }) {
     });
 
     if (!response.ok) {
+      setLoading(false);
       return;
     }
+    setLoading(false);
     router.push("/dashboard");
   };
 
@@ -60,8 +64,13 @@ export function DeleteBtn({ pageSlug }: { pageSlug: string }) {
               className="btn btn-warning grow"
               type="button"
               onClick={() => handleDelete(pageSlug, router)}
+              disabled={loading}
             >
-              Yes
+              {loading ? (
+                <span className="loading loading-spinner loading-xs" />
+              ) : (
+                <span>Yes</span>
+              )}
             </button>
             <button
               className="btn grow"
