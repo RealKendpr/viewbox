@@ -9,6 +9,13 @@ import { getUserId } from "@/_lib/getUserData";
 import { validUrls } from "@/app/_utils/fixUrl";
 
 export async function POST(request: NextRequest) {
+  const userId = await getUserId();
+  if (!userId)
+    return NextResponse.json(
+      { error: "request is unauthenticated" },
+      { status: 401 },
+    );
+
   const formData = await request.formData();
   const formValues = Object.fromEntries(formData);
   const { links, ...rest } = formValues;
@@ -21,13 +28,6 @@ export async function POST(request: NextRequest) {
   if (validData.error) {
     return NextResponse.json({ error: validData.error }, { status: 422 });
   }
-
-  const userId = await getUserId();
-  if (!userId)
-    return NextResponse.json(
-      { error: "request is unauthenticated" },
-      { status: 401 },
-    );
 
   const { pageIcon, pageName, pageDescription, linkList } = validData.data;
 

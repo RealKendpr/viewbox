@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         hostname: "*",
-        port: "",
       },
     ],
   },
