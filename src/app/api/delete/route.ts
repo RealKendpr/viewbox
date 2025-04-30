@@ -11,20 +11,18 @@ import {
 } from "@/_lib/mongodb/models/ConfigModels";
 
 const checks = async (request: NextRequest) => {
-  const pageSlug = await request.text();
-
-  if (!pageSlug)
-    return NextResponse.json(
-      { error: "empty request not accepted" },
-      { status: 400 },
-    );
-
   const userId = await getUserId();
-
   if (!userId)
     return NextResponse.json(
       { error: "request is unauthenticated" },
       { status: 401 },
+    );
+
+  const pageSlug = await request.text();
+  if (!pageSlug)
+    return NextResponse.json(
+      { error: "empty request not accepted" },
+      { status: 400 },
     );
 
   const requestObj = {

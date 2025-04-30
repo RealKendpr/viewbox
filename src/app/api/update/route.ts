@@ -11,6 +11,13 @@ import { deleteThing } from "../_uploadthing/deleteThing";
 import { validUrls } from "@/app/_utils/fixUrl";
 
 export async function PATCH(request: NextRequest) {
+  const userId = await getUserId();
+  if (!userId)
+    return NextResponse.json(
+      { error: "request is unauthenticated" },
+      { status: 401 },
+    );
+
   const formData = await request.formData();
   const { links, ...restData } = Object.fromEntries(formData);
 
@@ -22,13 +29,6 @@ export async function PATCH(request: NextRequest) {
   if (validData.error) {
     return NextResponse.json({ error: validData.error }, { status: 422 });
   }
-
-  const userId = await getUserId();
-  if (!userId)
-    return NextResponse.json(
-      { error: "request is unauthenticated" },
-      { status: 401 },
-    );
 
   const { pageId, pageIcon, pageName, linkList, ...rest } = validData.data;
 

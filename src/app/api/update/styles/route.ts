@@ -6,15 +6,15 @@ import { StylesExtendedType } from "@/types/PageTypes";
 import { StylesModel } from "@/_lib/mongodb/models/ConfigModels";
 
 export async function PATCH(request: NextRequest) {
-  const data = await request.json();
-  if (!data) return NextResponse.json({ error: "no content" }, { status: 204 });
-
   const userId = await getUserId();
   if (!userId)
     return NextResponse.json(
       { error: "request is unauthenticated" },
       { status: 401 },
     );
+
+  const data = await request.json();
+  if (!data) return NextResponse.json({ error: "no content" }, { status: 204 });
 
   const result = StylesSchema.safeParse(data);
   if (!result.success)
