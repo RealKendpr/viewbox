@@ -10,7 +10,7 @@ export default function LogoutBtn() {
       }}
     >
       <button className="text-start hover:cursor-pointer" type="submit">
-        logout
+        Logout
       </button>
     </form>
   );
