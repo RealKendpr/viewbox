@@ -1,6 +1,7 @@
 "use client";
 
 import Modal from "@/_components/modal";
+import { deleteUser } from "@/app/_lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -12,14 +13,9 @@ export function DeleteAccountBtn() {
 
   const handleDelete = async () => {
     setLoading(true);
-    const response = await fetch("/api/delete-account/", {
-      method: "DELETE",
+    await deleteUser({
+      callbackURL: "/login",
     });
-
-    if (!response.ok) {
-      setLoading(false);
-      return;
-    }
     setLoading(false);
     router.push("/login");
   };
