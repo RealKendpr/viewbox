@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DeleteAccountBtn } from "./deleteAccountBtn";
 
 export default function DeleteAccountPage() {
   return (
@@ -16,7 +17,7 @@ export default function DeleteAccountPage() {
             <Link className="btn btn-primary" href="/dashboard">
               Go back to dashboard
             </Link>
-            <button className="btn btn-warning">Delete</button>
+            <DeleteAccountBtn />
           </div>
         </div>
       </div>
