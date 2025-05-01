@@ -5,6 +5,7 @@ import { Breadcrumbs } from "./breadcrumbs";
 import Image from "next/image";
 import { ThemeSwitch } from "./themeSwitcher";
 import { getUserTheme } from "@/_lib/userTheme";
+import Link from "next/link";
 
 export async function DashHeader() {
   const imageSource = await getUserImage();
@@ -41,6 +42,9 @@ export async function DashHeader() {
             >
               <li>
                 <LogoutBtn />
+              </li>
+              <li>
+                <Link href="/dashboard/delete-account">Delete account</Link>
               </li>
             </ul>
           </div>
