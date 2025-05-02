@@ -17,5 +17,12 @@ export const auth = betterAuth({
     deleteUser: {
       enabled: true,
     },
+    additionalFields: {
+      userTheme: {
+        type: "string",
+        required: true,
+        defaultValue: "light",
+      },
+    },
   },
 });
