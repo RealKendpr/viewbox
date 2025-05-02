@@ -3,12 +3,13 @@ import { PageDocumentType } from "@/types/PageTypes";
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import PageModel from "@/_lib/mongodb/models/PageModel";
-import { deleteThing } from "../_uploadthing/deleteThing";
-import {
-  ActiveLayoutModel,
-  OptionsModel,
-  StylesModel,
-} from "@/_lib/mongodb/models/ConfigModels";
+// import { deleteThing } from "../_uploadthing/deleteThing";
+// import {
+//   ActiveLayoutModel,
+//   OptionsModel,
+//   StylesModel,
+// } from "@/_lib/mongodb/models/ConfigModels";
+import { deletePage } from "../_utils/deletePage";
 
 const checks = async (request: NextRequest) => {
   const userId = await getUserId();
@@ -59,11 +60,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    await pageToDelete;
-    await deleteThing(pageToDelete.pageIcon.key);
-    await ActiveLayoutModel.findOneAndDelete(documentId);
-    await StylesModel.findOneAndDelete(documentId);
-    await OptionsModel.findOneAndDelete(documentId);
+    await deletePage(documentId, pageToDelete);
 
     return NextResponse.json(
       { message: "selected resource updated" },
