@@ -24,4 +24,4 @@ export const getUserId = cache(async () => {
 export const getUserImage = async () => (await getSession())?.user.image;
 
 export const hasSession = async () =>
-  (await getSession()) !== null ? true : false;
+  (await getSession()) != null ? true : false;
