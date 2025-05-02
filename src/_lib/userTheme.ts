@@ -10,11 +10,11 @@ export async function updateUserTheme(theme: "dark" | "light") {
 
   try {
     await connectDB();
-    const collection = mongoose.connection.collection("users");
+    const collection = mongoose.connection.collection("user");
 
     await collection.findOneAndUpdate(
       { _id: mongoose.Types.ObjectId.createFromHexString(userId) },
-      { $set: { theme: theme } },
+      { $set: { userTheme: theme } },
     );
 
     return;
@@ -30,11 +30,13 @@ export async function getUserTheme(): Promise<"light" | "dark" | undefined> {
 
   try {
     await connectDB();
-    const collection = mongoose.connection.collection("users");
-    const currentTheme = await collection.findOne({
+    const collection = mongoose.connection.collection("user");
+
+    const userData = await collection.findOne({
       _id: mongoose.Types.ObjectId.createFromHexString(userId),
     });
-    return currentTheme?.theme;
+
+    return userData?.userTheme;
   } catch (error) {
     console.error(error);
     return undefined;

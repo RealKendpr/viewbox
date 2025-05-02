@@ -1,17 +1,28 @@
-import { signOut } from "@/auth";
+"use client";
+
+import { signOut } from "@/app/_lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function LogoutBtn() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/login");
+        },
+      },
+    });
+  };
+
   return (
-    <form
-      className="auto-cols-fr"
-      action={async () => {
-        "use server";
-        await signOut();
-      }}
+    <button
+      className="text-start hover:cursor-pointer"
+      type="button"
+      onClick={() => handleLogout()}
     >
-      <button className="text-start hover:cursor-pointer" type="submit">
-        logout
-      </button>
-    </form>
+      Logout
+    </button>
   );
 }
