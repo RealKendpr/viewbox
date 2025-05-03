@@ -6,19 +6,7 @@ import {
   StylesModel,
 } from "@/_lib/mongodb/models/ConfigModels";
 import { deleteThing } from "../_uploadthing/deleteThing";
-import { PageDocumentType } from "@/types/PageTypes";
 import PageModel from "@/_lib/mongodb/models/PageModel";
-
-export async function deletePage(
-  documentId: object,
-  pageToDelete: PageDocumentType,
-) {
-  await pageToDelete;
-  await deleteThing(pageToDelete.pageIcon.key);
-  await ActiveLayoutModel.findOneAndDelete(documentId);
-  await StylesModel.findOneAndDelete(documentId);
-  await OptionsModel.findOneAndDelete(documentId);
-}
 
 export async function deleteManyPages(userId: string) {
   const filter = {
