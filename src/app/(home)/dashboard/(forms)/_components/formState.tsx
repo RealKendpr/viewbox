@@ -27,7 +27,11 @@ export function FormState() {
       return resetState();
     }
 
-    if (isSubmitted && !errors.root) {
+    if (
+      isSubmitted &&
+      errors.root === undefined &&
+      errors.pageName === undefined
+    ) {
       setStatus("success");
 
       return resetState();
