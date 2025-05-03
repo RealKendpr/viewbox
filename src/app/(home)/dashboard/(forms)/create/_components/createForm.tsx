@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { getSlug } from "@api/_utils/getSlug";
 import FormError from "./formError";
+import { SuccessPromt } from "./successPromt";
 const AddLink = dynamic(() => import("@(forms)/_components/LinkDisplay"));
 const Modal = dynamic(() => import("@/_components/modal"));
 
@@ -92,6 +93,7 @@ export function CreateForm() {
           <AddLink />
           <FormError />
         </form>
+        {methods.formState.isSubmitSuccessful && <SuccessPromt />}
       </FormProvider>
       <Modal isOpen={isDuplicate} setIsOpen={setIsDuplicate}>
         <p className="font-semibold">⚠️ Page already exist</p>

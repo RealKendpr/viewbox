@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { deleteManyPages } from "../api/_utils/deleteManyPages";
 
 const client = new MongoClient(process.env.MONGODB_URI as string);
 const db = client.db();
@@ -16,6 +17,9 @@ export const auth = betterAuth({
   user: {
     deleteUser: {
       enabled: true,
+      afterDelete: async (user) => {
+        await deleteManyPages(user.id);
+      },
     },
     additionalFields: {
       userTheme: {
