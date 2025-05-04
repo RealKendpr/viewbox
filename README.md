@@ -1,4 +1,4 @@
-# Onepage
+# Viewbox
 
 Display all your social links in one page, with your own customization.
 
