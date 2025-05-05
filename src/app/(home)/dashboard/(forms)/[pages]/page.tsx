@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import { EditForm } from "./_components/editForm";
 import { getPageForm } from "@/_lib/getPageData";
 
@@ -10,8 +9,7 @@ export default async function EditPage({
   const { pages } = await params;
   const pageDetails = await getPageForm(pages);
 
-  // redirect users if they try to visit a slug/page that dont exist on the database
-  if (!pageDetails) notFound();
+  if (!pageDetails) return;
 
   return <EditForm pageDetails={pageDetails} slug={pages} />;
 }

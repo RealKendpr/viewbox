@@ -5,6 +5,15 @@ import { LinkType, PageDocumentType, PagePreviewType } from "@/types/PageTypes";
 import PageModel from "./mongodb/models/PageModel";
 import { getUserId } from "./getUserData";
 
+export const pageExist = async (slug: string) => {
+  await connectDB();
+  const page = await PageModel.findOne({ slug: slug });
+
+  if (!page) {
+    return false;
+  } else return true;
+};
+
 const pageData = (page: PageDocumentType) => {
   return {
     pageIcon: page?.pageIcon,
