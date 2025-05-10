@@ -63,7 +63,11 @@ export function ImageSelector({ fieldName }: { fieldName: string }) {
           {...register("pageIcon")}
           aria-hidden
         />
-        <input className="absolute size-0!" {...getInputProps()} aria-hidden />
+        <input
+          className="invisible absolute size-0!"
+          {...getInputProps()}
+          aria-hidden
+        />
         <span className="bg-base-300 relative z-10 rounded p-1">
           <svg
             width="32"
