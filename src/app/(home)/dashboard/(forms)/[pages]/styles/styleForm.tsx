@@ -41,7 +41,8 @@ export function StylesForm({
 
     if (!response.ok) {
       setError("root", {
-        type: `{server', message:'Something is wrong with your request; status code: ${response.status}}`,
+        type: "server",
+        message: `Something went wrong, code ${response.status}`,
       });
       return;
     }
