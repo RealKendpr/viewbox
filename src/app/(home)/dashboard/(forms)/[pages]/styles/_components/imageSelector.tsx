@@ -41,7 +41,7 @@ export function ImageSelector({ fieldName }: { fieldName: string }) {
       if (!fileTypes.includes(file.type)) {
         return {
           code: "type",
-          message: "Invalid icon type. Must either be JPEG, PNG, GIF, or SVG.",
+          message: "Invalid icon type. Must either be JPEG, PNG, or SVG.",
         };
       }
       return null;
