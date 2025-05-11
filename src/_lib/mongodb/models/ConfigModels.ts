@@ -52,7 +52,11 @@ const ActiveLayoutModel =
 const Styles = new Schema<StylesType>(
   {
     background: {
-      type: String,
+      type: Object,
+      default: {
+        key: "",
+        url: "",
+      },
     },
     cardColor: {
       type: String,
