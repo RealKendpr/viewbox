@@ -3,6 +3,7 @@
 import colors from "@/styles/colors.json";
 import { useFormContext } from "react-hook-form";
 import { useState } from "react";
+import { ImageSelector } from "./imageSelector";
 
 export function SolidSelector({
   fieldName,
@@ -149,7 +150,7 @@ export function MultiColorTabs({
     return "image";
   };
 
-  const tabs = ["solid", "gradient"];
+  const tabs = ["solid", "gradient", "image"];
   const [openTab, setOpenTab] = useState<string>(currentTab());
 
   return (
@@ -172,8 +173,10 @@ export function MultiColorTabs({
           currentStyle={currentStyle}
           transparent={transparent}
         />
-      ) : (
+      ) : openTab == "gradient" ? (
         <GradientSelector fieldName={fieldName} currentStyle={currentStyle} />
+      ) : (
+        <ImageSelector fieldName="imageBackground" />
       )}
     </>
   );

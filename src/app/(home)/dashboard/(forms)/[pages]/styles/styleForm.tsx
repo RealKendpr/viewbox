@@ -30,18 +30,32 @@ export function StylesForm({
     linkStyle: currentStyles?.linkStyle || "",
   };
 
-  const onSubmit: SubmitHandler<StylesType> = async (formData) => {
-    if (JSON.stringify(currentStyles) == JSON.stringify(formData)) return;
+  const onSubmit: SubmitHandler<StylesType> = async (data) => {
+    if (JSON.stringify(currentStyles) == JSON.stringify(data)) return;
+
+    const { imageBackground, ...rest } = data;
+
+    const image = () => {
+      if (imageBackground instanceof File) {
+        return imageBackground;
+      }
+      return JSON.stringify(imageBackground);
+    };
+
+    const formData = new FormData();
+    formData.append("slug", slug);
+    formData.append("imageBackground", image());
+    formData.append("restFormData", JSON.stringify(rest));
 
     const response = await fetch("/api/update/styles", {
       method: "PATCH",
-      headers: { "Content-Type": "applications/json" },
-      body: JSON.stringify({ slug: slug, styles: formData }),
+      body: formData,
     });
 
     if (!response.ok) {
       setError("root", {
-        type: `{server', message:'Something is wrong with your request; status code: ${response.status}}`,
+        type: "server",
+        message: `Something went wrong, code ${response.status}`,
       });
       return;
     }

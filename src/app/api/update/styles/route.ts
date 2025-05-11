@@ -4,6 +4,7 @@ import { StylesSchema } from "../../_schema/pageSchema";
 import { connectDB } from "@/_lib/mongodb/mongodb";
 import { StylesExtendedType } from "@/types/PageTypes";
 import { StylesModel } from "@/_lib/mongodb/models/ConfigModels";
+import { uploadThing } from "../../_uploadthing/uploadthing";
 
 export async function PATCH(request: NextRequest) {
   const userId = await getUserId();
@@ -13,22 +14,44 @@ export async function PATCH(request: NextRequest) {
       { status: 401 },
     );
 
-  const data = await request.json();
-  if (!data) return NextResponse.json({ error: "no content" }, { status: 204 });
+  const formData = await request.formData();
+  const { slug, imageBackground, restFormData } = Object.fromEntries(formData);
+  console.log(JSON.parse(restFormData as string));
 
-  const result = StylesSchema.safeParse(data);
-  if (!result.success)
-    return NextResponse.json({ error: result.error }, { status: 400 });
+  const validaData = StylesSchema.safeParse({
+    validSlug: slug,
+    styles: {
+      validImgBackground: imageBackground,
+      ...JSON.parse(restFormData as string),
+    },
+  });
+  if (!validaData.success)
+    return NextResponse.json({ error: validaData.error }, { status: 400 });
 
-  const { slug, ...rest } = result.data;
+  const { validSlug, ...restValidData } = validaData.data;
+  const { validImgBackground, ...restStyles } = restValidData.styles;
+
+  const uploadedBackground = await uploadThing(validImgBackground);
+
+  if (uploadedBackground === null) {
+    return NextResponse.json(
+      { error: "Error in saving the background." },
+      { status: 400 },
+    );
+  }
+
+  const newStyle = {
+    imageBackground: uploadedBackground,
+    ...restStyles,
+  };
 
   try {
     await connectDB();
 
     const findStyles: StylesExtendedType | null =
       await StylesModel.findOneAndUpdate(
-        { slug: slug, userId: userId },
-        { ...rest },
+        { slug: validSlug, userId: userId },
+        { styles: newStyle },
         { upsert: true },
       );
 

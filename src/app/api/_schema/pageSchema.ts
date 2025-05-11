@@ -1,13 +1,15 @@
 import { z } from "zod";
 import layouts from "@/layouts/layouts.json";
+import { ImageSchemaValidation } from "./imageSchema";
 
 const layoutsEnum = layouts.layouts as [string, ...string[]];
 
 export const StylesSchema = z.object({
-  slug: z.string().trim().min(1, { message: "required" }),
+  validSlug: z.string().trim().min(1, { message: "required" }),
   styles: z.object(
     {
       background: z.string().nullable(),
+      validImgBackground: z.union([ImageSchemaValidation, z.literal("")]),
       textColor: z.string().nullable(),
       cardColor: z.string().nullable(),
       linkColor: z.string().nullable(),
