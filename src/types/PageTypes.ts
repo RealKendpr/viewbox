@@ -6,7 +6,8 @@ export interface LinkStyleType {
   linkStyle: "default" | "soft" | "outline" | "ghost" | "";
 }
 export interface StylesType extends LinkStyleType {
-  background: File | pageIconOutputType;
+  background: string;
+  imageBackground?: File | pageIconOutputType;
   textColor: string;
   cardColor: string;
 }

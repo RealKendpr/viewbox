@@ -176,7 +176,7 @@ export function MultiColorTabs({
       ) : openTab == "gradient" ? (
         <GradientSelector fieldName={fieldName} currentStyle={currentStyle} />
       ) : (
-        <ImageSelector fieldName={fieldName} />
+        <ImageSelector fieldName="imageBackground" />
       )}
     </>
   );
