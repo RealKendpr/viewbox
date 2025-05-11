@@ -59,8 +59,8 @@ export function ImageSelector({ fieldName }: { fieldName: string }) {
       >
         <input
           className="invisible absolute size-0"
-          id="pageIcon"
-          {...register("pageIcon")}
+          id={fieldName}
+          {...register(fieldName)}
           aria-hidden
         />
         <input
