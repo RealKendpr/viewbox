@@ -39,7 +39,8 @@ export function StylesForm({
       if (imageBackground instanceof File) {
         return imageBackground;
       }
-      return JSON.stringify(imageBackground);
+      if (imageBackground == undefined) return "";
+      else return JSON.stringify(imageBackground);
     };
 
     const formData = new FormData();
