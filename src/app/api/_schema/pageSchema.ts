@@ -9,7 +9,7 @@ export const StylesSchema = z.object({
   styles: z.object(
     {
       background: z.string().nullable(),
-      validImgBackground: z.union([ImageSchemaValidation, z.literal("")]),
+      validImgBackground: z.union([ImageSchemaValidation, z.string()]),
       textColor: z.string().nullable(),
       cardColor: z.string().nullable(),
       linkColor: z.string().nullable(),
