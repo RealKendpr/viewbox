@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { LinkStyleType } from "@/types/PageTypes";
+import { LinkStyleType, pageIconOutputType } from "@/types/PageTypes";
 const LinkStyleSelector = dynamic(() =>
   import("./linkStyleSelector").then((mod) => mod.LinkStyleSelector),
 );
@@ -15,10 +15,20 @@ const Collapse = dynamic(() =>
   import("./collapse").then((mod) => mod.Collapse),
 );
 
-export function Background({ currentStyle }: { currentStyle: string }) {
+export function Background({
+  currentStyle,
+  imageBackground,
+}: {
+  currentStyle: string;
+  imageBackground: pageIconOutputType;
+}) {
   return (
     <Collapse name="background" label="background" open={true}>
-      <MultiColorTabs fieldName="background" currentStyle={currentStyle} />
+      <MultiColorTabs
+        fieldName="background"
+        currentStyle={currentStyle}
+        imageBackground={imageBackground}
+      />
     </Collapse>
   );
 }

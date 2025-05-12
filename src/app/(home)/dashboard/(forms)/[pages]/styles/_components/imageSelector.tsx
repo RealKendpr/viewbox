@@ -4,10 +4,17 @@ import { useFormContext } from "react-hook-form";
 import { fileSizeLimit, fileTypes } from "@/app/api/_schema/schema";
 import Image from "next/image";
 import { DropzoneError } from "@(forms)/_components/dropzone/dropzoneError";
+import { pageIconOutputType } from "@/types/PageTypes";
 
-export function ImageSelector({ fieldName }: { fieldName: string }) {
+export function ImageSelector({
+  fieldName,
+  currentImage,
+}: {
+  fieldName: string;
+  currentImage: pageIconOutputType;
+}) {
   const { setValue, register } = useFormContext();
-  const [preview, setPreview] = useState<string>("");
+  const [preview, setPreview] = useState<string>(currentImage.url);
 
   const { fileRejections, getRootProps, getInputProps } = useDropzone({
     accept: {

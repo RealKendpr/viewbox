@@ -73,7 +73,13 @@ export function StylesForm({
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <FormHeader slug={slug} title="Styles" />
         <div className="grid gap-y-3">
-          <Background currentStyle={currentStyles?.background || ""} />
+          <Background
+            currentStyle={currentStyles?.background || ""}
+            imageBackground={
+              (!(currentStyles?.imageBackground instanceof File) &&
+                currentStyles?.imageBackground) || { key: "", url: "" }
+            }
+          />
           <TextColor currentStyle={currentStyles?.textColor || ""} />
           <CardBackground currentStyle={currentStyles?.cardColor || ""} />
           <LinkStyle currentStyle={linkStyles} />
