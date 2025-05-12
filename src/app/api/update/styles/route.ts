@@ -16,7 +16,6 @@ export async function PATCH(request: NextRequest) {
 
   const formData = await request.formData();
   const { slug, imageBackground, restFormData } = Object.fromEntries(formData);
-  console.log(JSON.parse(restFormData as string));
 
   const validaData = StylesSchema.safeParse({
     validSlug: slug,
