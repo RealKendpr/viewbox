@@ -199,11 +199,7 @@ export function BackgroundSelector({
     ) {
       return "solid";
     }
-    if (
-      colors.solid.includes(currentStyle) ||
-      currentStyle == "" ||
-      currentStyle == "transparent"
-    ) {
+    if (colors.gradient.includes(currentStyle)) {
       return "gradient";
     }
     return "image";
