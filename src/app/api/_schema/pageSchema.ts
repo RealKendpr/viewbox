@@ -8,8 +8,7 @@ export const StylesSchema = z.object({
   validSlug: z.string().trim().min(1, { message: "required" }),
   styles: z.object(
     {
-      background: z.string().nullable(),
-      validImgBackground: z.union([ImageSchemaValidation, z.string()]),
+      validBackground: z.union([ImageSchemaValidation, z.string()]),
       textColor: z.string().nullable(),
       cardColor: z.string().nullable(),
       linkColor: z.string().nullable(),

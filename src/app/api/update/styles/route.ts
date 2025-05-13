@@ -15,12 +15,12 @@ export async function PATCH(request: NextRequest) {
     );
 
   const formData = await request.formData();
-  const { slug, imageBackground, restFormData } = Object.fromEntries(formData);
+  const { slug, background, restFormData } = Object.fromEntries(formData);
 
   const validaData = StylesSchema.safeParse({
     validSlug: slug,
     styles: {
-      validImgBackground: imageBackground,
+      validBackground: background,
       ...JSON.parse(restFormData as string),
     },
   });
@@ -28,11 +28,22 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: validaData.error }, { status: 400 });
 
   const { validSlug, ...restValidData } = validaData.data;
-  const { validImgBackground, ...restStyles } = restValidData.styles;
+  const { validBackground, ...restStyles } = restValidData.styles;
 
-  const uploadedBackground = await uploadThing(validImgBackground);
+  const getBackground = async (): Promise<string | null> => {
+    if (!(validBackground instanceof File)) {
+      return validBackground;
+    }
 
-  if (uploadedBackground === null) {
+    const uploadedBackground = await uploadThing(validBackground);
+
+    if (!uploadedBackground) return null;
+    return uploadedBackground.url;
+  };
+
+  const pageBackground = await getBackground();
+
+  if (pageBackground === null) {
     return NextResponse.json(
       { error: "Error in saving the background." },
       { status: 400 },
@@ -40,7 +51,7 @@ export async function PATCH(request: NextRequest) {
   }
 
   const newStyle = {
-    imageBackground: uploadedBackground,
+    background: pageBackground,
     ...restStyles,
   };
 

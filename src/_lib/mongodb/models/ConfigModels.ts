@@ -47,20 +47,10 @@ const ActiveLayoutModel =
   mongoose.models.Layouts ||
   model<LayoutsExtendedType>("Layouts", ActiveLayoutSchema);
 
-//
-
 const Styles = new Schema<StylesType>(
   {
     background: {
       type: String,
-    },
-    imageBackground: {
-      type: Object,
-      default: {
-        key: "",
-        url: "",
-      },
-      required: false,
     },
     cardColor: {
       type: String,
