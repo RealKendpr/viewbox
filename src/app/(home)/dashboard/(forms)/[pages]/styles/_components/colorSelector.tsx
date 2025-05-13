@@ -4,7 +4,6 @@ import colors from "@/styles/colors.json";
 import { useFormContext } from "react-hook-form";
 import { useState } from "react";
 import { ImageSelector } from "./imageSelector";
-import { pageIconOutputType } from "@/types/PageTypes";
 
 export function SolidSelector({
   fieldName,
@@ -132,17 +131,12 @@ export function MultiColorTabs({
   currentStyle,
   fieldName,
   transparent,
-  imageBackground,
 }: {
   currentStyle: string;
-  imageBackground?: pageIconOutputType;
   fieldName: string;
   transparent?: boolean;
 }) {
   const currentTab = () => {
-    if (imageBackground != undefined && imageBackground.key != "") {
-      return "image";
-    }
     if (
       colors.solid.includes(currentStyle) ||
       currentStyle == "" ||
@@ -151,6 +145,68 @@ export function MultiColorTabs({
       return "solid";
     }
     return "gradient";
+  };
+
+  const tabs = ["solid", "gradient"];
+  const [openTab, setOpenTab] = useState<string>(currentTab());
+
+  return (
+    <>
+      <div className="tabs tabs-box tabs-sm bg-base-300 p-2" role="tablist">
+        {tabs.map((i) => (
+          <button
+            key={i}
+            className={`tab capitalize ${openTab == i && "tab-active"}`}
+            type="button"
+            onClick={() => setOpenTab(i)}
+          >
+            {i}
+          </button>
+        ))}
+      </div>
+      {openTab == "solid" ? (
+        <SolidSelector
+          fieldName={fieldName}
+          currentStyle={currentStyle}
+          transparent={transparent}
+        />
+      ) : openTab == "gradient" ? (
+        <GradientSelector fieldName={fieldName} currentStyle={currentStyle} />
+      ) : (
+        <ImageSelector
+          fieldName="imageBackground"
+          currentImage={currentStyle}
+        />
+      )}
+    </>
+  );
+}
+
+export function BackgroundSelector({
+  currentStyle,
+  fieldName,
+  transparent,
+}: {
+  currentStyle: string;
+  fieldName: string;
+  transparent?: boolean;
+}) {
+  const currentTab = () => {
+    if (
+      colors.solid.includes(currentStyle) ||
+      currentStyle == "" ||
+      currentStyle == "transparent"
+    ) {
+      return "solid";
+    }
+    if (
+      colors.solid.includes(currentStyle) ||
+      currentStyle == "" ||
+      currentStyle == "transparent"
+    ) {
+      return "gradient";
+    }
+    return "image";
   };
 
   const tabs = ["solid", "gradient", "image"];
@@ -179,12 +235,10 @@ export function MultiColorTabs({
       ) : openTab == "gradient" ? (
         <GradientSelector fieldName={fieldName} currentStyle={currentStyle} />
       ) : (
-        imageBackground != undefined && (
-          <ImageSelector
-            fieldName="imageBackground"
-            currentImage={imageBackground}
-          />
-        )
+        <ImageSelector
+          fieldName="imageBackground"
+          currentImage={currentStyle}
+        />
       )}
     </>
   );

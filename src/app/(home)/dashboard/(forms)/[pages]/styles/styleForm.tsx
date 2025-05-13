@@ -12,6 +12,7 @@ import {
   LinkStyle,
   TextColor,
 } from "./_components/styleSelector";
+import { ClientStylesType } from "@/types/ConfigTypes";
 
 export function StylesForm({
   slug,
@@ -30,22 +31,22 @@ export function StylesForm({
     linkStyle: currentStyles?.linkStyle || "",
   };
 
-  const onSubmit: SubmitHandler<StylesType> = async (data) => {
+  const onSubmit: SubmitHandler<ClientStylesType> = async (data) => {
     if (JSON.stringify(currentStyles) == JSON.stringify(data)) return;
 
-    const { imageBackground, ...rest } = data;
+    const { background, ...rest } = data;
 
     const image = () => {
-      if (imageBackground instanceof File) {
-        return imageBackground;
+      if (background instanceof File) {
+        return background;
       }
-      if (imageBackground == undefined) return "";
-      else return JSON.stringify(imageBackground);
+      if (background == undefined) return "";
+      else return background;
     };
 
     const formData = new FormData();
     formData.append("slug", slug);
-    formData.append("imageBackground", image());
+    formData.append("background", image());
     formData.append("restFormData", JSON.stringify(rest));
 
     const response = await fetch("/api/update/styles", {
@@ -73,13 +74,7 @@ export function StylesForm({
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <FormHeader slug={slug} title="Styles" />
         <div className="grid gap-y-3">
-          <Background
-            currentStyle={currentStyles?.background || ""}
-            imageBackground={
-              (!(currentStyles?.imageBackground instanceof File) &&
-                currentStyles?.imageBackground) || { key: "", url: "" }
-            }
-          />
+          <Background currentStyle={currentStyles?.background || ""} />
           <TextColor currentStyle={currentStyles?.textColor || ""} />
           <CardBackground currentStyle={currentStyles?.cardColor || ""} />
           <LinkStyle currentStyle={linkStyles} />
