@@ -4,6 +4,7 @@ import colors from "@/styles/colors.json";
 import { useFormContext } from "react-hook-form";
 import { useState } from "react";
 import { ImageSelector } from "./imageSelector";
+import testUrl from "@(forms)/_utils/testUrl";
 
 export function SolidSelector({
   fieldName,
@@ -233,7 +234,7 @@ export function BackgroundSelector({
       ) : (
         <ImageSelector
           fieldName="imageBackground"
-          currentImage={currentStyle}
+          currentImage={testUrl(currentStyle) ? currentStyle : ""}
         />
       )}
     </>
