@@ -233,7 +233,7 @@ export function BackgroundSelector({
         <GradientSelector fieldName={fieldName} currentStyle={currentStyle} />
       ) : (
         <ImageSelector
-          fieldName="imageBackground"
+          fieldName={fieldName}
           currentImage={testUrl(currentStyle) ? currentStyle : ""}
         />
       )}
