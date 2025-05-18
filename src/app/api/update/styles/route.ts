@@ -5,6 +5,8 @@ import { connectDB } from "@/_lib/mongodb/mongodb";
 import { StylesExtendedType } from "@/types/PageTypes";
 import { StylesModel } from "@/_lib/mongodb/models/ConfigModels";
 import { uploadThing } from "../../_uploadthing/uploadthing";
+import { getUploadthingKey } from "@/app/_utils/getUploadthingKey";
+import { deleteThing } from "../../_uploadthing/deleteThing";
 
 export async function PATCH(request: NextRequest) {
   const userId = await getUserId();
@@ -15,13 +17,12 @@ export async function PATCH(request: NextRequest) {
     );
 
   const formData = await request.formData();
-  const { slug, imageBackground, restFormData } = Object.fromEntries(formData);
-  console.log(JSON.parse(restFormData as string));
+  const { slug, background, restFormData } = Object.fromEntries(formData);
 
   const validaData = StylesSchema.safeParse({
     validSlug: slug,
     styles: {
-      validImgBackground: imageBackground,
+      validBackground: background,
       ...JSON.parse(restFormData as string),
     },
   });
@@ -29,11 +30,22 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: validaData.error }, { status: 400 });
 
   const { validSlug, ...restValidData } = validaData.data;
-  const { validImgBackground, ...restStyles } = restValidData.styles;
+  const { validBackground, ...restStyles } = restValidData.styles;
 
-  const uploadedBackground = await uploadThing(validImgBackground);
+  const getBackground = async (): Promise<string | null> => {
+    if (!(validBackground instanceof File)) {
+      return validBackground;
+    }
 
-  if (uploadedBackground === null) {
+    const uploadedBackground = await uploadThing(validBackground);
+
+    if (!uploadedBackground) return null;
+    return uploadedBackground.url;
+  };
+
+  const pageBackground = await getBackground();
+
+  if (pageBackground === null) {
     return NextResponse.json(
       { error: "Error in saving the background." },
       { status: 400 },
@@ -41,7 +53,7 @@ export async function PATCH(request: NextRequest) {
   }
 
   const newStyle = {
-    imageBackground: uploadedBackground,
+    background: pageBackground,
     ...restStyles,
   };
 
@@ -54,6 +66,15 @@ export async function PATCH(request: NextRequest) {
         { styles: newStyle },
         { upsert: true },
       );
+
+    if (findStyles != null) {
+      const key = getUploadthingKey(findStyles.styles.background);
+      const newBgKey = getUploadthingKey(pageBackground);
+
+      if (key !== "" && key !== newBgKey) {
+        await deleteThing(key);
+      }
+    }
 
     await findStyles?.save();
     return NextResponse.json({ message: "Styles updated" }, { status: 200 });

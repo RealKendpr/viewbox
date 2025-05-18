@@ -13,7 +13,7 @@ export const uploadThing = async (
   pageIcon: File | string,
 ): Promise<pageIconOutputType | null> => {
   if (!(pageIcon instanceof File)) {
-    if (pageIcon !== "") {
+    if (pageIcon != undefined && pageIcon !== "") {
       const currentIcon = JSON.parse(pageIcon);
       return currentIcon;
     }

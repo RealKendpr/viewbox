@@ -9,6 +9,7 @@ import {
   OptionsModel,
   StylesModel,
 } from "@/_lib/mongodb/models/ConfigModels";
+import { getUploadthingKey } from "@/app/_utils/getUploadthingKey";
 
 const checks = async (request: NextRequest) => {
   const userId = await getUserId();
@@ -62,8 +63,16 @@ export async function DELETE(request: NextRequest) {
     await pageToDelete;
     await deleteThing(pageToDelete.pageIcon.key);
     await ActiveLayoutModel.findOneAndDelete(documentId);
-    await StylesModel.findOneAndDelete(documentId);
     await OptionsModel.findOneAndDelete(documentId);
+
+    const styleToDelete = await StylesModel.findOneAndDelete(documentId);
+
+    if (styleToDelete) {
+      const backgroundKey = getUploadthingKey(styleToDelete.styles.background);
+      await deleteThing(backgroundKey);
+    }
+
+    await styleToDelete;
 
     return NextResponse.json(
       { message: "selected resource updated" },

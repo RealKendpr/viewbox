@@ -7,7 +7,6 @@ export interface LinkStyleType {
 }
 export interface StylesType extends LinkStyleType {
   background: string;
-  imageBackground?: File | pageIconOutputType;
   textColor: string;
   cardColor: string;
 }

@@ -4,6 +4,7 @@ import colors from "@/styles/colors.json";
 import { useFormContext } from "react-hook-form";
 import { useState } from "react";
 import { ImageSelector } from "./imageSelector";
+import testUrl from "@(forms)/_utils/testUrl";
 
 export function SolidSelector({
   fieldName,
@@ -144,6 +145,61 @@ export function MultiColorTabs({
     ) {
       return "solid";
     }
+    return "gradient";
+  };
+
+  const tabs = ["solid", "gradient"];
+  const [openTab, setOpenTab] = useState<string>(currentTab());
+
+  return (
+    <>
+      <div className="tabs tabs-box tabs-sm bg-base-300 p-2" role="tablist">
+        {tabs.map((i) => (
+          <button
+            key={i}
+            className={`tab capitalize ${openTab == i && "tab-active"}`}
+            type="button"
+            onClick={() => setOpenTab(i)}
+          >
+            {i}
+          </button>
+        ))}
+      </div>
+      {openTab == "solid" ? (
+        <SolidSelector
+          fieldName={fieldName}
+          currentStyle={currentStyle}
+          transparent={transparent}
+        />
+      ) : openTab == "gradient" ? (
+        <GradientSelector fieldName={fieldName} currentStyle={currentStyle} />
+      ) : (
+        <ImageSelector
+          fieldName="imageBackground"
+          currentImage={currentStyle}
+        />
+      )}
+    </>
+  );
+}
+
+export function BackgroundSelector({
+  currentStyle,
+  fieldName,
+  transparent,
+}: {
+  currentStyle: string;
+  fieldName: string;
+  transparent?: boolean;
+}) {
+  const currentTab = () => {
+    if (
+      colors.solid.includes(currentStyle) ||
+      currentStyle == "" ||
+      currentStyle == "transparent"
+    ) {
+      return "solid";
+    }
     if (colors.gradient.includes(currentStyle)) {
       return "gradient";
     }
@@ -176,7 +232,10 @@ export function MultiColorTabs({
       ) : openTab == "gradient" ? (
         <GradientSelector fieldName={fieldName} currentStyle={currentStyle} />
       ) : (
-        <ImageSelector fieldName="imageBackground" />
+        <ImageSelector
+          fieldName={fieldName}
+          currentImage={testUrl(currentStyle) ? currentStyle : ""}
+        />
       )}
     </>
   );

@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { LinkStyleType } from "@/types/PageTypes";
+import { BackgroundSelector } from "./colorSelector";
 const LinkStyleSelector = dynamic(() =>
   import("./linkStyleSelector").then((mod) => mod.LinkStyleSelector),
 );
@@ -18,7 +19,7 @@ const Collapse = dynamic(() =>
 export function Background({ currentStyle }: { currentStyle: string }) {
   return (
     <Collapse name="background" label="background" open={true}>
-      <MultiColorTabs fieldName="background" currentStyle={currentStyle} />
+      <BackgroundSelector fieldName="background" currentStyle={currentStyle} />
     </Collapse>
   );
 }

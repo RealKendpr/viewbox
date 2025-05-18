@@ -5,9 +5,15 @@ import { fileSizeLimit, fileTypes } from "@/app/api/_schema/schema";
 import Image from "next/image";
 import { DropzoneError } from "@(forms)/_components/dropzone/dropzoneError";
 
-export function ImageSelector({ fieldName }: { fieldName: string }) {
+export function ImageSelector({
+  fieldName,
+  currentImage,
+}: {
+  fieldName: string;
+  currentImage: string;
+}) {
   const { setValue, register } = useFormContext();
-  const [preview, setPreview] = useState<string>("");
+  const [preview, setPreview] = useState<string>(currentImage);
 
   const { fileRejections, getRootProps, getInputProps } = useDropzone({
     accept: {
