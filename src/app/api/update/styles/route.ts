@@ -5,6 +5,8 @@ import { connectDB } from "@/_lib/mongodb/mongodb";
 import { StylesExtendedType } from "@/types/PageTypes";
 import { StylesModel } from "@/_lib/mongodb/models/ConfigModels";
 import { uploadThing } from "../../_uploadthing/uploadthing";
+import { getUploadthingKey } from "@/app/_utils/getUploadthingKey";
+import { deleteThing } from "../../_uploadthing/deleteThing";
 
 export async function PATCH(request: NextRequest) {
   const userId = await getUserId();
@@ -64,6 +66,15 @@ export async function PATCH(request: NextRequest) {
         { styles: newStyle },
         { upsert: true },
       );
+
+    if (findStyles != null) {
+      const key = getUploadthingKey(findStyles.styles.background);
+      const newBgKey = getUploadthingKey(pageBackground);
+
+      if (key !== "" && key !== newBgKey) {
+        await deleteThing(key);
+      }
+    }
 
     await findStyles?.save();
     return NextResponse.json({ message: "Styles updated" }, { status: 200 });
