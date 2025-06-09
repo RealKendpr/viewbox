@@ -60,9 +60,13 @@ export async function getStyles(slug: string): Promise<StylesType | null> {
       return null;
     }
 
-    const styles = JSON.parse(JSON.stringify(findStyles.styles));
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _id, ...currentStyles } = JSON.parse(
+      //_id is not used here.
+      JSON.stringify(findStyles.styles),
+    );
 
-    return styles;
+    return currentStyles;
   } catch (error) {
     console.log(error);
     return null;
