@@ -6,6 +6,15 @@ My initial thought for this project is to make something that's like a single we
 
 As of now, its simply just a link page where anyone can put social links, but I hope that this project gets to my initial thought.
 
+## Contributing
+
+Viewbox welcomes any form of contributions, big or small from anyone.
+
+- You may report any issues you found.
+- Submit or contribute a feature that you want to see in this project.
+- Fix an existing bug or issue.
+- Create and/or improve documentations.
+
 ## Features
 
 - Layout presets
@@ -72,9 +81,9 @@ npm run dev
 - Better Auth
 - React Hook Form
 
-<!-- ## Roadmap?
+## Roadmap?
 
-- a card display, carousel
+- a carousel element
 - a paragraph section; that can include heading, images, links
 - custom domain name
-- maybe an options to put their own static code -->
+- maybe an options to import your own static code
