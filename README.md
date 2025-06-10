@@ -8,14 +8,17 @@ As of now, its simply just a link page where anyone can put social links, but I 
 
 ## Features
 
-- Customizable layout and style from backgrounds, colors, text, buttons, borders, radius, etc.
-- Analytics; page view duration, what links are clicked the most for a period of time
+- Layout presets
+- Multiple pages
+- Customizable background, colors etc.
+- More features coming as we undergo development.
 
-- a card display, carousel
-- a paragraph section; that can include heading, images, links
-- custom domain name
-- maybe an options to put their own static code
-- ...
+### Upcoming features
+
+- Analytics
+- Custom domain
+- Custom code import
+- Multiple element options - instead of just a list of links there should also be other elements like: paragraphs, images, headings, cards, carousels, etc.
 
 ## Usage
 
@@ -31,7 +34,7 @@ openssl rand -base64 32
 # Windows can use https://generate-secret.vercel.app/32
 ```
 
-```env
+```toml
 // .env
 SESSION_SECRET=your-secret-key
 
@@ -63,15 +66,15 @@ npm run dev
 ## Tech
 
 - React/Next.js
-- Mongodb
+- MongoDB
 - Tailwind with DaisyUI
 - Uploadthing
 - Better Auth
 - React Hook Form
 
-## Roadmap?
+<!-- ## Roadmap?
 
 - a card display, carousel
 - a paragraph section; that can include heading, images, links
 - custom domain name
-- maybe an options to put their own static code
+- maybe an options to put their own static code -->
