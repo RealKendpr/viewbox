@@ -14,6 +14,7 @@ Viewbox welcomes any form of contributions, big or small from anyone.
 - Submit or contribute a feature that you want to see in this project.
 - Fix an existing bug or issue.
 - Create and/or improve documentations.
+- UI design improments.
 
 ## Features
 
@@ -31,11 +32,13 @@ Viewbox welcomes any form of contributions, big or small from anyone.
 
 ## Usage
 
-This is a Next.js project, and uses `npm`. <br/>
+If you want to contribute or play around with the project here is a breif guide. This is a Next.js project, and uses `npm`. <br/>
 
 1. Clone the main branch of this repository
 
-2. A `.env` file needs to be defined at the root of the project folder. Generate a secret in terminal:
+2. A `.env` file is needed at the root of the project folder.
+
+Generate a secret in terminal:
 
 ```bash
 # macOS or linux
@@ -71,6 +74,34 @@ npm install
 ```bash
 npm run dev
 ```
+
+### File Structure
+
+```bash
+./src/app/
+├── api
+├── (home)
+│   ├── (auth)
+│   └── dashboard
+│       ├── delete-account
+│       └── (forms)
+│           ├── create
+│           ├── [pages]
+│           │   ├── layouts
+│           │   ├── options
+│           │   └── styles
+│           └── _utils
+├── (pages)
+│   └── [pages]
+└── _utils
+```
+
+- api - contains all the api routes including the authentication route.
+- (home) - is a group folder to organize, and contain the layout that is shared between pages
+  - (auth) - contains everythings thats for the login and authentication route in client-side.
+  - dashboard - contains all the routes for managing the user's account and pages inside that account.
+    - (forms) - contains the routes for creating and editing the user's page
+- (pages)/[pages] - is a dynamic route that generates all of the pages from the database that was created by all users.
 
 ## Tech
 
